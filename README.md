@@ -260,7 +260,7 @@ The 3D design of the board is [assets/board.step](assets/board.step).
 
 Here's the photo of the cut wooden board:
 
-![assets/board.jpg](assets/board.step)
+![assets/board.jpg](assets/board.jpg)
 
 ## Log
 
