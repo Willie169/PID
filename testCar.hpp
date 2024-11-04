@@ -155,7 +155,7 @@ struct pidTest
 	double Kp, result;
 };
 
-void write_results(const vector<pidTest> &data, const string &filename)
+bool write_results(const vector<pidTest> &data, const string &filename)
 {
 	auto sorted_data = data;
 	sort(sorted_data.begin(), sorted_data.end(), [](const pidTest &a, const pidTest &b) {
@@ -166,7 +166,7 @@ void write_results(const vector<pidTest> &data, const string &filename)
 	if (!outfile)
 	{
 		cerr << "Error opening file for writing." << endl;
-		return;
+		return 0;
 	}
 
 	outfile << "maxIntTm,maxAmp,minKp,maxKp,rTiM,TdM,TddM,eDPm,eDPa,session,Kp,result\n";
@@ -181,6 +181,8 @@ void write_results(const vector<pidTest> &data, const string &filename)
 
 	outfile.close();
 	cout << "Data written to " << filename << endl;
+
+	return 1;
 }
 
 #endif
