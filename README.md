@@ -30,9 +30,9 @@ using namespace std;
 
 The traditional PID controller is defined by the following equation:
 
-\[
+$$
 u(t) = K_p e(t) + K_i \int_0^t e(\tau) d\tau + K_d \frac{de(t)}{dt} 
-\]
+$$
 
 Where:
 - $u(t)$ is the control output.
@@ -43,9 +43,9 @@ Where:
 
 The proportional gain $K_p$ is dynamically adjusted based on the interaction between the current error $e(t)$ and its rate of change (derivative). This adjustment is designed to improve the responsiveness of the controller to changing conditions. The adaptation can be mathematically expressed as follows:
 
-\[
+$$
 K_p' = K_p \times (1 \pm eDP_a)
-\]
+$$
 
 Where:
 - $eDP = e(t) \times \frac{de(t)}{dt}$
@@ -58,9 +58,9 @@ The key idea behind this adjustment is to increase the proportional gain when th
 
 Integral control is essential for eliminating steady-state error; however, it can lead to issues like integral windup, where the integral term accumulates excessively during periods of sustained error. To mitigate this, the integral gain $K_i$ is adaptively computed as follows:
 
-\[
+$$
 K_i = K_p \times rTiM \times ap
-\]
+$$
 
 Where:
 - $ap = e^{-\frac{\text{amp}}{\text{maxAmp}}}$
@@ -74,15 +74,15 @@ Inspired by the **Ziegler–Nichols tuning method**, the implementation maintain
 
 - **Deriving the Rate of Change**: The derivative term requires knowledge of how fast the error is changing. By storing previous error values in a linked list, we can accurately compute the change in error over time ($\frac{de(t)}{dt}$):
   
-\[
+$$
   dv = \frac{e(t) - preE}{dt}
-\]
+$$
   
 - **Integral Calculation**: The integral of the error is accumulated over time, enabling the controller to respond to persistent deviations from the setpoint:
   
-\[
+$$
   intg += e(t) \times dt
-\]
+$$
 
 Using a linked list allows for efficient management of this error history. As new errors are added, older entries can be pruned to ensure that only relevant data is retained, which helps avoid excessive memory usage and keeps the calculations focused on the most recent behavior of the system.
 
@@ -90,9 +90,9 @@ Using a linked list allows for efficient management of this error history. As ne
 
 In addition to the standard derivative term $K_d$, an additional derivative term $K_{dd}$ is included in the PID controller. This term represents a second derivative component, which can be defined as follows:
 
-\[
+$$
 K_{dd} = K_d \times TddM
-\]
+$$
 
 Where:
 - $TddM$ is a multiplier that adjusts the impact of the second derivative term. 
