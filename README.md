@@ -256,19 +256,17 @@ The code file demonstrates the usage of the `optimization.hpp` header file to pe
 
 The wooden board serves as the support structure of the kart that connects and props the components such as an Arduino board, an Omni wheel, a breadboard, 2 wheels, and 2 motors.
 
-The 3D design of the board is [assets/board.step](assets/board.step). 
+The 3D design file is [assets/board.step](assets/board.step). 
 
 Here's the photo of the cut wooden board:
 
 ![assets/board.jpg](assets/board.jpg)
 
-## Log
-
-### Inspiration and Background
+## Inspiration and Background
 
 The development of this PID (Proportional-Integral-Derivative) controller project is rooted in control theory, a field of engineering that focuses on the behavior of dynamic systems. What makes us take the initiative is the auto-following kart lesson in our living technology class. We aim to make an auto-following kart from scratch with Arduino and wooden boards and make it as quality as possible on a constrained budget.
 
-#### Control Theory and PID Controllers
+### Control Theory and PID Controllers
 
 The development of this PID (Proportional-Integral-Derivative) controller project is rooted in control theory, a field of engineering that focuses on the behavior of dynamic systems. PID controllers are a cornerstone of modern control systems. They are designed to automatically adjust system outputs based on feedback to minimize error, allowing for precise control of dynamic systems. The PID controller operates based on three fundamental components:
 
@@ -280,7 +278,7 @@ The development of this PID (Proportional-Integral-Derivative) controller projec
 
 The tuning of these parameters is crucial for achieving optimal performance. The traditional Ziegler–Nichols tuning method has served as a foundational approach for many engineers, providing empirical guidelines for setting PID parameters based on system behavior.
 
-#### Arduino Scenarios in Living Technology Classes
+### Arduino Scenarios in Living Technology Classes
 
 Arduino boards offer an accessible platform for students and hobbyists to experiment with hardware and software integration, facilitating hands-on learning experiences in technology classes.
 
@@ -288,11 +286,11 @@ In living technology classes, we engage with Arduino to build auto-following kar
 
 This PID controller serves as an imperative part of our auto-following kart. We use it to achieve a stable distance between the auto-following kart and the leader kart, in our case, a cleaning robot.
 
-### Development History
+## Development History
 
 The development of the PID controller and its associated simulation framework has been an iterative process, marked by continuous enhancement and refinement.
 
-#### Initial Implementation
+### Initial Implementation
 
 The journey began with a simple implementation of the traditional PID controller. The focus was on creating a basic class structure in C++ that encapsulated the PID logic, allowing for straightforward application in simulations.
 
@@ -300,7 +298,7 @@ The journey began with a simple implementation of the traditional PID controller
   - Basic PID calculations.
   - Initial support for both Arduino and non-Arduino environments through conditional compilation.
 
-#### Enhancements and Adaptive Features
+### Enhancements and Adaptive Features
 
 As the initial implementation was tested, several limitations became apparent, particularly regarding responsiveness and stability. This prompted the incorporation of advanced features such as:
 
@@ -308,21 +306,21 @@ As the initial implementation was tested, several limitations became apparent, p
 
 - **Adaptive Integral Term**: To mitigate integral windup, the integral gain $K_i$ was adjusted based on observed error amplitude. This feature improved system stability during sustained error conditions.
 
-#### Error History Management
+### Error History Management
 
 To accurately compute the integral and derivative terms, a robust error history management system was implemented. This system utilized a linked list structure to store past error values and timestamps, enabling precise calculations for both the integral and derivative components. The integration of error history management was crucial for implementing more advanced tuning strategies, inspired by established control theory practices.
 
-#### Additional Derivative Term
+### Additional Derivative Term
 
 Recognizing the need for improved damping characteristics, an additional derivative term $K_{dd}$ was introduced. This term accounted for the acceleration of error changes, allowing the controller to anticipate and react to rapid fluctuations more effectively.
 
-#### Testing and Simulation Framework
+### Testing and Simulation Framework
 
 With the PID logic in place, attention turned to building a comprehensive simulation framework to test various PID configurations. The introduction of the `Car` class for simulating follower and leader vehicles added a practical context for evaluating PID performance in a dynamic environment.
 
 - **PID Testing Function**: A dedicated function was developed to simulate the interaction between the leader and follower karts, providing insights into how different PID parameters affected system behavior.
 
-#### Optimization and Multi-threading
+### Optimization and Multi-threading
 
 To facilitate further exploration of PID parameter tuning, optimization functions were integrated. Utilizing multi-threading allowed for the concurrent evaluation of multiple parameter combinations, greatly enhancing the testing efficiency. The optimization framework also included mechanisms for result logging and progress tracking, making it easier to analyze and visualize outcomes.
 
