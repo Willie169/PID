@@ -1,12 +1,12 @@
 # PID Controller and Simulation
 
-This repository implements a PID (Proportional-Integral-Derivative) controller designed to regulate the speed of a follower car in relation to a leader car. The implementation includes the PID controller logic, a car simulation, and a framework for testing various PID configurations.
+This repository implements a PID (Proportional-Integral-Derivative) controller designed to regulate the speed of an auto-following kart with a leader robot. The implementation includes the PID controller logic, a car simulation, and a framework for testing various PID configurations.
 
 ## PID.hpp
 
 ### Overview
 
-This header file implementes a PID controller that includes traditional PID control logic along with enhancements such as adaptive gain adjustment, adaptive integral term, error history management, and additional derivative term. It is also designed to be compatible with both Arduino and non-Arduino environments.
+This header file implements a PID controller that includes traditional PID control logic along with enhancements such as adaptive gain adjustment, adaptive integral term, error history management, and additional derivative term. It is also designed to be compatible with both Arduino and non-Arduino environments.
 
 ### Arduino and Non-Arduino Compatibility
 
@@ -126,7 +126,7 @@ The `PID` class encapsulates the PID control logic. It includes:
 
 ### Overview
 
-This header file includes a `Car` class for simulating the motion of a car, a PID controller for adjusting the speed of a follower car based on the distance to a leader car, and several utility functions for data processing and results management.
+This header file includes a `Car` class for simulating the motion of a car, a PID controller for adjusting the speed of an auto-following kart based on the distance to a leader car, and several utility functions for data processing and results management.
 
 ### Car Class
 
@@ -152,7 +152,7 @@ Generates a vector of velocity values over a specified number of simulation step
 ```cpp
 vector<double> test(double maxIntTm, double maxAmp, double minKp, double maxKp, double rTiM, double TdM, double TddM, double eDPm, double eDPa, unsigned long session, double Kp, double preE = 0, unsigned long preT = 0, double timeInterval = 10, int steps = 1000)
 ```
-This function simulates the interaction between a leader car and a follower car using a PID controller to adjust the follower's speed based on the distance to the leader.
+This function simulates the interaction between a leader car and an auto-following kart using a PID controller to adjust the follower's speed based on the distance to the leader.
 
 - **Parameters**:
   - `double maxIntTm`: Maximum integral time constant.
@@ -251,6 +251,70 @@ Optimizes the parameters of the PID controller based on the provided ranges. It 
 ## main.cpp
 
 The code file demonstrates the usage of the `optimization.hpp` header file to perform parameter optimization for a PID controller. It defines a set of parameter ranges and calls the `optimize` function to evaluate different combinations of parameters.
+
+## Log
+
+### Inspiration and Background
+
+The development of this PID (Proportional-Integral-Derivative) controller project is rooted in control theory, a field of engineering that focuses on the behavior of dynamic systems. What makes us take the initiative is the auto-following kart lesson in our living technology class. We aim to make an auto-following kart from scratch with Arduino and wooden boards and make it as quality as possible on a constrained budget.
+
+#### Control Theory and PID Controllers
+
+The development of this PID (Proportional-Integral-Derivative) controller project is rooted in control theory, a field of engineering that focuses on the behavior of dynamic systems. PID controllers are a cornerstone of modern control systems. They are designed to automatically adjust system outputs based on feedback to minimize error, allowing for precise control of dynamic systems. The PID controller operates based on three fundamental components:
+
+1. **Proportional Control (P)**: Responds proportionally to the current error value, providing immediate correction based on how far the system is from the desired state.
+
+2. **Integral Control (I)**: Addresses accumulated past errors, ensuring that the system reaches the desired state even if there are persistent biases.
+
+3. **Derivative Control (D)**: Predicts future errors based on the rate of change of the error, providing a damping effect to reduce overshoot and oscillation.
+
+The tuning of these parameters is crucial for achieving optimal performance. The traditional Ziegler–Nichols tuning method has served as a foundational approach for many engineers, providing empirical guidelines for setting PID parameters based on system behavior.
+
+#### Arduino Scenarios in Living Technology Classes
+
+Arduino boards offer an accessible platform for students and hobbyists to experiment with hardware and software integration, facilitating hands-on learning experiences in technology classes.
+
+In living technology classes, we engage with Arduino to build auto-following kart projects that require real-time control systems. This scenario highlights the importance of tuning PID controllers to achieve desired behaviors in robotics and automotive systems.
+
+This PID controller serves as an imperative part of our auto-following kart. We use it to achieve a stable distance between the auto-following kart and the leader kart, in our case, a cleaning robot.
+
+### Development History
+
+The development of the PID controller and its associated simulation framework has been an iterative process, marked by continuous enhancement and refinement.
+
+#### Initial Implementation
+
+The journey began with a simple implementation of the traditional PID controller. The focus was on creating a basic class structure in C++ that encapsulated the PID logic, allowing for straightforward application in simulations.
+
+- **Key Features**:
+  - Basic PID calculations.
+  - Initial support for both Arduino and non-Arduino environments through conditional compilation.
+
+#### Enhancements and Adaptive Features
+
+As the initial implementation was tested, several limitations became apparent, particularly regarding responsiveness and stability. This prompted the incorporation of advanced features such as:
+
+- **Adaptive Gain Adjustment**: Inspired by the need for dynamic responsiveness, the proportional gain $K_p$ was made adaptable based on the error's rate of change. This enhancement allowed for better handling of transient behaviors in the system.
+
+- **Adaptive Integral Term**: To mitigate integral windup, the integral gain $K_i$ was adjusted based on observed error amplitude. This feature improved system stability during sustained error conditions.
+
+#### Error History Management
+
+To accurately compute the integral and derivative terms, a robust error history management system was implemented. This system utilized a linked list structure to store past error values and timestamps, enabling precise calculations for both the integral and derivative components. The integration of error history management was crucial for implementing more advanced tuning strategies, inspired by established control theory practices.
+
+#### Additional Derivative Term
+
+Recognizing the need for improved damping characteristics, an additional derivative term $K_{dd}$ was introduced. This term accounted for the acceleration of error changes, allowing the controller to anticipate and react to rapid fluctuations more effectively.
+
+#### Testing and Simulation Framework
+
+With the PID logic in place, attention turned to building a comprehensive simulation framework to test various PID configurations. The introduction of the `Car` class for simulating follower and leader vehicles added a practical context for evaluating PID performance in a dynamic environment.
+
+- **PID Testing Function**: A dedicated function was developed to simulate the interaction between the leader and follower karts, providing insights into how different PID parameters affected system behavior.
+
+#### Optimization and Multi-threading
+
+To facilitate further exploration of PID parameter tuning, optimization functions were integrated. Utilizing multi-threading allowed for the concurrent evaluation of multiple parameter combinations, greatly enhancing the testing efficiency. The optimization framework also included mechanisms for result logging and progress tracking, making it easier to analyze and visualize outcomes.
 
 ## Contributing
 
