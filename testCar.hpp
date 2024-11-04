@@ -41,6 +41,8 @@ void pidDebug(string message) {
 }
 
 vector<double> test(double maxIntTm, double maxAmp, double minKp, double maxKp, double rTiM, double TdM, double TddM, double eDPm, double eDPa, unsigned long session, double Kp, double preE=0, unsigned long preT=0) {
+    vector<double> vec;
+    
     random_device rd;
     mt19937 gen(rd());
     normal_distribution<> dist(0, 127.5);

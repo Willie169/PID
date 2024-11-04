@@ -53,10 +53,12 @@ public:
             }
             return preOut;
         }
+        
+        double amp, ap;
 
         if (session>0) {
 	        unsigned long S = 0;
-	        double amp = 0;
+	        amp = 0;
 	        if (dtXs.size > 1) {
 	            Node* pos = dtXs.tail;
 	            while (dtXs.size > 1 && pos != nullptr) {
@@ -78,7 +80,7 @@ public:
 	        } else if (dtXs.size == 1) {
 	            amp = ABS(dtXs.tail->data.e);
 	        }        
-            double ap = exp(-amp / maxAmp);
+            ap = exp(-amp / maxAmp);
         } else {
             amp=0;
             ap=1;
