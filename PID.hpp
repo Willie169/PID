@@ -40,7 +40,7 @@ public:
     unsigned long preT;
     List dtXs;
     
-    PID(double maxIntTm=100, double maxAmp=1000, double minKp=0.001, double maxKp=0.01, double rTiM=1, double TdM=1, double TddM=0.1, double eDPm=50, double eDPa=0.1, unsigned long session=50, double Kp=0.005, double preE=0, unsigned long preT=0)
+    PID(double maxIntTm, double maxAmp, double minKp, double maxKp, double rTiM, double TdM, double TddM, double eDPm, double eDPa, unsigned long session, double Kp, double preE=0, unsigned long preT=0)
         : maxIntTm(maxIntTm), maxAmp(maxAmp), minKp(minKp), maxKp(maxKp), rTiM(rTiM), TdM(TdM), TddM(TddM), eDPm(eDPm), eDPa(eDPa), session(session), Kp(Kp), Ki(0), Kd(0), Kdd(0), preE(preE), preDv(0), intg(0), preOut(0), preT(preT), dtXs({nullptr, nullptr, 0}) {}
     
     double update(double e, unsigned long timestamp, String* debug = nullptr) {
@@ -54,31 +54,36 @@ public:
             return preOut;
         }
 
-        unsigned long S = 0;
-        double amp = 0;
-        if (dtXs.size > 1) {
-            Node* pos = dtXs.tail;
-            while (dtXs.size > 1 && pos != nullptr) {
-                S += pos->data.dt;
-                amp = MAX(ABS(pos->data.e), amp);
-                if (S > session) {
-                    dtXs.head = pos;
-                    Node* cur = pos->prev;
-                    pos->prev = nullptr;
-                    while (cur != nullptr) {
-                        Node* tmp = cur->prev;
-                        delete cur;
-                        cur = tmp;
-                        dtXs.size--;
-                    }
-                    break;
-                } else pos = pos->prev;
-            }
-        } else if (dtXs.size == 1) {
-            amp = ABS(dtXs.tail->data.e);
+        if (session>0) {
+	        unsigned long S = 0;
+	        double amp = 0;
+	        if (dtXs.size > 1) {
+	            Node* pos = dtXs.tail;
+	            while (dtXs.size > 1 && pos != nullptr) {
+	                S += pos->data.dt;
+	                amp = MAX(ABS(pos->data.e), amp);
+	                if (S > session) {
+	                    dtXs.head = pos;
+	                    Node* cur = pos->prev;
+	                    pos->prev = nullptr;
+	                    while (cur != nullptr) {
+	                        Node* tmp = cur->prev;
+	                        delete cur;
+	                        cur = tmp;
+	                        dtXs.size--;
+	                    }
+	                    break;
+	                } else pos = pos->prev;
+	            }
+	        } else if (dtXs.size == 1) {
+	            amp = ABS(dtXs.tail->data.e);
+	        }        
+            double ap = exp(-amp / maxAmp);
+        } else {
+            amp=0;
+            ap=1;
         }
-        
-        double ap = exp(-amp / maxAmp);
+           
         Ki = Kp * rTiM * ap;
         Kd = Kp * TdM * ap;
         Kdd = Kd * TddM;
@@ -98,23 +103,26 @@ public:
         double ddTm = Kdd * dd;
         double out = propTm + intTm + dvTm + ddTm;
         
-        double eDP = ABS(e * dv);
-        if (eDP > eDPm) {
+        double eDP = e * dv;
+        if (ABS(eDP) > eDPm) {
             Kp *= (eDP < 0) ? (1+eDPa) : (1-eDPa);
             Kp = MIN(MAX(Kp, minKp), maxKp);
         }
         
         if (debug != nullptr) {
-            *debug += "update() called\ndt: " + to_string(dt) + ", e: " + to_string(e) + ", dv: " + to_string(dv) + ", dd: " + to_string(dd) +", amp: " + to_string(amp) + ",\nKp: " + to_string(Kp) + ", Ki: " + to_string(Ki) + ", Kd: " + to_string(Kd) + ", Kdd: " + to_string(Kdd) + ",\npropTm: " + to_string(propTm) + ", intTm: " + to_string(intTm) + ", dvTm: " + to_string(dvTm) + ", ddTm: " + to_string(ddTm) + ",\neDP: " + to_string(eDP) + ", out: " + to_string(out) + "\n";
+            *debug += "update() called\ndt: " + to_string(dt) + ", e: " + to_string(e) + ", dv: " + to_string(dv) + ", dd: " + to_string(dd) +", amp: " + to_string(amp) +", ap: " + to_string(ap) + ",\nKp: " + to_string(Kp) + ", Ki: " + to_string(Ki) + ", Kd: " + to_string(Kd) + ", Kdd: " + to_string(Kdd) + ",\npropTm: " + to_string(propTm) + ", intTm: " + to_string(intTm) + ", dvTm: " + to_string(dvTm) + ", ddTm: " + to_string(ddTm) + ",\neDP: " + to_string(eDP) + ", out: " + to_string(out) + "\n";
         }
         
         preE = e;
         preDv = dv;
-        Node* nn = new Node{{dt, e}, dtXs.tail};
-        dtXs.tail = nn;
-        if (dtXs.size == 0) dtXs.head = nn;
-        dtXs.size++;
         preOut = out;
+ 
+        if (session>0) {
+            Node* nn = new Node{{dt, e}, dtXs.tail};
+            dtXs.tail = nn;
+            if (dtXs.size == 0) dtXs.head = nn;
+            dtXs.size++;
+       } 
         
         return out;
     }
