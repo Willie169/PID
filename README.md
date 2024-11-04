@@ -254,9 +254,13 @@ The code file demonstrates the usage of the `optimization.hpp` header file to pe
 
 ## Wooden Board
 
-The wooden board serves as the support structure of the kart that connects and props the components including an Arduino board, an Omni wheel, a breadboard, 2 wheels, and 2 motors.
+The wooden board serves as the support structure of the kart that connects and props the components such as an Arduino board, an Omni wheel, a breadboard, 2 wheels, and 2 motors.
 
-The 3D design of the board is <assets/board.step> and the photo of it is <assets/board.jpg>.
+The 3D design of the board is [assets/board.step](assets/board.step). 
+
+Here's the photo of the cut wooden board:
+
+![assets/board.jpg](assets/board.step)
 
 ## Log
 
