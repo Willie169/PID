@@ -12,7 +12,6 @@
 #include <condition_variable>
 #include <cmath>
 #include "testCar.hpp"
-
 using namespace std;
 
 struct ParameterRange
@@ -61,10 +60,10 @@ void workerFunction(vector<pidTest> &results, atomic<bool> &running)
         vector<double> params;
 
         {
-            lock_guard<mutex> lock(queueMutex);
+            unique_lock<mutex> lock(queueMutex);
+            cv.wait(lock, [] { return !parameterQueue.empty(); }); // Use unique_lock for wait
             if (parameterQueue.empty())
             {
-                cv.wait(lock, [] { return !parameterQueue.empty(); });
                 continue;
             }
             params = parameterQueue.front();
