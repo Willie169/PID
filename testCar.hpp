@@ -46,17 +46,20 @@ void pidDebug(string message)
 	cout << message;
 }
 
-double average_last(const vector<double> &v, double prop)
+double sum_last_squared(const std::vector<double> &v, double prop)
 {
 	if (v.empty())
 		return 0.0;
 
 	size_t n = v.size();
-	size_t count = static_cast<size_t>(ceil(n * prop));
+	size_t count = static_cast<size_t>(std::ceil(n * prop));
 	size_t start_index = n - count;
 
-	double sum = accumulate(v.begin() + start_index, v.end(), 0.0);
-	return sum / count;
+	double sum_of_squares = std::accumulate(v.begin() + start_index, v.end(), 0.0,
+											[](double sum, double value) {
+												return sum + value * value;
+											});
+	return sum_of_squares;
 }
 
 vector<double> velocities(int steps)
@@ -141,7 +144,7 @@ vector<double> test(double maxIntTm, double maxAmp, double minKp, double maxKp, 
 		// cout << *ptr;
 		// delete ptr;
 	}
-	
+
 	return vec;
 }
 
