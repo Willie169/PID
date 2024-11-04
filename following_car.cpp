@@ -60,7 +60,7 @@ int main() {
         
         std::string* ptr = new std::string;
         double fS = pid.update(distanceToLeader, i * timeInterval, ptr);
-        follower.changeSpeed(fS);
+        follower.changeSpeed(follower.getSpeed()+fS);
         std::cout << *ptr;
         delete ptr;
     }

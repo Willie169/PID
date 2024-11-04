@@ -5,14 +5,16 @@
 #include <Arduino.h>
 #include <math.h>
 #define to_string(a) String(a)
-#define copysign(a, b) (((b) < 0) ? - abs(a) : abs(a))
 #else
 #include <cmath>
 #include <string>
-#include <algorithm>
 #define String string
 using namespace std;
 #endif
+#define MAX(a, b) (((a) > (b)) ? (a) : (b))
+#define MIN(a, b) (((a) < (b)) ? (a) : (b))
+#define ABS(a) (((a) < 0) ? -(a) : (a))
+#define COPYSIGN(a, b) (((b) < 0) ? -ABS(a) : ABS(a))
 
 struct Data {
     unsigned long dt;
@@ -36,10 +38,10 @@ public:
     const unsigned long session;
     double Kp, Ki, Kd, Kdd, preE, preDv, intg, preOut;
     unsigned long preT;
-    List outs;
+    List dtXs;
     
     PID(double maxIntTm=100, double maxAmp=1000, double minKp=0.001, double maxKp=0.01, double rTiM=1, double TdM=1, double TddM=0.1, double eDPm=50, double eDPa=0.1, unsigned long session=50, double Kp=0.005, double preE=0, unsigned long preT=0)
-        : maxIntTm(maxIntTm), maxAmp(maxAmp), minKp(minKp), maxKp(maxKp), rTiM(rTiM), TdM(TdM), TddM(TddM), eDPm(eDPm), eDPa(eDPa), session(session), Kp(Kp), Ki(0), Kd(0), Kdd(0), preE(preE), preDv(0), intg(0), preOut(0), preT(preT), outs({nullptr, nullptr, 0}) {}
+        : maxIntTm(maxIntTm), maxAmp(maxAmp), minKp(minKp), maxKp(maxKp), rTiM(rTiM), TdM(TdM), TddM(TddM), eDPm(eDPm), eDPa(eDPa), session(session), Kp(Kp), Ki(0), Kd(0), Kdd(0), preE(preE), preDv(0), intg(0), preOut(0), preT(preT), dtXs({nullptr, nullptr, 0}) {}
     
     double update(double e, unsigned long timestamp, String* debug = nullptr) {
         unsigned long dt = timestamp - preT;
@@ -54,26 +56,26 @@ public:
 
         unsigned long S = 0;
         double amp = 0;
-        if (outs.size > 1) {
-            Node* pos = outs.tail;
-            while (outs.size > 1 && pos != nullptr) {
+        if (dtXs.size > 1) {
+            Node* pos = dtXs.tail;
+            while (dtXs.size > 1 && pos != nullptr) {
                 S += pos->data.dt;
-                amp = max(abs(pos->data.e), amp);
+                amp = MAX(ABS(pos->data.e), amp);
                 if (S > session) {
-                    outs.head = pos;
+                    dtXs.head = pos;
                     Node* cur = pos->prev;
                     pos->prev = nullptr;
                     while (cur != nullptr) {
                         Node* tmp = cur->prev;
                         delete cur;
                         cur = tmp;
-                        outs.size--;
+                        dtXs.size--;
                     }
                     break;
                 } else pos = pos->prev;
             }
-        } else if (outs.size == 1) {
-            amp = abs(outs.tail->data.e);
+        } else if (dtXs.size == 1) {
+            amp = ABS(dtXs.tail->data.e);
         }
         
         double ap = exp(-amp / maxAmp);
@@ -86,9 +88,9 @@ public:
 
         intg += e * dt;
         double intTm = Ki * intg;
-        if (abs(intTm) > maxIntTm) {
-            intg = copysign(maxIntTm / Ki, intTm);
-            intTm = copysign(maxIntTm, intTm);
+        if (ABS(intTm) > maxIntTm) {
+            intg = COPYSIGN(maxIntTm / Ki, intTm);
+            intTm = COPYSIGN(maxIntTm, intTm);
         }
 
         double propTm = Kp * e;
@@ -96,10 +98,10 @@ public:
         double ddTm = Kdd * dd;
         double out = propTm + intTm + dvTm + ddTm;
         
-        double eDP = abs(e * dv);
+        double eDP = ABS(e * dv);
         if (eDP > eDPm) {
             Kp *= (eDP < 0) ? (1+eDPa) : (1-eDPa);
-            Kp = min(max(Kp, minKp), maxKp);
+            Kp = MIN(MAX(Kp, minKp), maxKp);
         }
         
         if (debug != nullptr) {
@@ -108,10 +110,10 @@ public:
         
         preE = e;
         preDv = dv;
-        Node* nn = new Node{{dt, e}, outs.tail};
-        outs.tail = nn;
-        if (outs.size == 0) outs.head = nn;
-        outs.size++;
+        Node* nn = new Node{{dt, e}, dtXs.tail};
+        dtXs.tail = nn;
+        if (dtXs.size == 0) dtXs.head = nn;
+        dtXs.size++;
         preOut = out;
         
         return out;
