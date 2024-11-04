@@ -1,4 +1,3 @@
-#include <vector>
 #include "optimization.hpp"
 
 int main() {
