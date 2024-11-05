@@ -61,7 +61,7 @@ void workerFunction(vector<pidTest> &results, atomic<bool> &running)
 
         {
             unique_lock<mutex> lock(queueMutex);
-            cv.wait(lock, [] { return !parameterQueue.empty(); }); // Use unique_lock for wait
+            cv.wait(lock, [] { return !parameterQueue.empty(); });
             if (parameterQueue.empty())
             {
                 continue;
