@@ -97,7 +97,7 @@ int optimize(vector<ParameterRange> ranges)
 	for (const auto &range : ranges)
 	{
 		size_t steps = calculateSteps(range);
-		if (totalCombinations > 0 && steps > SIZE_MAX / 2 / totalCombinations)
+		if (totalCombinations > 0 && steps > SIZE_MAX / totalCombinations)
 		{
 			cerr << "Error: Too many combinations, would cause overflow" << endl;
 			return 1;
@@ -150,7 +150,7 @@ int optimize(vector<ParameterRange> ranges)
 	atomic<bool> running(true);
 
 	thread progressThread(displayProgress);
-	unsigned int numThreads = thread::hardware_concurrency() / 4;
+	unsigned int numThreads = thread::hardware_concurrency();
 	cout << "Using " << numThreads << " threads" << endl;
 
 	for (unsigned int i = 0; i < numThreads; ++i)
