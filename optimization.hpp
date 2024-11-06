@@ -27,12 +27,12 @@ int optimize(vector<ParameterRange> ranges)
 								{
 									for (double eDPa = ranges[8].start; eDPa <= ranges[8].end; eDPa += ranges[8].step)
 									{
-										for (double session = ranges[9].start; session <= ranges[9].end; session += ranges[9].step)
+										for (unsigned long session = ranges[9].start; session <= ranges[9].end; session += ranges[9].step)
 										{
 											for (double Kp = max(minKp, ranges[10].start);
 												 Kp <= min(maxKp, ranges[10].end); Kp += ranges[10].step)
 											{
-												tmp = test(maxIntTm, maxAmp, minKp, maxKp, rTiM, TdM, TddM, eDPm, eDPa, session, Kp);
+												vector<double> tmp = test(maxIntTm, maxAmp, minKp, maxKp, rTiM, TdM, TddM, eDPm, eDPa, session, Kp);
 												double result = sum_last_squared(tmp, 0.5);
 												results.push_back({maxIntTm, maxAmp, minKp, maxKp, rTiM, TdM, TddM, eDPm, eDPa, session, Kp, result});
 											}

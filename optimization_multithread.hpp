@@ -119,7 +119,7 @@ int optimize(vector<ParameterRange> ranges)
 								{
 									for (double eDPa = ranges[8].start; eDPa <= ranges[8].end; eDPa += ranges[8].step)
 									{
-										for (double session = ranges[9].start; session <= ranges[9].end; session += ranges[9].step)
+										for (unsigned long session = ranges[9].start; session <= ranges[9].end; session += ranges[9].step)
 										{
 											for (double Kp = max(minKp, ranges[10].start);
 												 Kp <= min(maxKp, ranges[10].end); Kp += ranges[10].step)
