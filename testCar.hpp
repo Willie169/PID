@@ -111,7 +111,7 @@ vector<double> velocities(int steps)
 	return velocities;
 }
 
-vector<double> test(double maxIntTm, double maxAmp, double minKp, double maxKp, double rTiM, double TdM, double TddM, double eDPm, double eDPa, unsigned long session, double Kp, double preE = 0, unsigned long preT = 0, double timeInterval = 10, int steps = 1000, bool debug = true)
+vector<double> test(double maxIntTm, double maxAmp, double minKp, double maxKp, double rTiM, double TdM, double TddM, double eDPm, double eDPa, unsigned long session, double Kp, double preE = 0, unsigned long preT = 0, double timeInterval = 10, int steps = 50, bool debug = true)
 {
 	double leaderInitialSpeed = 0;
 	double followerInitialSpeed = 0;
