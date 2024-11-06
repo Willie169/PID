@@ -29,8 +29,8 @@ int optimize(vector<ParameterRange> ranges)
 									{
 										for (unsigned long session = ranges[9].start; session <= ranges[9].end; session += ranges[9].step)
 										{
-											for (double Kp = max(minKp, ranges[10].start);
-												 Kp <= min(maxKp, ranges[10].end); Kp += ranges[10].step)
+											for (double Kp = MAX(minKp, ranges[10].start);
+												 Kp <= MIN(maxKp, ranges[10].end); Kp += ranges[10].step)
 											{
 												vector<double> tmp = test(maxIntTm, maxAmp, minKp, maxKp, rTiM, TdM, TddM, eDPm, eDPa, session, Kp);
 												double result = sum_last_squared(tmp, 0.5);
