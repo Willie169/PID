@@ -135,7 +135,7 @@ vector<double> test(double maxIntTm, double maxAmp, double minKp, double maxKp, 
 
 		double distanceToLeader = leader.getPosition() - follower.getPosition();
 		vec.push_back(distanceToLeader);
-		string* ptr = nullptr
+		string* ptr = nullptr;
 		if (debug) {
             cout << "TimeStep: " << i + 1 << ", distanceToLeader: " << distanceToLeader << ", FollowerSpeed: " << follower.getSpeed() << ", LeaderSpeed: " << leader.getSpeed() << "\n";
 		
