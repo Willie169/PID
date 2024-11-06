@@ -3,17 +3,17 @@
 int main() {
     // Note that steps can't be zero
     vector<ParameterRange> ranges = {
-        {100, 1000, 100},    // maxIntTm
-        {50, 500, 50},     // maxAmp
-        {0.01, 0.01, 1},       // minKp
-        {1, 1, 1},      // maxKp
-        {10, 100, 10},       // rTiM
-        {10, 100, 10},       // TdM
-        {1, 1, 1},        // TddM
-        {100, 1000, 10}, // eDPm
-        {0.01, 0.05, 0.01},    // eDPa
-        {0, 150, 10},       // session
-        {0.01, 1, 0.01}      // Kp
+        {461.9, 461.9, 1},    // maxIntTm
+        {517.9, 517.9, 1},     // maxAmp
+        {0.00265, 0.00265, 1},       // minKp
+        {0.472, 0.472, 1},      // maxKp
+        {1, 1, 1},       // rTiM
+        {65.37, 65.37, 1},       // TdM
+        {1.7, 1.7, 1},        // TddM
+        {125, 125, 1}, // eDPm
+        {0.15, 0.15, 1},    // eDPa
+        {140, 140, 10},       // session
+        {0.2436, 0.2436, 1}      // Kp
     };
     
     return optimize(ranges);
