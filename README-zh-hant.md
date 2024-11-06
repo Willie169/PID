@@ -1,8 +1,8 @@
-# PID 控制器與仿真
+# PID
 
 [English](README.md)
 
-此儲存庫實現了 PID（比例積分微分）控制器，旨在調節具有引導機器人的自動跟隨卡丁車的速度。此實作包括 PID 控制器邏輯、汽車模擬以及用於測試各種 PID 配置的框架。
+此儲存庫實作了 PID（比例積分微分）控制器，旨在調節具有引導機器人的自動跟隨卡丁車的速度。此實作包括 PID 控制器邏輯、汽車模擬以及用於測試各種 PID 配置的框架。
 
 ## PID.hpp
 
@@ -16,15 +16,15 @@
 
 條件編譯：
 ```cpp
-#ifdef 阿爾杜諾
+#ifdef ARDUINO
 #include <Arduino.h>
-#include <數學.h>
-#define to_string(a) 字串(a)
-#別的
+#include <math.h>
+#define to_string(a) String(a)
+#else
 #include <cmath>
-#include <字串>
-#定義字串字串
-使用命名空間 std；
+#include <string>
+#define String string
+using namespace std;
 #endif
 ```
 
@@ -33,7 +33,7 @@
 傳統的PID控制器由以下方程式定義：
 
 $$
-u(t) = K_p e(t) + K_i \int_0^t e(\tau) d\tau + K_d \frac{de(t)}{dt}
+u(t) = K_p e(t) + K_i \int_0^t e(\tau) d\tau + K_d \frac{de(t)}{dt} 
 $$
 
 其中：
@@ -49,7 +49,7 @@ $$
 K_p' = K_p \times (1 \pm eDP_a)
 $$
 
-在哪裡：
+其中：
 - $eDP = e(t) \times \frac{de(t)}{dt}$
 - $eDP_m$ 是決定何時調整比例增益的閾值。
 - $eDP_a$ 是根據誤差導數縮放 $K_p$ 變化的調整因子。
@@ -64,7 +64,7 @@ $$
 K_i = K_p \times rTiM \times ap
 $$
 
-在哪裡：
+其中：
 - $ap = e^{-\frac{\text{amp}}{\text{maxAmp}}}$
 - $rTiM$ 是與所需積分時間常數相關的常數。
 
@@ -74,7 +74,7 @@ $$
 
 受**齊格勒-尼科爾斯調整方法**的啟發，該實現保留了過去錯誤及其時間戳的歷史記錄，以準確計算導數和積分項。這種歷史管理至關重要，主要有兩個原因：
 
-- **推導變化率**：導數項需要了解誤差變化的速度。透過將先前的誤差值儲存在鍊錶中，我們可以精確計算誤差隨時間的變化 ($\frac{de(t)}{dt}$)：
+- **推導變化率**：導數項需要了解誤差變化的速度。透過將先前的誤差值儲存在鏈結串列中，我們可以精確計算誤差隨時間的變化 ($\frac{de(t)}{dt}$)：
 
 $$
  dv = \frac{e(t) - preE}{dt}
@@ -96,7 +96,7 @@ $$
 K_{dd} = K_d \times TddM
 $$
 
-在哪裡：
+其中：
 - $TddM$ 是調整二階導數項影響的乘數。
 
 包含 $K_{dd}$ 有助於控制器更有效預測誤差的變化。透過考慮誤差的加速度（即誤差的速率如何）。如果誤差變化本身也在變化），這個附加項增強了控制器的阻尼特性，允許更精細的控制響應，特別是在受到快速變化或振盪的系統中。
@@ -105,9 +105,9 @@ $$
 
 #### 資料結構
 
-- **資料**：保存時間差（`dt`）和誤差值（`e`）。
-- **Node**：表示鍊錶中的一個元素，包含`Data`和指向前一個節點的指標。
-- **List**：管理鍊錶，保存指向頭尾節點的指標以及鍊錶的大小。
+- **Data**：保存時間差（`dt`）和誤差值（`e`）。
+- **Node**：表示鏈結串列中的一個元素，包含`Data`和指向前一個節點的指標。
+- **List**：管理鏈結串列，保存指向頭尾節點的指標以及鏈結串列的大小。
 
 #### PID 類
 
@@ -128,11 +128,11 @@ $$
 
 ### 概述
 
-此頭檔包括用於模擬汽車運動的「Car」類別、用於根據與領先汽車的距離調整自動跟隨卡丁車速度的 PID 控制器，以及用於資料處理和結果管理的多個實用函數。
+此頭檔包括用於模擬汽車運動的 `Car` 類別、用於根據與領先汽車的距離調整自動跟隨卡丁車速度的 PID 控制器，以及用於資料處理和結果管理的多個實用函數。
 
 ### 汽車類
 
-“Car”類別代表具有基本運動動力學的簡單車輛模型。它包括速度和位置的屬性，以及更新這些屬性的方法。
+`Car` 類別代表具有基本運動動力學的簡單車輛模型。它包括速度和位置的屬性，以及更新這些屬性的方法。
 
 ### PID調試功能
 
@@ -146,13 +146,13 @@ double sum_last_squared(const std::vector<double> &v, double prop)
 
 ### 速度生成
 ```cpp
-向量<double> 速度（int 步長）
+vector<double> velocities(int steps)
 ```
 在指定數量的模擬步驟上產生速度值向量，模擬運動的不同階段（加速、減速和調整）。
 
 ### PID測試功能
 ```cpp
-向量<雙>測試（雙maxIntTm，雙maxAmp，雙minKp，雙maxKp，雙rTiM，雙TdM，雙TddM，雙eDPm，雙eDPa，無符號長會話，雙Kp，雙preE = 0，無符號長preT = 0 ，雙倍時間間隔 = 10，整數步數 = 1000)
+vector<double> test(double maxIntTm, double maxAmp, double minKp, double maxKp, double rTiM, double TdM, double TddM, double eDPm, double eDPa, unsigned long session, double Kp, double preE = 0, unsigned long preT = 0, double timeInterval = 10, int steps = 1000)
 ```
 此功能模擬領頭車和自動跟隨卡丁車之間的交互，使用 PID 控制器根據與領頭車的距離調整跟隨車的速度。
 
@@ -177,28 +177,22 @@ double sum_last_squared(const std::vector<double> &v, double prop)
 
 ### PID 測試資料結構
 ```cpp
-結構體pidTest
+struct pidTest
 {
-  雙 maxIntTm、maxAmp、minKp、maxKp、rTiM、TdM、TddM、eDPm、edPa；
-  未簽名的長會話；
-  雙 Kp，結果；
+	double maxIntTm, maxAmp, minKp, maxKp, rTiM, TdM, TddM, eDPm, eDPa;
+	unsigned long session;
+	double Kp, result;
 };
 ```
 `pidTest` 結構用於儲存 PID 測試的參數以及模擬結果。
 
 ### 結果寫入功能
 ```cpp
-bool write_results(const vector<pidTest> &data, const string &檔名)
+bool write_results(const vector<pidTest> &data, const string &filename)
 ```
 將 PID 測試結果寫入 CSV 檔案以供分析。
 
-## 優化.hpp
-
-此頭檔定義了用於最佳化汽車模擬中 PID 控制器參數的最佳化函數和結構。它包括參數範圍定義、多線程處理和結果記錄的功能。
-
-### 結構
-
-#### `參數範圍`
+### `ParameterRange`
 
 定義優化參數範圍的結構。
 
@@ -207,62 +201,47 @@ bool write_results(const vector<pidTest> &data, const string &檔名)
  - `double end`：參數範圍的結束值。
  - `double step`：參數的增量步長。
 
-### 全域變數
+## optimization.hpp
 
-- `mutex resultsMutex`：用於保護對結果向量的存取的互斥體。
-- `mutex queueMutex`：用於保護對參數的存取的互斥體隊列。
--`atomic<int>totalCombinations`：參數總組合的原子計數器。
--`atomic<int>processedCombinations`：已處理組合數量的原子計數器。
-- `queue<vector<double>>parameterQueue`：保存用於測試的參數組合的佇列。
-- `condition_variable cv`：執行緒同步的條件變數。
+此頭檔定義了最佳化函數和結構，用於在不具有多執行緒處理的汽車模擬中最佳化 PID 控制器的參數。
 
-### 函數
+### `int optimize(vector<ParameterRange> ranges)`
 
-#### `void displayProgress()`
-
-在控制台中顯示最佳化過程進度的功能。它不斷更新進度，直到處理完所有組合。
-
-#### `size_t calculateSteps(const ParameterRange &range)`
-
-計算給定參數範圍內的步數。
-
-- **參數**：
- - `const ParameterRange &range`：要評估的參數範圍。
-
-- **退貨**：
- - `size_t`：指定範圍內的步數。
-
-#### `void workerFunction(vector<pidTest> &results, atomic<bool> &running)`
-
-每個處理參數組合的執行緒的工作函數。它從佇列中檢索參數，使用這些參數執行測試，並儲存結果。
-
-- **參數**：
- - `vector<pidTest> &results`：將儲存輸出的結果向量的參考。
- - `atomic<bool> &running`：指示工作執行緒是否應繼續運作的原子標誌。
-
-#### `int optimize(vector<ParameterRange> ranges)`
-
-根據提供的範圍優化 PID 控制器的參數。它計算所有組合，啟動工作線程來處理它們，並將結果寫入 CSV 檔案。
+根據提供的範圍優化 PID 控制器的參數，並將結果寫入 CSV 檔案。
 
 - **參數**：
  - `vector<ParameterRange> range`：包含要最佳化的參數範圍的向量。
 
-- **退貨**：
+- **返回**：
+ - `int`：如果最佳化成功完成，則傳回`EXIT_SUCCESS` (0)，否則傳回`EXIT_FAILURE`。
+ 
+ ## optimization_multithread.hpp
+
+此頭檔定義了最佳化函數和結構，用於在具有多執行緒處理的汽車模擬中最佳化 PID 控制器的參數。
+
+### `int optimize(vector<ParameterRange> ranges)`
+
+根據提供的範圍優化 PID 控制器的參數，並將結果寫入 CSV 檔案。
+
+- **參數**：
+ - `vector<ParameterRange> range`：包含要最佳化的參數範圍的向量。
+
+- **返回**：
  - `int`：如果最佳化成功完成，則傳回`EXIT_SUCCESS` (0)，否則傳回`EXIT_FAILURE`。
 
 ## main.cpp
 
-此程式碼檔案示範如何使用「optimization.hpp」頭檔來執行 PID 控制器的參數最佳化。它定義了一組參數範圍並呼叫“optimize”函數來評估不同的參數組合。
+此程式碼檔案示範如何使用 `optimization.hpp` （或`optimization_multithread.hpp`）頭檔來執行 PID 控制器的參數最佳化。它定義了一組參數範圍並呼叫“optimize”函數來評估不同的參數組合。
 
 ## 木板
 
-木板作為卡丁車的支撐結構，連接並支撐 Arduino 板、全向輪、麵包板、2 個輪子和 2 個馬達等組件。
+木板作為跟隨卡丁車的支撐結構，連接並支撐 Arduino 板、全向輪、麵包板、2 個輪子和 2 個馬達等組件。
 
 3D 設計檔案為 [assets/board.step](assets/board.step)。
 
 這是切割木板的照片：
 
-![資產/board.jpg](資產/board.jpg)
+![assets/board.jpg](assets/board.jpg)
 
 ## 靈感和背景
 
@@ -310,7 +289,7 @@ PID 控制器及其相關模擬框架的開發是一個迭代過程，其特點�
 
 ### 錯誤歷史管理
 
-為了準確計算積分項和導數項，實施了強大的錯誤歷史管理系統。該系統利用鍊錶結構來儲存過去的誤差值和時間戳，從而能夠精確計算積分和導數分量。受既定控制理論實踐的啟發，錯誤歷史管理的整合對於實施更高階的調整策略至關重要。
+為了準確計算積分項和導數項，實施了強大的錯誤歷史管理系統。該系統利用鏈結串列結構來儲存過去的誤差值和時間戳，從而能夠精確計算積分和導數分量。受既定控制理論實踐的啟發，錯誤歷史管理的整合對於實施更高階的調整策略至關重要。
 
 ### 附加導數項
 

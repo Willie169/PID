@@ -185,4 +185,11 @@ bool write_results(const vector<pidTest> &data, const string &filename)
 	return 1;
 }
 
+struct ParameterRange
+{
+	double start;
+	double end;
+	double step;
+};
+
 #endif

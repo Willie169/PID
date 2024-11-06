@@ -1,112 +1,13 @@
 #ifndef OPTIMIZATION_HPP
 #define OPTIMIZATION_HPP
 
-#include <vector>
-#include <iostream>
-#include <thread>
-#include <mutex>
-#include <queue>
-#include <atomic>
-#include <chrono>
-#include <iomanip>
-#include <condition_variable>
-#include <cmath>
 #include "testCar.hpp"
 using namespace std;
 
-struct ParameterRange
-{
-	double start;
-	double end;
-	double step;
-};
-
-mutex resultsMutex;
-mutex queueMutex;
-atomic<int> totalCombinations(0);
-atomic<int> processedCombinations(0);
-queue<vector<double>> parameterQueue;
-condition_variable cv;
-
-void displayProgress()
-{
-	while (true)
-	{
-		{
-			lock_guard<mutex> lock(queueMutex);
-			if (processedCombinations >= totalCombinations)
-			{
-				break;
-			}
-			cout << "\rProgress: " << processedCombinations << "/" << totalCombinations
-				 << " (" << fixed << setprecision(2)
-				 << (static_cast<double>(processedCombinations) / totalCombinations * 100)
-				 << "%)          " << flush;
-		}
-		this_thread::sleep_for(chrono::seconds(1));
-	}
-	cout << "\rProgress: 100% Complete!                   " << endl;
-}
-
-size_t calculateSteps(const ParameterRange &range)
-{
-	return static_cast<size_t>(ceil((range.end - range.start) / range.step)) + 1;
-}
-
-void workerFunction(vector<pidTest> &results, atomic<bool> &running)
-{
-    while (running)
-    {
-        vector<double> params;
-
-        {
-            unique_lock<mutex> lock(queueMutex);
-            cv.wait(lock, [] { return !parameterQueue.empty(); });
-            if (parameterQueue.empty())
-            {
-                continue;
-            }
-            params = parameterQueue.front();
-            parameterQueue.pop();
-        }
-
-        vector<double> tmp = test(
-            params[0], params[1], params[2], params[3],
-            params[4], params[5], params[6], params[7],
-            params[8], params[9], params[10]);
-
-        double result = sum_last_squared(tmp, 0.5);
-
-        {
-            lock_guard<mutex> lock(resultsMutex);
-            results.emplace_back(pidTest{
-                params[0], params[1], params[2], params[3],
-                params[4], params[5], params[6], params[7],
-                params[8], static_cast<unsigned long>(params[9]),
-                params[10], result});
-        }
-
-        processedCombinations++;
-        cv.notify_one();
-    }
-}
-
 int optimize(vector<ParameterRange> ranges)
 {
-	totalCombinations = 1;
-	for (const auto &range : ranges)
-	{
-		size_t steps = calculateSteps(range);
-		if (totalCombinations > 0 && steps > SIZE_MAX / totalCombinations)
-		{
-			cerr << "Error: Too many combinations, would cause overflow" << endl;
-			return 1;
-		}
-		totalCombinations = totalCombinations * steps;
-	}
-
-	cout << "Total parameter combinations to test: " << totalCombinations << endl;
-
+    vector<pidTest> results;
+    
 	for (double maxIntTm = ranges[0].start; maxIntTm <= ranges[0].end; maxIntTm += ranges[0].step)
 	{
 		for (double maxAmp = ranges[1].start; maxAmp <= ranges[1].end; maxAmp += ranges[1].step)
@@ -131,8 +32,9 @@ int optimize(vector<ParameterRange> ranges)
 											for (double Kp = max(minKp, ranges[10].start);
 												 Kp <= min(maxKp, ranges[10].end); Kp += ranges[10].step)
 											{
-												parameterQueue.push({maxIntTm, maxAmp, minKp, maxKp, rTiM,
-																	 TdM, TddM, eDPm, eDPa, session, Kp});
+												tmp = test(maxIntTm, maxAmp, minKp, maxKp, rTiM, TdM, TddM, eDPm, eDPa, session, Kp);
+												double result = sum_last_squared(tmp, 0.5);
+												results.push_back({maxIntTm, maxAmp, minKp, maxKp, rTiM, TdM, TddM, eDPm, eDPa, session, Kp, result});
 											}
 										}
 									}
@@ -144,29 +46,6 @@ int optimize(vector<ParameterRange> ranges)
 			}
 		}
 	}
-
-	vector<pidTest> results;
-	vector<thread> threads;
-	atomic<bool> running(true);
-
-	thread progressThread(displayProgress);
-	unsigned int numThreads = thread::hardware_concurrency();
-	cout << "Using " << numThreads << " threads" << endl;
-
-	for (unsigned int i = 0; i < numThreads; ++i)
-	{
-		threads.emplace_back(workerFunction, ref(results), ref(running));
-	}
-
-	for (auto &thread : threads)
-	{
-		thread.join();
-	}
-
-	running = false;
-	cv.notify_all();
-
-	progressThread.join();
 
 	if (!write_results(results, "results.csv"))
 	{

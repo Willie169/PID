@@ -1,4 +1,4 @@
-# PID Controller and Simulation
+# PID
 
 [中文繁體](README-zh-hant.md)
 
@@ -192,13 +192,7 @@ bool write_results(const vector<pidTest> &data, const string &filename)
 ```
 Writes the results of PID tests to a CSV file for analysis.
 
-## optimization.hpp
-
-This header file defines the optimization functions and structures used to optimize the parameters of a PID controller in a car simulation. It includes functionality for parameter range definition, multi-threaded processing, and result logging.
-
-### Structures
-
-#### `ParameterRange`
+### `ParameterRange`
 
 A structure to define the range of parameters for optimization.
 
@@ -207,42 +201,27 @@ A structure to define the range of parameters for optimization.
   - `double end`: The ending value of the parameter range.
   - `double step`: The increment step for the parameter.
 
-### Global Variables
+## optimization.hpp
 
-- `mutex resultsMutex`: Mutex for protecting access to the results vector.
-- `mutex queueMutex`: Mutex for protecting access to the parameter queue.
-- `atomic<int> totalCombinations`: Atomic counter for the total combinations of parameters.
-- `atomic<int> processedCombinations`: Atomic counter for the number of processed combinations.
-- `queue<vector<double>> parameterQueue`: A queue to hold parameter combinations for testing.
-- `condition_variable cv`: Condition variable for thread synchronization.
+This header file defines the optimization functions and structures used to optimize the parameters of a PID controller in a car simulation without multi-threaded processing.
 
-### Functions
+### `int optimize(vector<ParameterRange> ranges)`
 
-#### `void displayProgress()`
-
-A function to display the progress of the optimization process in the console. It continuously updates the progress until all combinations are processed.
-
-#### `size_t calculateSteps(const ParameterRange &range)`
-
-Calculates the number of steps in the given parameter range.
+Optimizes the parameters of the PID controller based on the provided ranges and writes results to a CSV file.
 
 - **Parameters**:
-  - `const ParameterRange &range`: The range of parameters to evaluate.
+  - `vector<ParameterRange> ranges`: A vector containing the ranges of parameters to optimize.
   
 - **Returns**: 
-  - `size_t`: The number of steps in the specified range.
+  - `int`: Returns `EXIT_SUCCESS` (0) if optimization completes successfully, otherwise returns `EXIT_FAILURE`.
 
-#### `void workerFunction(vector<pidTest> &results, atomic<bool> &running)`
+## optimization_multithread.hpp
 
-The worker function for each thread that processes parameter combinations. It retrieves parameters from the queue, performs the test using these parameters, and stores the results.
+This header file defines the optimization functions and structures used to optimize the parameters of a PID controller in a car simulation with multi-threaded processing.
 
-- **Parameters**:
-  - `vector<pidTest> &results`: Reference to the results vector where output will be stored.
-  - `atomic<bool> &running`: Atomic flag indicating whether the worker thread should continue running.
+### `int optimize(vector<ParameterRange> ranges)`
 
-#### `int optimize(vector<ParameterRange> ranges)`
-
-Optimizes the parameters of the PID controller based on the provided ranges. It calculates all combinations, starts worker threads to process them, and writes results to a CSV file.
+Optimizes the parameters of the PID controller based on the provided ranges and writes results to a CSV file.
 
 - **Parameters**:
   - `vector<ParameterRange> ranges`: A vector containing the ranges of parameters to optimize.
@@ -252,11 +231,11 @@ Optimizes the parameters of the PID controller based on the provided ranges. It 
 
 ## main.cpp
 
-The code file demonstrates the usage of the `optimization.hpp` header file to perform parameter optimization for a PID controller. It defines a set of parameter ranges and calls the `optimize` function to evaluate different combinations of parameters.
+The code file demonstrates the usage of the `optimization.hpp` (or `optimization_multithread.hpp`) header file to perform parameter optimization for a PID controller. It defines a set of parameter ranges and calls the `optimize` function to evaluate different combinations of parameters.
 
 ## Wooden Board
 
-The wooden board serves as the support structure of the kart that connects and props the components such as an Arduino board, an Omni wheel, a breadboard, 2 wheels, and 2 motors.
+The wooden board serves as the support structure of the auto-following kart that connects and props the components such as an Arduino board, an Omni wheel, a breadboard, 2 wheels, and 2 motors.
 
 The 3D design file is [assets/board.step](assets/board.step). 
 
