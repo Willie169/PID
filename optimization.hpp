@@ -34,7 +34,7 @@ int optimize(vector<ParameterRange> ranges)
 											{
 												vector<double> tmp = test(maxIntTm, maxAmp, minKp, maxKp, rTiM, TdM, TddM, eDPm, eDPa, session, Kp);
 												double result = sum_last_squared(tmp, 0.5);
-												results.push_back({maxIntTm, maxAmp, minKp, maxKp, rTiM, TdM, TddM, eDPm, eDPa, session, Kp, result});
+												results.push_back(new pidTest({maxIntTm, maxAmp, minKp, maxKp, rTiM, TdM, TddM, eDPm, eDPa, session, Kp, result}));
 											}
 										}
 									}

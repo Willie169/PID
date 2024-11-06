@@ -124,8 +124,8 @@ int optimize(vector<ParameterRange> ranges)
 											for (double Kp = MAX(minKp, ranges[10].start);
 												 Kp <= MIN(maxKp, ranges[10].end); Kp += ranges[10].step)
 											{
-												parameterQueue.push({maxIntTm, maxAmp, minKp, maxKp, rTiM,
-																	 TdM, TddM, eDPm, eDPa, session, Kp});
+												parameterQueue.push(new pidTest({maxIntTm, maxAmp, minKp, maxKp, rTiM,
+																	 TdM, TddM, eDPm, eDPa, session, Kp}));
 											}
 										}
 									}
