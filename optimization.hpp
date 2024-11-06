@@ -14,7 +14,7 @@ int optimize(vector<ParameterRange> ranges)
 		{
 			for (double minKp = ranges[2].start; minKp <= ranges[2].end; minKp += ranges[2].step)
 			{
-				for (double maxKp = max(minKp + ranges[3].step, ranges[3].start);
+				for (double maxKp = max(minKp, ranges[3].start);
 					 maxKp <= ranges[3].end; maxKp += ranges[3].step)
 				{
 					for (double rTiM = ranges[4].start; rTiM <= ranges[4].end; rTiM += ranges[4].step)
@@ -34,7 +34,7 @@ int optimize(vector<ParameterRange> ranges)
 											{
 												vector<double> tmp = test(maxIntTm, maxAmp, minKp, maxKp, rTiM, TdM, TddM, eDPm, eDPa, session, Kp);
 												double result = sum_last_squared(tmp, 0.5);
-												results.push_back(*(new pidTest({maxIntTm, maxAmp, minKp, maxKp, rTiM, TdM, TddM, eDPm, eDPa, session, Kp, result})));
+												results.push_back(pidTest({maxIntTm, maxAmp, minKp, maxKp, rTiM, TdM, TddM, eDPm, eDPa, session, Kp, result}));
 											}
 										}
 									}
