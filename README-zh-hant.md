@@ -233,6 +233,8 @@ bool write_results(const vector<pidTest> &data, const string &filename)
 
 此程式碼檔案示範如何使用 `optimization.hpp` （或`optimization_multithread.hpp`）頭檔來執行 PID 控制器的參數最佳化。它定義了一組參數範圍並呼叫 `optimize` 函數來評估不同的參數組合。
 
+請注意，`steps` 不能為零，否則程式將不會停止。
+
 ## 木板
 
 木板作為跟隨卡丁車的支撐結構，連接並支撐 Arduino 板、全向輪、麵包板、2 個輪子和 2 個馬達等組件。

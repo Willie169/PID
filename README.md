@@ -233,6 +233,8 @@ Optimizes the parameters of the PID controller based on the provided ranges and 
 
 The code file demonstrates the usage of the `optimization.hpp` (or `optimization_multithread.hpp`) header file to perform parameter optimization for a PID controller. It defines a set of parameter ranges and calls the `optimize` function to evaluate different combinations of parameters.
 
+Note that steps can't be zero or the program won't stop.
+
 ## Wooden Board
 
 The wooden board serves as the support structure of the auto-following kart that connects and props the components such as an Arduino board, an Omni wheel, a breadboard, 2 wheels, and 2 motors.
