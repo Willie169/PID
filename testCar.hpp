@@ -111,7 +111,7 @@ vector<double> velocities(int steps)
 	return velocities;
 }
 
-vector<double> test(double maxIntTm, double maxAmp, double minKp, double maxKp, double rTiM, double TdM, double TddM, double eDPm, double eDPa, unsigned long session, double Kp, double preE = 0, unsigned long preT = 0, double timeInterval = 10, int steps = 1000)
+vector<double> test(double maxIntTm, double maxAmp, double minKp, double maxKp, double rTiM, double TdM, double TddM, double eDPm, double eDPa, unsigned long session, double Kp, double preE = 0, unsigned long preT = 0, double timeInterval = 10, int steps = 1000, bool debug = true)
 {
 	double leaderInitialSpeed = 0;
 	double followerInitialSpeed = 0;
@@ -135,14 +135,18 @@ vector<double> test(double maxIntTm, double maxAmp, double minKp, double maxKp, 
 
 		double distanceToLeader = leader.getPosition() - follower.getPosition();
 		vec.push_back(distanceToLeader);
-		// cout << "TimeStep: " << i + 1 << ", distanceToLeader: " << distanceToLeader << ", FollowerSpeed: " << follower.getSpeed() << ", LeaderSpeed: " << leader.getSpeed() << "\n";
-
-		// string* ptr = new string;
-		// double fS = pid.update(distanceToLeader, i * timeInterval, ptr);
-		double fS = pid.update(distanceToLeader, i * timeInterval);
+		double fS;
+		if (debug) {
+            cout << "TimeStep: " << i + 1 << ", distanceToLeader: " << distanceToLeader << ", FollowerSpeed: " << follower.getSpeed() << ", LeaderSpeed: " << leader.getSpeed() << "\n";
+		
+		    string* ptr = new string;
+		    fS = pid.update(distanceToLeader, i * timeInterval, ptr);
+		} else fS = pid.update(distanceToLeader, i * timeInterval);
 		follower.changeSpeed(follower.getSpeed() + MAX(-511, MIN(fS, 511)));
-		// cout << *ptr;
-		// delete ptr;
+		if (debug) {
+            cout << *ptr;
+		    delete ptr;
+		}
 	}
 
 	return vec;
