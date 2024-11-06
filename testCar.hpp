@@ -135,13 +135,13 @@ vector<double> test(double maxIntTm, double maxAmp, double minKp, double maxKp, 
 
 		double distanceToLeader = leader.getPosition() - follower.getPosition();
 		vec.push_back(distanceToLeader);
-		double fS;
+		string* ptr = nullptr
 		if (debug) {
             cout << "TimeStep: " << i + 1 << ", distanceToLeader: " << distanceToLeader << ", FollowerSpeed: " << follower.getSpeed() << ", LeaderSpeed: " << leader.getSpeed() << "\n";
 		
-		    string* ptr = new string;
-		    fS = pid.update(distanceToLeader, i * timeInterval, ptr);
-		} else fS = pid.update(distanceToLeader, i * timeInterval);
+		    ptr = new string;
+		}
+		double fS = pid.update(distanceToLeader, i * timeInterval, ptr);
 		follower.changeSpeed(follower.getSpeed() + MAX(-511, MIN(fS, 511)));
 		if (debug) {
             cout << *ptr;
