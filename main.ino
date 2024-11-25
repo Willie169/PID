@@ -36,8 +36,8 @@ void loop() {
     leftV *= (leftV>0) ? POSITIVE_SPEED_MULTIPLIER : NEGATIVE_SPEED_MULTIPLIER;
     double rightV = avgV - difV;
     rightV *= (rightV>0) ? POSITIVE_SPEED_MULTIPLIER : NEGATIVE_SPEED_MULTIPLIER;
-    leftOut();
-    rightOut();
+    leftOut(leftV);
+    rightOut(rightV);
 }
 
 inline void leftOut(double output) {
