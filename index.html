@@ -1,4 +1,22 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>PID</title><style>html{margin:0;padding:0;}body{font-family:'Roboto',sans-serif;line-height:1.6;background-color:#f5f5f5;color:#333;padding:0;margin:0;overflow:auto;}*,*::before,*::after{box-sizing:border-box;}h1,h2,h3,h4,h5,h6{font-family:'Roboto',sans-serif;color:#007acc;margin-bottom:15px;}h1{font-size:2rem;border-bottom:2pxsolid#007acc;padding-bottom:10px;}h2{font-size:1.6rem;border-bottom:1pxsolid#007acc;padding-bottom:8px;}h3{font-size:1.4rem;}h4,h5,h6{font-size:1.2rem;}.navbar{width:100%;background-color:#333;color:white;padding:10px20px;position:fixed;top:0;left:0;z-index:1000;display:flex;justify-content:space-between;align-items:center;}.navbara{color:white;text-decoration:none;font-size:1.2rem;margin-left:20px;}.navbara:hover{color:#007acc;}button{position:fixed;bottom:20px;left:20px;background-color:#007acc;color:white;border:none;outline:none;padding:20px20px;font-size:1rem;cursor:pointer;border-radius:5px;transition:background-color0.3sease;z-index:1000;}button:hover{background-color:#005f8d;}.content{margin:20px;padding:60px20px;text-align:left;}a{color:#007acc;text-decoration:none;}a:hover{text-decoration:underline;}ul,ol{margin:20px;padding-left:40px;}ul{list-style-type:disc;}ol{list-style-type:decimal;}li{margin-bottom:10px;font-size:1rem;}li::marker{font-size:1.2rem;color:#007acc;}pre{background-color:#e8e8e8;border-radius:3pxsolid#848484;padding:10px;overflow-x:auto;white-space:pre-wrap;line-height:1.5;}code{background-color:#e8e8e8;color:#d6336c;padding:2px5px;border-radius:3px;font-size:1rem;font-family:'FiraCode',monospace;}precode{display:block;background:none;white-space:pre;overflow-x:auto;max-width:100%;min-width:100px;padding:0;}li:hover{background-color:#f0faff;}pre:hover{background-color:#f8f8f8;}.container{display:flex;justify-content:space-between;align-items:center;}.containeraimg{max-width:100px;height:auto;}#table-of-contents{border:1pxsolid#ccc;padding:15px;margin-top:20px;}#top{width:0;height:0;display:inline-block;}</style><script>functionscrollToTop(){document.getElementById('top').scrollIntoView({behavior:'smooth',block:'start'});}</script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS_HTML" defer></script></head><body><div class="navbar"><div class="container"><a href="https://willie169.github.io"><img src="img/willie169.jpeg" alt="Willie169" style="height: 40px;"></a><a href="https://willie169.github.io/Android-Non-Root"><img src="img/Android_Non_Root.png" alt="Android Non Root" style="height: 40px;"></a></div></div><div id="top"></div><div class="content"><h1>PID</h1><h2>Repository</h2><a href="https://github.com/Willie169/PID">https://github.com/Willie169/PID</a><h2>Workflow</h2><h3>Design kart:</h3><pre><code>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PID</title>
+<style>html{margin:0;padding:0;}body{font-family:'Roboto',sans-serif;line-height:1.6;background-color:#f5f5f5;color:#333;padding:0;margin:0;overflow:auto;}*,*::before,*::after{box-sizing:border-box;}h1,h2,h3,h4,h5,h6{font-family:'Roboto',sans-serif;color:#007acc;margin-bottom:15px;}h1{font-size:2rem;border-bottom:2pxsolid#007acc;padding-bottom:10px;}h2{font-size:1.6rem;border-bottom:1pxsolid#007acc;padding-bottom:8px;}h3{font-size:1.4rem;}h4,h5,h6{font-size:1.2rem;}.navbar{width:100%;background-color:#333;color:white;padding:10px20px;position:fixed;top:0;left:0;z-index:1000;display:flex;justify-content:space-between;align-items:center;}.navbara{color:white;text-decoration:none;font-size:1.2rem;margin-left:20px;}.navbara:hover{color:#007acc;}button{position:fixed;bottom:20px;left:20px;background-color:#007acc;color:white;border:none;outline:none;padding:20px20px;font-size:1rem;cursor:pointer;border-radius:5px;transition:background-color0.3sease;z-index:1000;}button:hover{background-color:#005f8d;}.content{margin:20px;padding:60px20px;text-align:left;}a{color:#007acc;text-decoration:none;}a:hover{text-decoration:underline;}ul,ol{margin:20px;padding-left:40px;}ul{list-style-type:disc;}ol{list-style-type:decimal;}li{margin-bottom:10px;font-size:1rem;}li::marker{font-size:1.2rem;color:#007acc;}pre{background-color:#e8e8e8;border-radius:3pxsolid#848484;padding:10px;overflow-x:auto;white-space:pre-wrap;line-height:1.5;}code{background-color:#e8e8e8;color:#d6336c;padding:2px5px;border-radius:3px;font-size:1rem;font-family:'FiraCode',monospace;}precode{display:block;background:none;white-space:pre;overflow-x:auto;max-width:100%;min-width:100px;padding:0;}li:hover{background-color:#f0faff;}pre:hover{background-color:#f8f8f8;}.container{display:flex;justify-content:space-between;align-items:center;}.containeraimg{max-width:100px;height:auto;}#table-of-contents{border:1pxsolid#ccc;padding:15px;margin-top:20px;}#top{width:0;height:0;display:inline-block;}</style>
+<script>functionscrollToTop(){document.getElementById('top').scrollIntoView({behavior:'smooth',block:'start'});}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS_HTML" defer></script>
+</head>
+<body>
+<div class="navbar">
+<div class="container"><a href="https://willie169.github.io"><img src="img/willie169.jpeg" alt="Willie169" style="height: 40px;"></a><a href="https://willie169.github.io/Android-Non-Root"><img src="img/Android_Non_Root.png" alt="Android Non Root" style="height: 40px;"></a></div></div><div id="top"></div>
+<div class="content">
+<h1>PID</h1>
+<h2>Repository</h2><a href="https://github.com/Willie169/PID">https://github.com/Willie169/PID</a>
+<hr /><h2>Workflow</h2>
+<h3>Design kart:</h3>
+<pre><code>
 import FreeCAD, Part, Draft
 from FreeCAD import Base
 
@@ -34,7 +52,9 @@ def create_rear_wheels():
 
 def create_front_wheel():
     front_wheel = create_wheel(20, 10, (0, 0, 0))      return front_wheel
-</code></pre><h3>Assembly kart:</h3><pre><code>
+</code></pre>
+<h3>Assembly kart:</h3>
+<pre><code>
 def create_kart():
         kart_body = create_kart_body(150, 80, 30)
     
@@ -62,7 +82,9 @@ def main():
         doc.recompute()
 
 main()
-</code></pre><h3>Design board:</h3><pre><code>
+</code></pre>
+<h3>Design board:</h3>
+<pre><code>
 ISO-10303-21;
 HEADER;
 /* Generated by software containing ST-Developer
@@ -561,7 +583,9 @@ SI_UNIT($,.METRE.)
 #455=APPLICATION_CONTEXT('managed model based 3d engineering');
 ENDSEC;
 END-ISO-10303-21;
-</code></pre><h3>Design and assembly netlist:</h3><pre><code>
+</code></pre>
+<h3>Design and assembly netlist:</h3>
+<pre><code>
 (kicad_netlist  (version 4)
   (components
     (comp (value Arduino) (footprint Arduino:Uno) (ref U1)
@@ -615,7 +639,9 @@ END-ISO-10303-21;
     (net (code 15) (node 49) (node 50))                 ; Battery Box connection
   )
 )
-</code></pre><h3>Perform detection and drive control:</h3><pre><code>
+</code></pre>
+<h3>Perform detection and drive control:</h3>
+<pre><code>
 import unittest
 import FreeCAD
 import Part
@@ -687,7 +713,9 @@ class TestKartModel(unittest.TestCase):
         
 if __name__ == '__main__':
     unittest.main()
-</code></pre><h3>Writing programs:</h3><pre><code>
+</code></pre>
+<h3>Writing programs:</h3>
+<pre><code>
 #ifndef PID_HPP
 #define PID_HPP
 
@@ -821,7 +849,9 @@ public:
 };
 
 #endif
-</code></pre><h3>Perform simulation:</h3><pre><code>
+</code></pre>
+<h3>Perform simulation:</h3>
+<pre><code>
 #ifndef TESTCAR_HPP
 #define TESTCAR_HPP
 
@@ -1021,7 +1051,9 @@ struct ParameterRange
 };
 
 #endif
-</code></pre><h3>Optimize software performance:</h3><pre><code>
+</code></pre>
+<h3>Optimize software performance:</h3>
+<pre><code>
   #ifndef OPTIMIZATION_HPP
 #define OPTIMIZATION_HPP
 
@@ -1081,7 +1113,8 @@ int optimize(vector<ParameterRange> ranges)
 }
 
 #endif
-</code></pre><pre><code>
+</code></pre>
+<pre><code>
 #include "optimization.hpp" // or #include "optimization_multithread.hpp"
 
 int main() {
@@ -1102,7 +1135,9 @@ int main() {
 
     return optimize(ranges);
 }
-</code></pre><h3>Perform hardware and software compatibility test:</h3><pre><code>
+</code></pre>
+<h3>Perform hardware and software compatibility test:</h3>
+<pre><code>
 #include "PID.hpp"
 #define TARGET_DISTANCE 10
 #define DISTANCE_BETWEEN_ULTRASONIC 5
@@ -1152,7 +1187,58 @@ inline void leftOut(double output) {
 inline void rightOut(double output) {
     Serial.println("Right: " + String(output));
 }
-</code></pre><h2>Inspiration</h2><h3>Beforehand:</h3><p>The development of this PID (Proportional-Integral-Derivative) controller project is rooted in control theory, a field of engineering that focuses on the behavior of dynamic systems. What makes us take the initiative is the auto-following kart lesson in our living technology class. We aim to make an auto-following kart from scratch with Arduino and wooden boards and make it as quality as possible on a constrained budget.</p><h3>Control Theory and PID Controllers</h3><p>The development of this PID (Proportional-Integral-Derivative) controller project is rooted in control theory, a field of engineering that focuses on the behavior of dynamic systems. PID controllers are a cornerstone of modern control systems. They are designed to automatically adjust system outputs based on feedback to minimize error, allowing for precise control of dynamic systems. The PID controller operates based on three fundamental components:</p><ol><li><p><strong>Proportional Control (P)</strong>: Responds proportionally to the current error value, providing immediate correction based on how far the system is from the desired state.</p></li><li><strong>Integral Control (I)</strong>: Addresses accumulated past errors, ensuring that the system reaches the desired state even if there are persistent biases.</p></li><li><strong>Derivative Control (D)</strong>: Predicts future errors based on the rate of change of the error, providing a damping effect to reduce overshoot and oscillation.</p></li></ol><p>The tuning of these parameters is crucial for achieving optimal performance. The traditional Ziegler–Nichols tuning method has served as a foundational approach for many engineers, providing empirical guidelines for setting PID parameters based on system behavior.</p><h3>Arduino</h3><p>Arduino boards offer an accessible platform for students and hobbyists to experiment with hardware and software integration, facilitating hands-on learning experiences in technology classes.</p><p>In living technology classes, we engage with Arduino to build auto-following kart projects that require real-time control systems. This scenario highlights the importance of tuning PID controllers to achieve desired behaviors in robotics and automotive systems.</p><p>This PID controller serves as an imperative part of our auto-following kart. We use it to achieve a stable distance between the auto-following kart and the leader kart, in our case, a cleaning robot.</p><h2>Development History</h2><p>The development of the PID controller and its associated simulation framework has been an iterative process, marked by continuous enhancement and refinement.</p><h3>Initial Implementation</h3><p>The journey began with a simple implementation of the traditional PID controller. The focus was on creating a basic class structure in C++ that encapsulated the PID logic, allowing for straightforward application in simulations.</p><p><strong>Key Features</strong>:</p><ul><li>Basic PID calculations.</li><li>Initial support for both Arduino and non-Arduino environments through conditional compilation.</li></ul><h3>Enhancements and Adaptive Features</h3><p>As the initial implementation was tested, several limitations became apparent, particularly regarding responsiveness and stability. This prompted the incorporation of advanced features such as:</p><ul><li><p><strong>Adaptive Gain Adjustment</strong>: Inspired by the need for dynamic responsiveness, the proportional gain $K_p$ was made adaptable based on the error's rate of change. This enhancement allowed for better handling of transient behaviors in the system.</p></li><li><p><strong>Adaptive Integral Term</strong>: To mitigate integral windup, the integral gain $K_i$ was adjusted based on observed error amplitude. This feature improved system stability during sustained error conditions.</p></li></ul><h3>Error History Management</h3><p>To accurately compute the integral and derivative terms, a robust error history management system was implemented. This system utilized a linked list structure to store past error values and timestamps, enabling precise calculations for both the integral and derivative components. The integration of error history management was crucial for implementing more advanced tuning strategies, inspired by established control theory practices.</p><h3>Additional Derivative Term</h3><p>Recognizing the need for improved damping characteristics, an additional derivative term $K_{dd}$ was introduced. This term accounted for the acceleration of error changes, allowing the controller to anticipate and react to rapid fluctuations more effectively.</p><h3>Testing and Simulation Framework</h3><p>With the PID logic in place, attention turned to building a comprehensive simulation framework to test various PID configurations. The introduction of the <code>Car</code> class for simulating follower and leader vehicles added a practical context for evaluating PID performance in a dynamic environment.</p><ul><li><strong>PID Testing Function</strong>: A dedicated function was developed to simulate the interaction between the leader and follower karts, providing insights into how different PID parameters affected system behavior.</li></ul><h3>Optimization and Multi-threading</h3><p>To facilitate further exploration of PID parameter tuning, optimization functions were integrated. Utilizing multi-threading allowed for the concurrent evaluation of multiple parameter combinations, greatly enhancing the testing efficiency. The optimization framework also included mechanisms for result logging and progress tracking, making it easier to analyze and visualize outcomes.</p><h2>PID.hpp</h2><h3>Overview</h3><p>This header file implements a PID controller that includes traditional PID control logic along with enhancements such as adaptive gain adjustment, adaptive integral term, error history management, and additional derivative term. It is also designed to be compatible with both Arduino and non-Arduino environments.</p><h3>Arduino and Non-Arduino Compatibility</h3><p>The header is designed to be compatible with both Arduino and non-Arduino environments. This allows developers to use the same PID controller implementation across different platforms.</p><p>Conditional Compilation:<pre><code>#ifdef ARDUINO
+</code></pre>
+<hr /><h2>Inspiration</h2>
+<h3>Beforehand:</h3>
+<p>The development of this PID (Proportional-Integral-Derivative) controller project is rooted in control theory, a field of engineering that focuses on the behavior of dynamic systems. What makes us take the initiative is the auto-following kart lesson in our living technology class. We aim to make an auto-following kart from scratch with Arduino and wooden boards and make it as quality as possible on a constrained budget.</p>
+<h3>Control Theory and PID Controllers</h3>
+<p>The development of this PID (Proportional-Integral-Derivative) controller project is rooted in control theory, a field of engineering that focuses on the behavior of dynamic systems. PID controllers are a cornerstone of modern control systems. They are designed to automatically adjust system outputs based on feedback to minimize error, allowing for precise control of dynamic systems. The PID controller operates based on three fundamental components:</p>
+<ol>
+<li>
+<p><strong>Proportional Control (P)</strong>: Responds proportionally to the current error value, providing immediate correction based on how far the system is from the desired state.</p></li>
+<li><strong>Integral Control (I)</strong>: Addresses accumulated past errors, ensuring that the system reaches the desired state even if there are persistent biases.</p></li>
+<li><strong>Derivative Control (D)</strong>: Predicts future errors based on the rate of change of the error, providing a damping effect to reduce overshoot and oscillation.</p></li>
+</ol>
+<p>The tuning of these parameters is crucial for achieving optimal performance. The traditional Ziegler–Nichols tuning method has served as a foundational approach for many engineers, providing empirical guidelines for setting PID parameters based on system behavior.</p>
+<h3>Arduino</h3>
+<p>Arduino boards offer an accessible platform for students and hobbyists to experiment with hardware and software integration, facilitating hands-on learning experiences in technology classes.</p>
+<p>In living technology classes, we engage with Arduino to build auto-following kart projects that require real-time control systems. This scenario highlights the importance of tuning PID controllers to achieve desired behaviors in robotics and automotive systems.</p>
+<p>This PID controller serves as an imperative part of our auto-following kart. We use it to achieve a stable distance between the auto-following kart and the leader kart, in our case, a cleaning robot.</p>
+<hr /><h2>Development History</h2>
+<p>The development of the PID controller and its associated simulation framework has been an iterative process, marked by continuous enhancement and refinement.</p>
+<h3>Initial Implementation</h3>
+<p>The journey began with a simple implementation of the traditional PID controller. The focus was on creating a basic class structure in C++ that encapsulated the PID logic, allowing for straightforward application in simulations.</p>
+<p><strong>Key Features</strong>:</p>
+<ul>
+<li>Basic PID calculations.</li>
+<li>Initial support for both Arduino and non-Arduino environments through conditional compilation.</li>
+</ul>
+<h3>Enhancements and Adaptive Features</h3>
+<p>As the initial implementation was tested, several limitations became apparent, particularly regarding responsiveness and stability. This prompted the incorporation of advanced features such as:</p>
+<ul>
+<li>
+<p><strong>Adaptive Gain Adjustment</strong>: Inspired by the need for dynamic responsiveness, the proportional gain $K_p$ was made adaptable based on the error's rate of change. This enhancement allowed for better handling of transient behaviors in the system.</p></li>
+<li>
+<p><strong>Adaptive Integral Term</strong>: To mitigate integral windup, the integral gain $K_i$ was adjusted based on observed error amplitude. This feature improved system stability during sustained error conditions.</p></li>
+</ul>
+<h3>Error History Management</h3>
+<p>To accurately compute the integral and derivative terms, a robust error history management system was implemented. This system utilized a linked list structure to store past error values and timestamps, enabling precise calculations for both the integral and derivative components. The integration of error history management was crucial for implementing more advanced tuning strategies, inspired by established control theory practices.</p>
+<h3>Additional Derivative Term</h3>
+<p>Recognizing the need for improved damping characteristics, an additional derivative term $K_{dd}$ was introduced. This term accounted for the acceleration of error changes, allowing the controller to anticipate and react to rapid fluctuations more effectively.</p>
+<h3>Testing and Simulation Framework</h3>
+<p>With the PID logic in place, attention turned to building a comprehensive simulation framework to test various PID configurations. The introduction of the <code>Car</code> class for simulating follower and leader vehicles added a practical context for evaluating PID performance in a dynamic environment.</p>
+<ul>
+<li><strong>PID Testing Function</strong>: A dedicated function was developed to simulate the interaction between the leader and follower karts, providing insights into how different PID parameters affected system behavior.</li>
+</ul>
+<h3>Optimization and Multi-threading</h3>
+<p>To facilitate further exploration of PID parameter tuning, optimization functions were integrated. Utilizing multi-threading allowed for the concurrent evaluation of multiple parameter combinations, greatly enhancing the testing efficiency. The optimization framework also included mechanisms for result logging and progress tracking, making it easier to analyze and visualize outcomes.</p>
+<hr /><h2>PID.hpp</h2>
+<h3>Overview</h3>
+<p>This header file implements a PID controller that includes traditional PID control logic along with enhancements such as adaptive gain adjustment, adaptive integral term, error history management, and additional derivative term. It is also designed to be compatible with both Arduino and non-Arduino environments.</p>
+<h3>Arduino and Non-Arduino Compatibility</h3>
+<p>The header is designed to be compatible with both Arduino and non-Arduino environments. This allows developers to use the same PID controller implementation across different platforms.</p>
+<p>Conditional Compilation:
+<pre><code>#ifdef ARDUINO
 #include &lt;Arduino.h&gt;
 #include &lt;math.h&gt;
 #define to_string(a) String(a)
@@ -1162,4 +1248,156 @@ inline void rightOut(double output) {
 #define String string
 using namespace std;
 #endif
-</code></pre></p><h3>Traditional PID Controller</h3><p>The traditional PID controller is defined by the following equation:</p><p>$$u(t) = K<em>p e(t) + K</em>i \int<em>0^t e(\tau) d\tau + K</em>d \frac{de(t)}{dt} $$</p><p>Where:</p><ul><li>$u(t)$ is the control output.</li><li>$e(t)$ is the error at time $t$, defined as the difference between the desired value and the measured value.</li><li>$K<em>p$, $K</em>i$, and $K_d$ are the proportional, integral, and derivative gains, respectively.</li></ul><h3>Adaptive Gain Adjustment</h3><p>The proportional gain $K_p$ is dynamically adjusted based on the interaction between the current error $e(t)$ and its rate of change (derivative). This adjustment is designed to improve the responsiveness of the controller to changing conditions. The adaptation can be mathematically expressed as follows:</p><p>$$K<em>p' = K</em>p \times (1 \pm eDP_a)$$</p><p>Where:</p><ul><li>$eDP = e(t) \times \frac{de(t)}{dt}$</li><li>$eDP_m$ is a threshold that determines when to adjust the proportional gain.</li><li>$eDP<em>a$ is the adjustment factor that scales the change in $K</em>p$ based on the error’s derivative. </li></ul><p>The key idea behind this adjustment is to increase the proportional gain when the system is experiencing a large error combined with a significant rate of change, which could indicate an approaching overshoot or oscillation. Conversely, if the error is decreasing but remains large, it may reduce the proportional gain to prevent excessive correction, allowing the system to stabilize more smoothly.</p><h3>Adaptive Integral Term</h3><p>Integral control is essential for eliminating steady-state error; however, it can lead to issues like integral windup, where the integral term accumulates excessively during periods of sustained error. To mitigate this, the integral gain $K_i$ is adaptively computed as follows:</p><p>$$K<em>i = K</em>p \times rTiM \times ap$$</p><p>Where:</p><ul><li>$ap = e^{-\frac{\text{amp}}{\text{maxAmp}}}$</li><li>$rTiM$ is a constant that relates to the desired integral time constant.</li></ul><p>The variable $amp$ represents the maximum amplitude of error observed over a session. By using the exponential decay factor $ap$, the contribution of the integral term is diminished during periods of high error, effectively reducing the risk of windup. When the error is within an acceptable range, $ap$ approaches 1, allowing the integral term to contribute effectively to the control output.</p><h3>Error History Management</h3><p>Inspired by the <strong>Ziegler–Nichols tuning method</strong>, the implementation maintains a history of past errors and their timestamps to calculate the derivative and integral terms accurately. This history management is crucial for two main reasons:</p><ul><li><strong>Deriving the Rate of Change</strong>: The derivative term requires knowledge of how fast the error is changing. By storing previous error values in a linked list, we can accurately compute the change in error over time ($\frac{de(t)}{dt}$):</li></ul><p>$$  dv = \frac{e(t) - preE}{dt}$$</p><ul><li><strong>Integral Calculation</strong>: The integral of the error is accumulated over time, enabling the controller to respond to persistent deviations from the setpoint:</li></ul><p>$$  intg += e(t) \times dt$$</p><p>Using a linked list allows for efficient management of this error history. As new errors are added, older entries can be pruned to ensure that only relevant data is retained, which helps avoid excessive memory usage and keeps the calculations focused on the most recent behavior of the system.</p><h3>Additional Derivative Term</h3><p>In addition to the standard derivative term $K<em>d$, an additional derivative term $K</em>{dd}$ is included in the PID controller. This term represents a second derivative component, which can be defined as follows:</p><p>$$K<em>{dd} = K</em>d \times TddM$$</p><p>Where:</p><ul><li>$TddM$ is a multiplier that adjusts the impact of the second derivative term. </li></ul><p>The inclusion of $K_{dd}$ helps the controller anticipate changes in the error more effectively. By accounting for the acceleration of the error (i.e., how the rate of error change is itself changing), this additional term enhances the damping characteristics of the controller, allowing for more refined control responses, especially in systems that are subject to rapid changes or oscillations.</p><h3>Code Structure</h3><h4>Data Structures</h4><ul><li><strong>Data</strong>: Holds the time difference (<code>dt</code>) and error value (<code>e</code>).</li><li><strong>Node</strong>: Represents an element in the linked list, containing <code>Data</code> and a pointer to the previous node.</li><li><strong>List</strong>: Manages the linked list, holding pointers to the head and tail nodes and the size of the list.</li></ul><h4>PID Class</h4><p>The <code>PID</code> class encapsulates the PID control logic. It includes:</p><ul><li><p><strong>Member Variables</strong>:</p></li><li><p>Control gains: <code>Kp</code>, <code>Ki</code>, <code>Kd</code>, <code>Kdd</code> (additional derivative term).</p></li><li><p>State variables: <code>preE</code>, <code>preDv</code>, <code>intg</code>, <code>preOut</code>, and <code>preT</code> for storing previous error, derivative, integral term, last output, and last timestamp, respectively.</p></li><li><p><code>dtXs</code>: An instance of <code>List</code> to maintain historical error data.</p></li><li><p><strong>Constructor</strong>: Initializes the PID parameters and state variables.</p></li><li><p><strong>Update Method</strong>:</p></li><li><p>Takes the current error and timestamp, computes the control output, and updates the internal state.</p></li><li><p>Implements logic for calculating the adaptive gains, managing error history, and generating the control signal.</p></li></ul><h2>testCar.hpp</h2><h3>Overview</h3><p>This header file includes a <code>Car</code> class for simulating the motion of a car, a PID controller for adjusting the speed of an auto-following kart based on the distance to a leader car, and several utility functions for data processing and results management.</p><h3>Car Class</h3><p>The <code>Car</code> class represents a simple vehicle model with basic motion dynamics. It includes attributes for speed and position, as well as methods to update these attributes.</p><h3>PID Debugging Function</h3><p>The <code>pidDebug</code> function is a utility for logging messages related to PID control operations.</p><h3>Sum of Last Squared Values</h3><pre><code>bool write_results(const vector&lt;pidTest&gt; &amp;data, const string &amp;filename)</code></pre><p>Writes the results of PID tests to a CSV file for analysis.</p><h3><code>ParameterRange</code></h3><p>A structure to define the range of parameters for optimization.</p><ul><li><strong>Attributes</strong>:</li><li><code>double start</code>: The starting value of the parameter range.</li><li><code>double end</code>: The ending value of the parameter range.</li><li><code>double step</code>: The increment step for the parameter.</li></ul><h2>optimization.hpp</h2><p>This header file defines the optimization functions and structures used to optimize the parameters of a PID controller in a car simulation without multi-threaded processing.</p><h3><code>int optimize(vector&lt;ParameterRange&gt; ranges)</code></h3><p>Optimizes the parameters of the PID controller based on the provided ranges and writes results to a CSV file.</p><ul><li><p><strong>Parameters</strong>:</p></li><li><p><code>vector&lt;ParameterRange&gt; ranges</code>: A vector containing the ranges of parameters to optimize.</p></li><li><p><strong>Returns</strong>: </p></li><li><p><code>int</code>: Returns <code>EXIT_SUCCESS</code> (0) if optimization completes successfully, otherwise returns <code>EXIT_FAILURE</code>.</p></li></ul><h2>optimization_multithread.hpp</h2><p>This header file defines the optimization functions and structures used to optimize the parameters of a PID controller in a car simulation with multi-threaded processing.</p><h3><code>int optimize(vector&lt;ParameterRange&gt; ranges)</code></h3><p>Optimizes the parameters of the PID controller based on the provided ranges and writes results to a CSV file.</p><ul><li><p><strong>Parameters</strong>:</p></li><li><p><code>vector&lt;ParameterRange&gt; ranges</code>: A vector containing the ranges of parameters to optimize.</p></li><li><p><strong>Returns</strong>: </p></li><li><p><code>int</code>: Returns <code>EXIT_SUCCESS</code> (0) if optimization completes successfully, otherwise returns <code>EXIT_FAILURE</code>.</p></li></ul><h2>main.cpp</h2><p>The code file demonstrates the usage of the <code>optimization.hpp</code> (or <code>optimization_multithread.hpp</code>) header file to perform parameter optimization for a PID controller. It defines a set of parameter ranges and calls the <code>optimize</code> function to evaluate different combinations of parameters.</p><p>Note that steps can't be zero or the program won't stop.</p><h2>Wooden Board</h2><p>The wooden board serves as the support structure of the auto-following kart that connects and props the components such as an Arduino board, an Omni wheel, a breadboard, 2 wheels, and 2 motors.</p><h2>Afterthoughts</h2><p>Looking back on the development and implementation of the Arduino-based PID auto-following kart, this project has been a remarkable journey that deepened my understanding of control systems, robotics, and the intricacies of sensor integration. As with any engineering project, the process involved a series of trials, errors, and discoveries, each contributing to a more refined and successful final result. Below are some detailed afterthoughts from different aspects of the project.</p><h3>PID Tuning Challenges</h3><p>One of the most insightful yet challenging parts of the project was tuning the PID (Proportional, Integral, Derivative) controller. At the outset, the kart’s behavior was far from ideal, with erratic turns, oscillations, and overshooting, even when the line-following task seemed straightforward. I initially faced difficulties because PID controllers require careful balancing of the three parameters to achieve smooth and stable control. After experimenting with different values, I came to realize that small adjustments in one parameter could drastically alter the kart’s performance. For example, increasing the proportional gain (Kp) made the kart more responsive but also introduced instability, while adjusting the derivative gain (Kd) helped reduce overshooting but didn’t entirely eliminate the oscillations. This hands-on experience taught me the delicate art of PID tuning and how to fine-tune it for real-time performance. It also provided me with a deeper appreciation for the role of feedback control in automation systems.</p><h3>Sensor Calibration and Integration</h3><p>The quality and accuracy of the sensors played a pivotal role in the kart's ability to follow the line. I opted to use infrared sensors for line detection, which are widely used for such applications due to their simplicity and affordability. However, I quickly learned that infrared sensors are sensitive to external factors like ambient light, surface texture, and even the angle at which they are positioned. Calibration became a crucial part of the setup process. Initially, the kart struggled to detect the line in areas with poor contrast or variable lighting, leading to misalignments and failures to follow the path.</p><p>By carefully adjusting the sensor threshold values and performing several test runs, I was able to achieve consistent detection in a variety of conditions. This process made me realize that sensor calibration is often as important as the controller itself and cannot be overlooked. I also discovered that the placement of sensors relative to the track—especially in ensuring that they cover a sufficient area and are aligned properly—was critical for reliable tracking. In hindsight, experimenting with different types of sensors (like color or ultrasonic sensors) might have improved performance in certain conditions, but the infrared sensors performed adequately for this project’s scale.</p><h3>System Design and Component Selection</h3><p>The design and selection of components had a significant impact on both the performance and scalability of the project. The kart required careful integration of the Arduino microcontroller with the motor driver, sensors, and power supply. Initially, I used a basic motor driver and simple infrared sensors, which worked for the task at hand, but I later realized there were opportunities for improvement. For example, a more efficient motor driver could have reduced the power losses during operation, and using sensors with better resolution would have increased accuracy.</p><p>Looking back, I could have made the design more compact by optimizing the wiring layout and minimizing the size of the motor driver and power supply. The kart's frame was designed to be large enough to house the components comfortably, but in future iterations, I would explore creating a more streamlined design, potentially using a custom PCB to reduce wiring complexity and improve reliability.</p><p>Moreover, I learned that a well-planned mechanical design, especially when integrating motors, wheels, and sensors, is crucial for minimizing friction and ensuring smooth operation. If I were to repeat this project, I would spend more time on optimizing the physical layout for better maneuverability and sensor coverage.</p><h3>Power Management and Battery Considerations</h3><p>The kart’s power management system was another crucial aspect that affected its overall performance. The kart was powered by a small rechargeable battery, and at times, the kart exhibited strange behavior when the battery voltage dropped too low. I soon realized that even a small voltage drop could cause the motor speed to fluctuate, leading to uneven turns and unpredictable movement. This issue underscored the importance of not only selecting the right power supply but also designing a system that accounts for power fluctuations.</p><p>In future iterations, I would focus on selecting a more reliable and higher-capacity battery, as well as incorporating a voltage regulator to ensure a stable supply of power to both the motors and the Arduino. Additionally, I would experiment with power-efficient motor controllers and explore the possibility of integrating a power management circuit to extend the kart’s runtime and prevent sudden drops in performance.</p><h3>Real-World Performance vs. Simulated Testing</h3><p>One of the most significant lessons from this project was the difference between controlled simulations and real-world performance. While the kart worked well on paper and in ideal conditions, the real world is much more unpredictable. Minor changes in track conditions—such as different surface textures, angles, or even lighting—could significantly impact the kart's performance. The kart sometimes failed to follow the line in certain situations, requiring me to tweak the PID settings and sensor calibration multiple times.</p><p>This experience highlighted the importance of robust real-world testing and the need for adaptive systems that can account for such variables. While the PID controller performed well under most circumstances, incorporating more advanced algorithms or adding feedback from additional sensors (e.g., accelerometers or gyroscopes) could help the kart adapt more dynamically to environmental changes.</p><h3>Next Steps and Potential Improvements</h3><p>Looking ahead, there are several avenues for improving the project. One major area to explore is enhancing the control algorithm itself. While the PID controller served its purpose, I believe more advanced methods, such as Model Predictive Control (MPC), could offer better performance in terms of accuracy and adaptability. MPC would allow the kart to predict future positions and adjust its speed and direction proactively, rather than reacting to changes after they occur.</p><p>In terms of hardware, upgrading the sensor suite would be beneficial. Using more sophisticated sensors, such as cameras for vision-based tracking or encoders for more accurate wheel position feedback, could significantly improve the kart’s performance. Implementing a camera-based line-following system could even enable the kart to follow more complex paths and handle obstacles.</p><p>Moreover, expanding the kart’s capabilities to handle more complex environments—such as navigating through obstacles, responding to dynamic changes in the track, or even following multiple lines—would be an exciting challenge. Adding wireless communication (such as Bluetooth or Wi-Fi) could allow for remote monitoring and control of the kart, opening the door to further experimentation with autonomous navigation.</p><h3>Conclusion</h3><p>In conclusion, the Arduino PID auto-following kart project has been a valuable learning experience that provided deep insights into feedback control systems, sensor integration, and the challenges of real-world robotics. While there were several hurdles along the way—especially in tuning the PID controller and dealing with power management—these challenges were integral to the learning process. The project has sparked my interest in robotics and control theory, and I am excited about the potential for future improvements. Ultimately, this experience has solidified my understanding of the complexities involved in building autonomous systems and has given me the confidence to tackle more advanced projects in the future.</p></div><button id="backToTopBtn" onclick="scrollToTop()">↑ Back to Top</button></body></html>
+</code></pre></p>
+<h3>Traditional PID Controller</h3>
+<p>The traditional PID controller is defined by the following equation:</p>
+<p>$$u(t) = K<em>p e(t) + K</em>i \int<em>0^t e(\tau) d\tau + K</em>d \frac{de(t)}{dt} $$</p>
+<p>Where:</p>
+<ul>
+<li>$u(t)$ is the control output.</li>
+<li>$e(t)$ is the error at time $t$, defined as the difference between the desired value and the measured value.</li>
+<li>$K<em>p$, $K</em>i$, and $K_d$ are the proportional, integral, and derivative gains, respectively.</li>
+</ul>
+<h3>Adaptive Gain Adjustment</h3>
+<p>The proportional gain $K_p$ is dynamically adjusted based on the interaction between the current error $e(t)$ and its rate of change (derivative). This adjustment is designed to improve the responsiveness of the controller to changing conditions. The adaptation can be mathematically expressed as follows:</p>
+<p>$$K<em>p' = K</em>p \times (1 \pm eDP_a)$$</p>
+<p>Where:</p>
+<ul>
+<li>$eDP = e(t) \times \frac{de(t)}{dt}$</li>
+<li>$eDP_m$ is a threshold that determines when to adjust the proportional gain.</li>
+<li>$eDP<em>a$ is the adjustment factor that scales the change in $K</em>p$ based on the error’s derivative. </li>
+</ul>
+<p>The key idea behind this adjustment is to increase the proportional gain when the system is experiencing a large error combined with a significant rate of change, which could indicate an approaching overshoot or oscillation. Conversely, if the error is decreasing but remains large, it may reduce the proportional gain to prevent excessive correction, allowing the system to stabilize more smoothly.</p>
+<h3>Adaptive Integral Term</h3>
+<p>Integral control is essential for eliminating steady-state error; however, it can lead to issues like integral windup, where the integral term accumulates excessively during periods of sustained error. To mitigate this, the integral gain $K_i$ is adaptively computed as follows:</p>
+<p>$$K<em>i = K</em>p \times rTiM \times ap$$</p>
+<p>Where:</p>
+<ul>
+<li>$ap = e^{-\frac{\text{amp}}{\text{maxAmp}}}$</li>
+<li>$rTiM$ is a constant that relates to the desired integral time constant.</li>
+</ul>
+<p>The variable $amp$ represents the maximum amplitude of error observed over a session. By using the exponential decay factor $ap$, the contribution of the integral term is diminished during periods of high error, effectively reducing the risk of windup. When the error is within an acceptable range, $ap$ approaches 1, allowing the integral term to contribute effectively to the control output.</p>
+<h3>Error History Management</h3>
+<p>Inspired by the <strong>Ziegler–Nichols tuning method</strong>, the implementation maintains a history of past errors and their timestamps to calculate the derivative and integral terms accurately. This history management is crucial for two main reasons:</p>
+<ul>
+<li><strong>Deriving the Rate of Change</strong>: The derivative term requires knowledge of how fast the error is changing. By storing previous error values in a linked list, we can accurately compute the change in error over time ($\frac{de(t)}{dt}$):</li>
+</ul>
+<p>$$  dv = \frac{e(t) - preE}{dt}$$</p>
+<ul>
+<li><strong>Integral Calculation</strong>: The integral of the error is accumulated over time, enabling the controller to respond to persistent deviations from the setpoint:</li>
+</ul>
+<p>$$  intg += e(t) \times dt$$</p>
+<p>Using a linked list allows for efficient management of this error history. As new errors are added, older entries can be pruned to ensure that only relevant data is retained, which helps avoid excessive memory usage and keeps the calculations focused on the most recent behavior of the system.</p>
+<h3>Additional Derivative Term</h3>
+<p>In addition to the standard derivative term $K<em>d$, an additional derivative term $K</em>{dd}$ is included in the PID controller. This term represents a second derivative component, which can be defined as follows:</p>
+<p>$$K<em>{dd} = K</em>d \times TddM$$</p>
+<p>Where:</p>
+<ul>
+<li>$TddM$ is a multiplier that adjusts the impact of the second derivative term. </li>
+</ul>
+<p>The inclusion of $K_{dd}$ helps the controller anticipate changes in the error more effectively. By accounting for the acceleration of the error (i.e., how the rate of error change is itself changing), this additional term enhances the damping characteristics of the controller, allowing for more refined control responses, especially in systems that are subject to rapid changes or oscillations.</p>
+<h3>Code Structure</h3>
+<h4>Data Structures</h4>
+<ul>
+<li><strong>Data</strong>: Holds the time difference (<code>dt</code>) and error value (<code>e</code>).</li>
+<li><strong>Node</strong>: Represents an element in the linked list, containing <code>Data</code> and a pointer to the previous node.</li>
+<li><strong>List</strong>: Manages the linked list, holding pointers to the head and tail nodes and the size of the list.</li>
+</ul>
+<h4>PID Class</h4>
+<p>The <code>PID</code> class encapsulates the PID control logic. It includes:</p>
+<ul>
+<li>
+<p><strong>Member Variables</strong>:</p></li>
+<li>
+<p>Control gains: <code>Kp</code>, <code>Ki</code>, <code>Kd</code>, <code>Kdd</code> (additional derivative term).</p></li>
+<li>
+<p>State variables: <code>preE</code>, <code>preDv</code>, <code>intg</code>, <code>preOut</code>, and <code>preT</code> for storing previous error, derivative, integral term, last output, and last timestamp, respectively.</p></li>
+<li>
+<p><code>dtXs</code>: An instance of <code>List</code> to maintain historical error data.</p></li>
+<li>
+<p><strong>Constructor</strong>: Initializes the PID parameters and state variables.</p></li>
+<li>
+<p><strong>Update Method</strong>:</p></li>
+<li>
+<p>Takes the current error and timestamp, computes the control output, and updates the internal state.</p></li>
+<li>
+<p>Implements logic for calculating the adaptive gains, managing error history, and generating the control signal.</p></li>
+</ul>
+<hr /><h2>testCar.hpp</h2>
+<h3>Overview</h3>
+<p>This header file includes a <code>Car</code> class for simulating the motion of a car, a PID controller for adjusting the speed of an auto-following kart based on the distance to a leader car, and several utility functions for data processing and results management.</p>
+<h3>Car Class</h3>
+<p>The <code>Car</code> class represents a simple vehicle model with basic motion dynamics. It includes attributes for speed and position, as well as methods to update these attributes.</p>
+<h3>PID Debugging Function</h3>
+<p>The <code>pidDebug</code> function is a utility for logging messages related to PID control operations.</p>
+<h3>Sum of Last Squared Values</h3>
+<pre><code>bool write_results(const vector&lt;pidTest&gt; &amp;data, const string &amp;filename)</code></pre>
+<p>Writes the results of PID tests to a CSV file for analysis.</p>
+<h3><code>ParameterRange</code></h3>
+<p>A structure to define the range of parameters for optimization.</p>
+<ul>
+<li><strong>Attributes</strong>:</li>
+<li><code>double start</code>: The starting value of the parameter range.</li>
+<li><code>double end</code>: The ending value of the parameter range.</li>
+<li><code>double step</code>: The increment step for the parameter.</li>
+</ul>
+<hr /><h2>optimization.hpp</h2>
+<p>This header file defines the optimization functions and structures used to optimize the parameters of a PID controller in a car simulation without multi-threaded processing.</p>
+<h3><code>int optimize(vector&lt;ParameterRange&gt; ranges)</code></h3>
+<p>Optimizes the parameters of the PID controller based on the provided ranges and writes results to a CSV file.</p>
+<ul>
+<li>
+<p><strong>Parameters</strong>:</p></li>
+<li>
+<p><code>vector&lt;ParameterRange&gt; ranges</code>: A vector containing the ranges of parameters to optimize.</p></li>
+<li>
+<p><strong>Returns</strong>: </p></li>
+<li>
+<p><code>int</code>: Returns <code>EXIT_SUCCESS</code> (0) if optimization completes successfully, otherwise returns <code>EXIT_FAILURE</code>.</p></li>
+</ul>
+<hr /><h2>optimization_multithread.hpp</h2>
+<p>This header file defines the optimization functions and structures used to optimize the parameters of a PID controller in a car simulation with multi-threaded processing.</p>
+<h3><code>int optimize(vector&lt;ParameterRange&gt; ranges)</code></h3>
+<p>Optimizes the parameters of the PID controller based on the provided ranges and writes results to a CSV file.</p>
+<ul>
+<li>
+<p><strong>Parameters</strong>:</p></li>
+<li>
+<p><code>vector&lt;ParameterRange&gt; ranges</code>: A vector containing the ranges of parameters to optimize.</p></li>
+<li>
+<p><strong>Returns</strong>: </p></li>
+<li>
+<p><code>int</code>: Returns <code>EXIT_SUCCESS</code> (0) if optimization completes successfully, otherwise returns <code>EXIT_FAILURE</code>.</p></li>
+</ul>
+<hr /><h2>main.cpp</h2>
+<p>The code file demonstrates the usage of the <code>optimization.hpp</code> (or <code>optimization_multithread.hpp</code>) header file to perform parameter optimization for a PID controller. It defines a set of parameter ranges and calls the <code>optimize</code> function to evaluate different combinations of parameters.</p>
+<p>Note that steps can't be zero or the program won't stop.</p>
+<hr /><h2>Wooden Board</h2>
+<p>The wooden board serves as the support structure of the auto-following kart that connects and props the components such as an Arduino board, an Omni wheel, a breadboard, 2 wheels, and 2 motors.</p>
+<hr /><h2>Afterthoughts</h2>
+<p>Looking back on the development and implementation of the Arduino-based PID auto-following kart, this project has been a remarkable journey that deepened my understanding of control systems, robotics, and the intricacies of sensor integration. As with any engineering project, the process involved a series of trials, errors, and discoveries, each contributing to a more refined and successful final result. Below are some detailed afterthoughts from different aspects of the project.</p>
+<h3>PID Tuning Challenges</h3>
+<p>One of the most insightful yet challenging parts of the project was tuning the PID (Proportional, Integral, Derivative) controller. At the outset, the kart’s behavior was far from ideal, with erratic turns, oscillations, and overshooting, even when the line-following task seemed straightforward. I initially faced difficulties because PID controllers require careful balancing of the three parameters to achieve smooth and stable control. After experimenting with different values, I came to realize that small adjustments in one parameter could drastically alter the kart’s performance. For example, increasing the proportional gain (Kp) made the kart more responsive but also introduced instability, while adjusting the derivative gain (Kd) helped reduce overshooting but didn’t entirely eliminate the oscillations. This hands-on experience taught me the delicate art of PID tuning and how to fine-tune it for real-time performance. It also provided me with a deeper appreciation for the role of feedback control in automation systems.</p>
+<h3>Sensor Calibration and Integration</h3>
+<p>The quality and accuracy of the sensors played a pivotal role in the kart's ability to follow the line. I opted to use infrared sensors for line detection, which are widely used for such applications due to their simplicity and affordability. However, I quickly learned that infrared sensors are sensitive to external factors like ambient light, surface texture, and even the angle at which they are positioned. Calibration became a crucial part of the setup process. Initially, the kart struggled to detect the line in areas with poor contrast or variable lighting, leading to misalignments and failures to follow the path.</p>
+<p>By carefully adjusting the sensor threshold values and performing several test runs, I was able to achieve consistent detection in a variety of conditions. This process made me realize that sensor calibration is often as important as the controller itself and cannot be overlooked. I also discovered that the placement of sensors relative to the track—especially in ensuring that they cover a sufficient area and are aligned properly—was critical for reliable tracking. In hindsight, experimenting with different types of sensors (like color or ultrasonic sensors) might have improved performance in certain conditions, but the infrared sensors performed adequately for this project’s scale.</p>
+<h3>System Design and Component Selection</h3>
+<p>The design and selection of components had a significant impact on both the performance and scalability of the project. The kart required careful integration of the Arduino microcontroller with the motor driver, sensors, and power supply. Initially, I used a basic motor driver and simple infrared sensors, which worked for the task at hand, but I later realized there were opportunities for improvement. For example, a more efficient motor driver could have reduced the power losses during operation, and using sensors with better resolution would have increased accuracy.</p>
+<p>Looking back, I could have made the design more compact by optimizing the wiring layout and minimizing the size of the motor driver and power supply. The kart's frame was designed to be large enough to house the components comfortably, but in future iterations, I would explore creating a more streamlined design, potentially using a custom PCB to reduce wiring complexity and improve reliability.</p>
+<p>Moreover, I learned that a well-planned mechanical design, especially when integrating motors, wheels, and sensors, is crucial for minimizing friction and ensuring smooth operation. If I were to repeat this project, I would spend more time on optimizing the physical layout for better maneuverability and sensor coverage.</p>
+<h3>Power Management and Battery Considerations</h3>
+<p>The kart’s power management system was another crucial aspect that affected its overall performance. The kart was powered by a small rechargeable battery, and at times, the kart exhibited strange behavior when the battery voltage dropped too low. I soon realized that even a small voltage drop could cause the motor speed to fluctuate, leading to uneven turns and unpredictable movement. This issue underscored the importance of not only selecting the right power supply but also designing a system that accounts for power fluctuations.</p>
+<p>In future iterations, I would focus on selecting a more reliable and higher-capacity battery, as well as incorporating a voltage regulator to ensure a stable supply of power to both the motors and the Arduino. Additionally, I would experiment with power-efficient motor controllers and explore the possibility of integrating a power management circuit to extend the kart’s runtime and prevent sudden drops in performance.</p>
+<h3>Real-World Performance vs. Simulated Testing</h3>
+<p>One of the most significant lessons from this project was the difference between controlled simulations and real-world performance. While the kart worked well on paper and in ideal conditions, the real world is much more unpredictable. Minor changes in track conditions—such as different surface textures, angles, or even lighting—could significantly impact the kart's performance. The kart sometimes failed to follow the line in certain situations, requiring me to tweak the PID settings and sensor calibration multiple times.</p>
+<p>This experience highlighted the importance of robust real-world testing and the need for adaptive systems that can account for such variables. While the PID controller performed well under most circumstances, incorporating more advanced algorithms or adding feedback from additional sensors (e.g., accelerometers or gyroscopes) could help the kart adapt more dynamically to environmental changes.</p>
+<h3>Next Steps and Potential Improvements</h3>
+<p>Looking ahead, there are several avenues for improving the project. One major area to explore is enhancing the control algorithm itself. While the PID controller served its purpose, I believe more advanced methods, such as Model Predictive Control (MPC), could offer better performance in terms of accuracy and adaptability. MPC would allow the kart to predict future positions and adjust its speed and direction proactively, rather than reacting to changes after they occur.</p>
+<p>In terms of hardware, upgrading the sensor suite would be beneficial. Using more sophisticated sensors, such as cameras for vision-based tracking or encoders for more accurate wheel position feedback, could significantly improve the kart’s performance. Implementing a camera-based line-following system could even enable the kart to follow more complex paths and handle obstacles.</p>
+<p>Moreover, expanding the kart’s capabilities to handle more complex environments—such as navigating through obstacles, responding to dynamic changes in the track, or even following multiple lines—would be an exciting challenge. Adding wireless communication (such as Bluetooth or Wi-Fi) could allow for remote monitoring and control of the kart, opening the door to further experimentation with autonomous navigation.</p>
+<h3>Conclusion</h3>
+<p>In conclusion, the Arduino PID auto-following kart project has been a valuable learning experience that provided deep insights into feedback control systems, sensor integration, and the challenges of real-world robotics. While there were several hurdles along the way—especially in tuning the PID controller and dealing with power management—these challenges were integral to the learning process. The project has sparked my interest in robotics and control theory, and I am excited about the potential for future improvements. Ultimately, this experience has solidified my understanding of the complexities involved in building autonomous systems and has given me the confidence to tackle more advanced projects in the future.</p>
+</div>
+<button id="backToTopBtn" onclick="scrollToTop()">↑ Back to Top</button>
+</body>
+</html>
