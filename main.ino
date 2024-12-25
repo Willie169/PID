@@ -27,6 +27,7 @@ PID avgPID(461.9, 517.9, 0.00265, 0.472, 1, 65.37, 1.7, 125, 0.15, 140, 0.2436);
 PID difPID(461.9, 517.9, 0.00265, 0.472, 1, 65.37, 1.7, 125, 0.15, 140, 0.2436);
 double avgV;
 double difV;
+if (debug) String* ptr;
 
 inline double leftIn() {
     digitalWrite(TRIG_LEFT, LOW);
@@ -67,15 +68,17 @@ void loop() {
     double avg = left + right;
     double dif = atan2(left - right, DISTANCE_BETWEEN_ULTRASONIC);
 
-    avgV += avgPID.update((avg - TARGET_DISTANCE), millis());
-    difV += difPID.update((dif - TARGET_DISTANCE), millis()) * DIFFERENTIAL_SPEED_MULTIPLIER;
+    if (debug) avgV += avgPID.update((avg - TARGET_DISTANCE), millis(), ptr);
+    else avgV += avgPID.update((avg - TARGET_DISTANCE), millis());
+    if (debug) difV += difPID.update((dif - TARGET_DISTANCE), millis(), ptr) * DIFFERENTIAL_SPEED_MULTIPLIER;
+    else difV += difPID.update((dif - TARGET_DISTANCE), millis()) * DIFFERENTIAL_SPEED_MULTIPLIER;
 
     double leftV = avgV + difV;
     double rightV = avgV - difV;
 
     leftOut(CLAMP(leftV, 255, -255));
     rightOut(CLAMP(rightV, 255, -255));
-    
+
     delayMicroseconds(10000);
     stop();
 }
