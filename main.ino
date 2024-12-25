@@ -16,7 +16,7 @@
 #define LEFT_NEGATIVE_SPEED_MULTIPLIER 1.2
 #define RIGHT_POSITIVE_SPEED_MULTIPLIER 1
 #define RIGHT_NEGATIVE_SPEED_MULTIPLIER 1.2
-// Adjust the above pins and multipliers.
+// Adjust the above pins and multipliers
 // The below code does not need to be changed
 
 #include "PID.hpp"
