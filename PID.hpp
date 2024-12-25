@@ -13,8 +13,9 @@ using namespace std;
 #endif
 #define MAX(a, b) (((a) > (b)) ? (a) : (b))
 #define MIN(a, b) (((a) < (b)) ? (a) : (b))
-#define ABS(a) (((a) < 0) ? -(a) : (a))
-#define COPYSIGN(a, b) (((b) < 0) ? -ABS(a) : ABS(a))
+#define ABS(a) ((a) < 0 ? -(a) : (a))
+#define COPYSIGN(a, b) ((b) < 0 ? -ABS(a) : ABS(a))
+#define CLAMP(a, b, c) (MAX(MIN((a), (b)), (c)))
 
 struct Data {
     unsigned long dt;
