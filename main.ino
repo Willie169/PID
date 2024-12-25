@@ -2,8 +2,10 @@
 #define TARGET_DISTANCE 10
 #define DISTANCE_BETWEEN_ULTRASONIC 5
 #define DIFFERENTIAL_SPEED_MULTIPLIER 0.8
-#define POSITIVE_SPEED_MULTIPLIER 1
-#define NEGATIVE_SPEED_MULTIPLIER 1.2
+#define LEFT_POSITIVE_SPEED_MULTIPLIER 1
+#define LEFT_NEGATIVE_SPEED_MULTIPLIER 1.2
+#define RIGHT_POSITIVE_SPEED_MULTIPLIER 1
+#define RIGHT_NEGATIVE_SPEED_MULTIPLIER 1.2
 
 PID avgPID(461.9, 517.9, 0.00265, 0.472, 1, 65.37, 1.7, 125, 0.15, 140, 0.2436);
 PID difPID(461.9, 517.9, 0.00265, 0.472, 1, 65.37, 1.7, 125, 0.15, 140, 0.2436);
@@ -31,19 +33,17 @@ void loop() {
     
     avgV += avgPID.update((avg - TARGET_DISTANCE), millis());
     difV += difPID.update((dif - TARGET_DISTANCE), millis()) * DIFFERENTIAL_SPEED_MULTIPLIER;
-    
-    double leftV = avgV + difV;
-    leftV *= (leftV>0) ? POSITIVE_SPEED_MULTIPLIER : NEGATIVE_SPEED_MULTIPLIER;
-    double rightV = avgV - difV;
-    rightV *= (rightV>0) ? POSITIVE_SPEED_MULTIPLIER : NEGATIVE_SPEED_MULTIPLIER;
-    leftOut(leftV);
-    rightOut(rightV);
+
+    leftOut(avgV + difV);
+    rightOut(avgV - difV);
 }
 
-inline void leftOut(double output) {
-    Serial.println("Left: " + String(output));
+inline void leftOut(double leftV) {
+    Serial.println("Left Velocity: " + String(leftV));
+    leftV *= (leftV < 0)?LEFT_NEGATIVE_SPEED_MULTIPLIER:LEFT_POSITIVE_SPEED_MULTIPLIER
 }
 
-inline void rightOut(double output) {
-    Serial.println("Right: " + String(output));
+inline void rightOut(double rightV) {
+    Serial.println("Right Velocity: " + String(rightV));
+    rightV *= (rightV < 0)?RIGHT_NEGATIVE_SPEED_MULTIPLIER:RIGHT_POSITIVE_SPEED_MULTIPLIER
 }
