@@ -1,6 +1,6 @@
 # PID
 
-This README mainly focuses on the program part. For detailed records, please see: [Site](https://Willie169.github.io/PID)
+This README mainly focuses on the program part. For detailed records, please see the [site](https://Willie169.github.io/PID) version.
 
 [中文繁體 README（舊）](README-zh-hant.md)
 
