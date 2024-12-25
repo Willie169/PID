@@ -65,8 +65,11 @@ void loop() {
     avgV += avgPID.update((avg - TARGET_DISTANCE), millis());
     difV += difPID.update((dif - TARGET_DISTANCE), millis()) * DIFFERENTIAL_SPEED_MULTIPLIER;
 
-    leftOut(avgV + difV);
-    rightOut(avgV - difV);
+    double leftV = avgV + difV;
+    double rightV = avgV - difV;
+
+    leftOut(CLAMP(leftV, 255, -255));
+    rightOut(CLAMP(rightV, 255, -255));
     
     delayMicroseconds(10000);
     stop();
