@@ -84,7 +84,7 @@ inline void leftOut(double leftV) {
 inline void rightOut(double rightV) {
     Serial.println("Right Velocity: " + String(rightV));
     rightV *= (rightV < 0)?RIGHT_NEGATIVE_SPEED_MULTIPLIER:RIGHT_POSITIVE_SPEED_MULTIPLIER;
-   if (rightV > 0) {
+    if (rightV > 0) {
         analogWrite(L293D_RIGHT1, 0);
         analogWrite(L293D_RIGHT2, rightV);
     } else {
