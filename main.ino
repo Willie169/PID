@@ -68,9 +68,19 @@ void loop() {
     double avg = left + right;
     double dif = atan2(left - right, DISTANCE_BETWEEN_ULTRASONIC);
 
-    if (debug) avgV += avgPID.update((avg - TARGET_DISTANCE), millis(), ptr);
+    if (debug) {
+        avgV += avgPID.update((avg - TARGET_DISTANCE), millis(), ptr);
+        Serial.println("Average Velocity Update:");
+        Serial.println(*ptr);
+        ptr->clear();
+    }
     else avgV += avgPID.update((avg - TARGET_DISTANCE), millis());
-    if (debug) difV += difPID.update((dif - TARGET_DISTANCE), millis(), ptr) * DIFFERENTIAL_SPEED_MULTIPLIER;
+    if (debug) {
+        difV += difPID.update((dif - TARGET_DISTANCE), millis(), ptr) * DIFFERENTIAL_SPEED_MULTIPLIER;
+        Serial.println("Differential Velocity Update:");
+        Serial.println(*ptr);
+        ptr->clear();
+    }
     else difV += difPID.update((dif - TARGET_DISTANCE), millis()) * DIFFERENTIAL_SPEED_MULTIPLIER;
 
     double leftV = avgV + difV;
