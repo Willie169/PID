@@ -16,7 +16,9 @@
 #define LEFT_NEGATIVE_SPEED_MULTIPLIER 1.2
 #define RIGHT_POSITIVE_SPEED_MULTIPLIER 1
 #define RIGHT_NEGATIVE_SPEED_MULTIPLIER 1.2
-// Adjust the above pins and multipliers
+// debug or not
+#define debug 1
+// Adjust the above parameters
 // The below code does not need to be changed
 
 #include "PID.hpp"
@@ -51,7 +53,10 @@ void setup()
     pinMode(TRIG_RIGHT, OUTPUT);
     pinMode(ECHO_LEFT, INPUT);
     pinMode(ECHO_RIGHT, INPUT);
-    pinMode((L293D_LEFT1,L293D_LEFT2,L293D_RIGHT1,L293D_RIGHT2),OUTPUT);
+    pinMode(L293D_LEFT1, OUTPUT);
+    pinMode(L293D_LEFT2, OUTPUT);
+    pinMode(L293D_RIGHT1, OUTPUT);
+    pinMode(L293D_RIGHT2, OUTPUT);
     avgV = 0;
     difV = 0;
 }
@@ -76,9 +81,9 @@ void loop() {
 }
 
 inline void leftOut(double leftV) {
-    Serial.println("Left Velocity: " + String(leftV));
+    if (debug) Serial.println("Left Velocity: " + String(leftV));
     leftV *= (leftV < 0)?LEFT_NEGATIVE_SPEED_MULTIPLIER:LEFT_POSITIVE_SPEED_MULTIPLIER;
-    Serial.println("Left Output: " + String(leftV));
+    if (debug) Serial.println("Left Output: " + String(leftV));
     if (leftV > 0) {
         analogWrite(L293D_LEFT1, 0);
         analogWrite(L293D_LEFT2, leftV);
@@ -89,8 +94,9 @@ inline void leftOut(double leftV) {
 }
 
 inline void rightOut(double rightV) {
-    Serial.println("Right Velocity: " + String(rightV));
+    if (debug) Serial.println("Right Velocity: " + String(rightV));
     rightV *= (rightV < 0)?RIGHT_NEGATIVE_SPEED_MULTIPLIER:RIGHT_POSITIVE_SPEED_MULTIPLIER;
+    if (debug) Serial.println("Right Output: " + String(rightV));
     if (rightV > 0) {
         analogWrite(L293D_RIGHT1, 0);
         analogWrite(L293D_RIGHT2, rightV);
