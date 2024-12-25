@@ -6,6 +6,7 @@
 #define LEFT_NEGATIVE_SPEED_MULTIPLIER 1.2
 #define RIGHT_POSITIVE_SPEED_MULTIPLIER 1
 #define RIGHT_NEGATIVE_SPEED_MULTIPLIER 1.2
+#define DISTANCE_OVER_DURATION 58.2
 
 PID avgPID(461.9, 517.9, 0.00265, 0.472, 1, 65.37, 1.7, 125, 0.15, 140, 0.2436);
 PID difPID(461.9, 517.9, 0.00265, 0.472, 1, 65.37, 1.7, 125, 0.15, 140, 0.2436);
@@ -13,11 +14,15 @@ double avgV;
 double difV;
 
 inline double leftIn() {
-    return 0;
+    digitalWrite(TRIG_LEFT, HIGH);
+    digitalWrite(TRIG_LEFT, LOW);
+    return pulseIn(ECHO_LEFT, HIGH) * DISTANCE_OVER_DURATION;
 }
 
 inline double rightIn() {
-    return 0;
+    digitalWrite(TRIG_RIGHT, HIGH);
+    digitalWrite(TRIG_RIGHT, LOW);
+    return pulseIn(ECHO_RIGHT, HIGH) * DISTANCE_OVER_DURATION;
 }
 
 void setup()
