@@ -1,3 +1,4 @@
+// Arduino Pins
 #define L293D_LEFT1 12
 #define L293D_LEFT2 11
 #define L293D_RIGHT1 10
@@ -6,6 +7,7 @@
 #define TRIG_RIGHT 13
 #define ECHO_LEFT 8
 #define ECHO_RIGHT 7
+// Multipliers
 #define DISTANCE_OVER_DURATION 58.2
 #define TARGET_DISTANCE 10
 #define DISTANCE_BETWEEN_ULTRASONIC 5
@@ -14,6 +16,8 @@
 #define LEFT_NEGATIVE_SPEED_MULTIPLIER 1.2
 #define RIGHT_POSITIVE_SPEED_MULTIPLIER 1
 #define RIGHT_NEGATIVE_SPEED_MULTIPLIER 1.2
+// Adjust the above pins and multipliers.
+// The below code does not need to be changed
 
 #include "PID.hpp"
 
