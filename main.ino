@@ -20,7 +20,13 @@ inline double rightIn() {
     return 0;
 }
 
-void setup() {
+void setup()
+{ 
+    Serial.begin (9600);
+    pinMode(TRIG_LEFT, OUTPUT);
+    pinMode(TRIG_RIGHT, OUTPUT);
+    pinMode(ECHO_LEFT, INPUT);
+    pinMode(ECHO_RIGHT, INPUT);
     avgV = 0;
     difV = 0;
 }
