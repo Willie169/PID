@@ -93,7 +93,9 @@ void loop() {
 }
 
 inline void leftOut(double leftV) {
-    if (debug) Serial.println("Left Velocity: " + String(leftV));
+    #if DEBUG
+        Serial.println("Left Velocity: " + String(leftV));
+    #endif
     leftV *= (leftV < 0)?LEFT_NEGATIVE_SPEED_MULTIPLIER:LEFT_POSITIVE_SPEED_MULTIPLIER;
     if (debug) Serial.println("Left Output: " + String(leftV));
     if (leftV > 0) {
@@ -106,7 +108,9 @@ inline void leftOut(double leftV) {
 }
 
 inline void rightOut(double rightV) {
-    if (debug) Serial.println("Right Velocity: " + String(rightV));
+    #if DEBUG
+        Serial.println("Right Velocity: " + String(rightV));
+    #endif
     rightV *= (rightV < 0)?RIGHT_NEGATIVE_SPEED_MULTIPLIER:RIGHT_POSITIVE_SPEED_MULTIPLIER;
     if (debug) Serial.println("Right Output: " + String(rightV));
     if (rightV > 0) {
