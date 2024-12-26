@@ -17,7 +17,7 @@
 #define RIGHT_POSITIVE_SPEED_MULTIPLIER 1
 #define RIGHT_NEGATIVE_SPEED_MULTIPLIER 1.2
 // debug or not
-#define debug 1
+#define DEBUG 1
 // Adjust the above parameters
 // The below code does not need to be changed
 
@@ -68,20 +68,19 @@ void loop() {
     double avg = left + right;
     double dif = atan2(left - right, DISTANCE_BETWEEN_ULTRASONIC);
 
-    if (debug) {
+    #if DEBUG
         avgV += avgPID.update((avg - TARGET_DISTANCE), millis(), ptr);
         Serial.println("Average Velocity Update:");
         Serial.println(*ptr);
         ptr->clear();
-    }
-    else avgV += avgPID.update((avg - TARGET_DISTANCE), millis());
-    if (debug) {
         difV += difPID.update((dif - TARGET_DISTANCE), millis(), ptr) * DIFFERENTIAL_SPEED_MULTIPLIER;
         Serial.println("Differential Velocity Update:");
         Serial.println(*ptr);
         ptr->clear();
-    }
-    else difV += difPID.update((dif - TARGET_DISTANCE), millis()) * DIFFERENTIAL_SPEED_MULTIPLIER;
+    #else
+        avgV += avgPID.update((avg - TARGET_DISTANCE), millis());
+        difV += difPID.update((dif - TARGET_DISTANCE), millis()) * DIFFERENTIAL_SPEED_MULTIPLIER;
+    #endif
 
     double leftV = avgV + difV;
     double rightV = avgV - difV;
