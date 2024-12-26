@@ -92,7 +92,6 @@ void loop() {
     rightOut(CLAMP(rightV, 255, -255));
 
     delayMicroseconds(10000);
-    stop();
 }
 
 inline void leftOut(double leftV) {
@@ -127,11 +126,4 @@ inline void rightOut(double rightV) {
         analogWrite(L293D_RIGHT_IN1, -rightV);
         analogWrite(L293D_RIGHT_IN2, 0);
     }
-}
-
-inline void stop() {
-    analogWrite(L293D_LEFT_IN1, 0);
-    analogWrite(L293D_LEFT_IN2, 0);
-    analogWrite(L293D_RIGHT_IN1, 0);
-    analogWrite(L293D_RIGHT_IN2, 0);
 }
