@@ -27,7 +27,9 @@ PID avgPID(461.9, 517.9, 0.00265, 0.472, 1, 65.37, 1.7, 125, 0.15, 140, 0.2436);
 PID difPID(461.9, 517.9, 0.00265, 0.472, 1, 65.37, 1.7, 125, 0.15, 140, 0.2436);
 double avgV;
 double difV;
-String* ptr = new String();
+#if DEBUG
+    String* ptr = new String();
+#endif
 
 inline double leftIn() {
     digitalWrite(TRIG_LEFT, LOW);
