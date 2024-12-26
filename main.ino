@@ -8,18 +8,20 @@
 #define ECHO_LEFT 8
 #define ECHO_RIGHT 7
 // Multipliers
-#define DISTANCE_OVER_DURATION 58.2
 #define TARGET_DISTANCE 10
-#define DISTANCE_BETWEEN_ULTRASONIC 5
+#define DISTANCE_BETWEEN_ULTRASONIC_SENSOR 5
 #define DIFFERENTIAL_SPEED_MULTIPLIER 0.8
 #define LEFT_POSITIVE_SPEED_MULTIPLIER 1
 #define LEFT_NEGATIVE_SPEED_MULTIPLIER 1.2
 #define RIGHT_POSITIVE_SPEED_MULTIPLIER 1
 #define RIGHT_NEGATIVE_SPEED_MULTIPLIER 1.2
-// debug or not
+// debug (1) or not (0)
 #define DEBUG 1
 // Adjust the above parameters
 // The below code does not need to be changed
+
+// Constant
+#define DISTANCE_OVER_DURATION 58.2
 
 #include "PID.hpp"
 
