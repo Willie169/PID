@@ -15,13 +15,12 @@
 #define LEFT_NEGATIVE_SPEED_MULTIPLIER 1.2
 #define RIGHT_POSITIVE_SPEED_MULTIPLIER 1
 #define RIGHT_NEGATIVE_SPEED_MULTIPLIER 1.2
+// Half sound speed
+#define DISTANCE_OVER_DURATION 0.1715
 // debug (1) or not (0)
 #define DEBUG 1
 // Adjust the above parameters
 // The below code does not need to be changed
-
-// Constant
-#define DISTANCE_OVER_DURATION 58.2
 
 #include "PID.hpp"
 
