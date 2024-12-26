@@ -3,8 +3,8 @@
 #define L293D_LEFT2 11
 #define L293D_RIGHT1 10
 #define L293D_RIGHT2 9
-#define TRIG_LEFT 14
-#define TRIG_RIGHT 13
+#define TRIG_LEFT 6
+#define TRIG_RIGHT 5
 #define ECHO_LEFT 8
 #define ECHO_RIGHT 7
 // Multipliers
@@ -97,7 +97,9 @@ inline void leftOut(double leftV) {
         Serial.println("Left Velocity: " + String(leftV));
     #endif
     leftV *= (leftV < 0)?LEFT_NEGATIVE_SPEED_MULTIPLIER:LEFT_POSITIVE_SPEED_MULTIPLIER;
-    if (debug) Serial.println("Left Output: " + String(leftV));
+    #if DEBUG
+        Serial.println("Left Output: " + String(leftV));
+    #endif
     if (leftV > 0) {
         analogWrite(L293D_LEFT1, 0);
         analogWrite(L293D_LEFT2, leftV);
@@ -112,7 +114,9 @@ inline void rightOut(double rightV) {
         Serial.println("Right Velocity: " + String(rightV));
     #endif
     rightV *= (rightV < 0)?RIGHT_NEGATIVE_SPEED_MULTIPLIER:RIGHT_POSITIVE_SPEED_MULTIPLIER;
-    if (debug) Serial.println("Right Output: " + String(rightV));
+    #if DEBUG
+        Serial.println("Right Output: " + String(rightV));
+    #endif
     if (rightV > 0) {
         analogWrite(L293D_RIGHT1, 0);
         analogWrite(L293D_RIGHT2, rightV);
