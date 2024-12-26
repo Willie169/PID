@@ -10,7 +10,7 @@
 // Multipliers
 #define HALF_SOUND_SPEED 0.1715
 #define TARGET_DISTANCE 10
-#define DISTANCE_BETWEEN_ULTRASONIC_SENSOR 5
+#define DISTANCE_BETWEEN_ULTRASONIC_SENSORS 5
 #define ANGULAR_SPEED_MULTIPLIER 0.8
 #define LEFT_POSITIVE_SPEED_MULTIPLIER 1
 #define LEFT_NEGATIVE_SPEED_MULTIPLIER 1.2
@@ -68,7 +68,7 @@ void loop() {
     double left = leftIn();
     double right = rightIn();
     double avg = left + right;
-    double ang = atan2(left - right, DISTANCE_BETWEEN_ULTRASONIC);
+    double ang = atan2(left - right, DISTANCE_BETWEEN_ULTRASONIC_SENSORS);
 
     #if DEBUG
         ptr->clear();
