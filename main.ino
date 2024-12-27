@@ -3,10 +3,10 @@
 #define L293D_LEFT_IN2 11
 #define L293D_RIGHT_IN1 10
 #define L293D_RIGHT_IN2 9
-#define TRIG_LEFT 6
-#define TRIG_RIGHT 5
-#define ECHO_LEFT 8
-#define ECHO_RIGHT 7
+#define TRIG_LEFT D0
+#define TRIG_RIGHT D1
+#define ECHO_LEFT D9
+#define ECHO_RIGHT D10
 // Multipliers
 #define HALF_SOUND_SPEED 0.1715
 #define TARGET_DISTANCE 10
