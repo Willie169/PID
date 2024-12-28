@@ -1,0 +1,2258 @@
+% template.tex of https://github.com/Willie169/LaTeX-ToolKit, licensed under either GPL-3.0-or-later or CC BY-SA 4.0-or-later.
+\documentclass[a4paper,12pt]{article}
+% Change it to the documentclass you want, this template is now mainly designed for report and article documentclass.
+\newcounter{xeCJK}
+\setcounter{xeCJK}{1}
+% Set xeCJK counter to 1 to use xeCJK packageb; 0 to not use it.
+\usepackage[margin=1.27cm,foot=0.77cm]{geometry}
+\setcounter{secnumdepth}{6}
+\setcounter{tocdepth}{3}
+% Change above to what you want.
+\newcounter{Fonts}
+\setcounter{Fonts}{1}
+% Set Fonts counter to set fonts' style: 0 for not set; 1 for TeX Gyre Heros as main font, TeX Gyre Termes as sans font, Courier as mono font; 2 for TeX Gyre Termes as main font, TeX Gyre Heros as sans font, Courier as mono font; 3 for TeX Gyre Heros as main font, sans font not set, Courier as mono font; 4 for TeX Gyre Termes as main font, sans font not set, Courier as mono font; 5 to 8 for 1 to 4 but without Courier as mono font.
+\newcounter{STIXMath}
+\setcounter{STIXMath}{1}
+% Set STIXMath counter to set math font: 0 for not set; 1 for STIX 2 Math.
+\newcounter{CJKFonts}
+\setcounter{CJKFonts}{1}
+% Set CJKFonts counter to set CJK fonts' style: 0 for not set; 1 for Noto Sans CJK as CJK main font, Noto Serif CJK as CJK sans font, Noto Sans Mono CJK as CJK mono font; 2 for Noto Serif CJK as CJK main font, Noto Sans CJK as CJK sans font, Noto Sans Mono CJK as CJK mono font; 3 for Noto Sans CJK as CJK main font, CJK sans font not set, Noto Sans Mono CJK as CJK mono font; 4 for Noto Serif CJK as CJK main font, CJK sans font not set, Noto Sans Mono CJK as CJK mono font; 5 to 8 for 1 to 4 but without Noto Sans Mono CJK as CJK mono font. If xeCJK package is not loaded, this counter will be omitted.
+\newcounter{CJKLanguage}
+\setcounter{CJKLanguage}{0}
+% Set CJKLanguage counter to set CJK fonts' language: 0 for TC (Traditional Chinese Taiwan), 1 for SC (Simplified Chinese), 2 for HK (Traditional Chinese Hong Kong), 3 for JP (Japanese), 4 for KR (Korean). If either xeCJK package is not loaded or CJKFonts counter is set to zero, this counter will be omitted.
+\newcounter{NotoCJKFamily}
+\setcounter{NotoCJKFamily}{1}
+% Set NotoCJKFamily counter to set Noto CJK font families, where Lang stands for TC, SC, HK, JP, and KR, one language one family: 0 for not set; 1 for Noto Sans CJK Lang as Lang and SansLang, Noto Serif CJK as SerifLang, Noto Sans Mono CJK Lang as MonoLang; 2 for Noto Serif CJK Lang as Lang and SerifLang, Noto Sans CJK Lang as SansLang, Noto Sans Mono CJK Lang as MonoLang; 3 for Noto Sans CJK Lang as SansLang, Noto Serif CJK Lang as SerifLang, Noto Sans Mono CJK Lang as MonoLang. If xeCJK package is not loaded, this counter will be omitted.
+\newcounter{SectionLanguage}
+\setcounter{SectionLanguage}{0}
+% Set SectionLanguage counter to choose the language of the numbering for chapters (if documentclass is not article), sections, subsections, and subsubsections: 0 for Arabic, 1 for Traditional Chinese, 2 for Simplified Chinese. If xeCJK package is not loaded, this counter will be omitted and Arabic will be used.
+\newcounter{ZhRenew}
+\setcounter{ZhRenew}{0}
+% Set ZhRenew counter to 1 to renew TOC's title to 目錄; 2 to renew TOC's title to 目录; 0 to not renew them. If xeCJK package is not loaded, this counter will be omitted.
+% --- Below is the implementation of this template --- %
+\usepackage[defaultlines=8]{nowidow}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{etoolbox}
+\ifnum\value{xeCJK}=1
+\usepackage[CJKspace]{xeCJK}
+\fi
+\usepackage{fontspec,titlesec,titling,setspace,needspace,titletoc,bibliography}
+\usepackage{amsthm,amsmath,amsfonts,amssymb,dsfont,stmaryrd,unicode-math,mathtools,mathrsfs,textcomp,esint,textgreek}
+\usepackage{diagbox,cellspace,array,booktabs,longtable,enumitem,graphicx,caption,subcaption,float,placeins,xcolor}
+\usepackage{tikz,xparse,physics,braket,longtable,hanging,tcolorbox,chemfig}
+\usepackage[version=4]{mhchem}
+\makeatletter\tikzset{dot diameter/.store in=\dot@diameter,dot diameter=1pt,dot spacing/.store in=\dot@spacing,dot spacing=5.5pt,dots/.style={line width=\dot@diameter,line cap=round,dash pattern=on 0pt off \dot@spacing}}\makeatother
+\ifnum\value{Fonts}=1
+\setmainfont{TeX Gyre Heros}[Ligatures=TeX]
+\setsansfont{TeX Gyre Termes}[Ligatures=TeX]
+\setmonofont{Courier}[Ligatures=TeX]
+\else\ifnum\value{Fonts}=2
+\setmainfont{TeX Gyre Termes}[Ligatures=TeX]
+\setsansfont{TeX Gyre Heros}[Ligatures=TeX]
+\setmonofont{Courier}[Ligatures=TeX]
+\else\ifnum\value{Fonts}=3
+\setmainfont{TeX Gyre Heros}[Ligatures=TeX]
+\setmonofont{Courier}[Ligatures=TeX]
+\else\ifnum\value{Fonts}=4
+\setmainfont{TeX Gyre Termes}[Ligatures=TeX]
+\setmonofont{Courier}[Ligatures=TeX]
+\else\ifnum\value{Fonts}=5
+\setmainfont{TeX Gyre Heros}[Ligatures=TeX]
+\setsansfont{TeX Gyre Termes}[Ligatures=TeX]
+\else\ifnum\value{Fonts}=6
+\setmainfont{TeX Gyre Termes}[Ligatures=TeX]
+\setsansfont{TeX Gyre Heros}[Ligatures=TeX]
+\else\ifnum\value{Fonts}=7
+\setmainfont{TeX Gyre Heros}[Ligatures=TeX]
+\else\ifnum\value{Fonts}=8
+\setmainfont{TeX Gyre Termes}[Ligatures=TeX]
+\fi\fi\fi\fi\fi\fi\fi\fi
+\ifnum\value{STIXMath}=1\setmathfont{STIX Two Math}[Ligatures=TeX]\fi
+\ifnum\value{xeCJK}=1
+\usepackage{zhnumber}
+\ifnum\value{CJKFonts}=0\else
+\ifnum\value{CJKLanguage}=0
+\ifnum\value{CJKFonts}=1
+\setCJKmainfont{Noto Sans CJK TC}[UprightFont=*,ItalicFont=* Medium,SmallCapsFont=* DemiLight,BoldFont=*,BoldItalicFont=* Black,Ligatures=TeX]
+\setCJKsansfont{Noto Serif CJK TC}[UprightFont=*,ItalicFont=* Medium,SmallCapsFont=* Light,BoldFont=*,BoldItalicFont=* Black,Ligatures=TeX]
+\setCJKmonofont{Noto Sans Mono CJK TC}[Ligatures=TeX]
+\else\ifnum\value{CJKFonts}=2
+\setCJKmainfont{Noto Serif CJK TC}[UprightFont=*,ItalicFont=* Medium,SmallCapsFont=* Light,BoldFont=*,BoldItalicFont=* Black,Ligatures=TeX]
+\setCJKsansfont{Noto Sans CJK TC}[UprightFont=*,ItalicFont=* Medium,SmallCapsFont=* DemiLight,BoldFont=*,BoldItalicFont=* Black,Ligatures=TeX]
+\setCJKmonofont{Noto Sans Mono CJK TC}[Ligatures=TeX]
+\else\ifnum\value{CJKFonts}=3
+\setCJKmainfont{Noto Sans CJK TC}[UprightFont=*,ItalicFont=* Medium,SmallCapsFont=* DemiLight,BoldFont=*,BoldItalicFont=* Black,Ligatures=TeX]
+\setCJKmonofont{Noto Sans Mono CJK TC}[Ligatures=TeX]
+\else\ifnum\value{CJKFonts}=4
+\setCJKmainfont{Noto Serif CJK TC}[UprightFont=*,ItalicFont=* Medium,SmallCapsFont=* Light,BoldFont=*,BoldItalicFont=* Black,Ligatures=TeX]
+\setCJKmonofont{Noto Sans Mono CJK TC}[Ligatures=TeX]
+\else\ifnum\value{CJKFonts}=5
+\setCJKmainfont{Noto Sans CJK TC}[UprightFont=*,ItalicFont=* Medium,SmallCapsFont=* DemiLight,BoldFont=*,BoldItalicFont=* Black,Ligatures=TeX]
+\setCJKsansfont{Noto Serif CJK TC}[UprightFont=*,ItalicFont=* Medium,SmallCapsFont=* Light,BoldFont=*,BoldItalicFont=* Black,Ligatures=TeX]
+\else\ifnum\value{CJKFonts}=6
+\setCJKmainfont{Noto Serif CJK TC}[UprightFont=*,ItalicFont=* Medium,SmallCapsFont=* Light,BoldFont=*,BoldItalicFont=* Black,Ligatures=TeX]
+\setCJKsansfont{Noto Sans CJK TC}[UprightFont=*,ItalicFont=* Medium,SmallCapsFont=* DemiLight,BoldFont=*,BoldItalicFont=* Black,Ligatures=TeX]
+\else\ifnum\value{CJKFonts}=7
+\setCJKmainfont{Noto Sans CJK TC}[UprightFont=*,ItalicFont=* Medium,SmallCapsFont=* DemiLight,BoldFont=*,BoldItalicFont=* Black,Ligatures=TeX]
+\else\ifnum\value{CJKFonts}=8
+\setCJKmainfont{Noto Serif CJK TC}[UprightFont=*,ItalicFont=* Medium,SmallCapsFont=* Light,BoldFont=*,BoldItalicFont=* Black,Ligatures=TeX]
+\fi\fi\fi\fi\fi\fi\fi\fi
+\else\ifnum\value{CJKLanguage}=1
+\ifnum\value{CJKFonts}=1
+\setCJKmainfont{Noto Sans CJK SC}[UprightFont=*,ItalicFont=* Medium,SmallCapsFont=* DemiLight,BoldFont=*,BoldItalicFont=* Black,Ligatures=TeX]
+\setCJKsansfont{Noto Serif CJK SC}[UprightFont=*,ItalicFont=* Medium,SmallCapsFont=* Light,BoldFont=*,BoldItalicFont=* Black,Ligatures=TeX]
+\setCJKmonofont{Noto Sans Mono CJK SC}[Ligatures=TeX]
+\else\ifnum\value{CJKFonts}=2
+\setCJKmainfont{Noto Serif CJK SC}[UprightFont=*,ItalicFont=* Medium,SmallCapsFont=* Light,BoldFont=*,BoldItalicFont=* Black,Ligatures=TeX]
+\setCJKsansfont{Noto Sans CJK SC}[UprightFont=*,ItalicFont=* Medium,SmallCapsFont=* DemiLight,BoldFont=*,BoldItalicFont=* Black,Ligatures=TeX]
+\setCJKmonofont{Noto Sans Mono CJK SC}[Ligatures=TeX]
+\else\ifnum\value{CJKFonts}=3
+\setCJKmainfont{Noto Sans CJK SC}[UprightFont=*,ItalicFont=* Medium,SmallCapsFont=* DemiLight,BoldFont=*,BoldItalicFont=* Black,Ligatures=TeX]
+\setCJKmonofont{Noto Sans Mono CJK SC}[Ligatures=TeX]
+\else\ifnum\value{CJKFonts}=4
+\setCJKmainfont{Noto Serif CJK SC}[UprightFont=*,ItalicFont=* Medium,SmallCapsFont=* Light,BoldFont=*,BoldItalicFont=* Black,Ligatures=TeX]
+\setCJKmonofont{Noto Sans Mono CJK SC}[Ligatures=TeX]
+\else\ifnum\value{CJKFonts}=5
+\setCJKmainfont{Noto Sans CJK SC}[UprightFont=*,ItalicFont=* Medium,SmallCapsFont=* DemiLight,BoldFont=*,BoldItalicFont=* Black,Ligatures=TeX]
+\setCJKsansfont{Noto Serif CJK SC}[UprightFont=*,ItalicFont=* Medium,SmallCapsFont=* Light,BoldFont=*,BoldItalicFont=* Black,Ligatures=TeX]
+\else\ifnum\value{CJKFonts}=6
+\setCJKmainfont{Noto Serif CJK SC}[UprightFont=*,ItalicFont=* Medium,SmallCapsFont=* Light,BoldFont=*,BoldItalicFont=* Black,Ligatures=TeX]
+\setCJKsansfont{Noto Sans CJK SC}[UprightFont=*,ItalicFont=* Medium,SmallCapsFont=* DemiLight,BoldFont=*,BoldItalicFont=* Black,Ligatures=TeX]
+\else\ifnum\value{CJKFonts}=7
+\setCJKmainfont{Noto Sans CJK SC}[UprightFont=*,ItalicFont=* Medium,SmallCapsFont=* DemiLight,BoldFont=*,BoldItalicFont=* Black,Ligatures=TeX]
+\else\ifnum\value{CJKFonts}=8
+\setCJKmainfont{Noto Serif CJK SC}[UprightFont=*,ItalicFont=* Medium,SmallCapsFont=* Light,BoldFont=*,BoldItalicFont=* Black,Ligatures=TeX]
+\fi\fi\fi\fi\fi\fi\fi\fi
+\else\ifnum\value{CJKLanguage}=2
+\ifnum\value{CJKFonts}=1
+\setCJKmainfont{Noto Sans CJK HK}[UprightFont=*,ItalicFont=* Medium,SmallCapsFont=* DemiLight,BoldFont=*,BoldItalicFont=* Black,Ligatures=TeX]
+\setCJKsansfont{Noto Serif CJK HK}[UprightFont=*,ItalicFont=* Medium,SmallCapsFont=* Light,BoldFont=*,BoldItalicFont=* Black,Ligatures=TeX]
+\setCJKmonofont{Noto Sans Mono CJK HK}[Ligatures=TeX]
+\else\ifnum\value{CJKFonts}=2
+\setCJKmainfont{Noto Serif CJK HK}[UprightFont=*,ItalicFont=* Medium,SmallCapsFont=* Light,BoldFont=*,BoldItalicFont=* Black,Ligatures=TeX]
+\setCJKsansfont{Noto Sans CJK HK}[UprightFont=*,ItalicFont=* Medium,SmallCapsFont=* DemiLight,BoldFont=*,BoldItalicFont=* Black,Ligatures=TeX]
+\setCJKmonofont{Noto Sans Mono CJK HK}[Ligatures=TeX]
+\else\ifnum\value{CJKFonts}=3
+\setCJKmainfont{Noto Sans CJK HK}[UprightFont=*,ItalicFont=* Medium,SmallCapsFont=* DemiLight,BoldFont=*,BoldItalicFont=* Black,Ligatures=TeX]
+\setCJKmonofont{Noto Sans Mono CJK HK}[Ligatures=TeX]
+\else\ifnum\value{CJKFonts}=4
+\setCJKmainfont{Noto Serif CJK HK}[UprightFont=*,ItalicFont=* Medium,SmallCapsFont=* Light,BoldFont=*,BoldItalicFont=* Black,Ligatures=TeX]
+\setCJKmonofont{Noto Sans Mono CJK HK}[Ligatures=TeX]
+\else\ifnum\value{CJKFonts}=5
+\setCJKmainfont{Noto Sans CJK HK}[UprightFont=*,ItalicFont=* Medium,SmallCapsFont=* DemiLight,BoldFont=*,BoldItalicFont=* Black,Ligatures=TeX]
+\setCJKsansfont{Noto Serif CJK HK}[UprightFont=*,ItalicFont=* Medium,SmallCapsFont=* Light,BoldFont=*,BoldItalicFont=* Black,Ligatures=TeX]
+\else\ifnum\value{CJKFonts}=6
+\setCJKmainfont{Noto Serif CJK HK}[UprightFont=*,ItalicFont=* Medium,SmallCapsFont=* Light,BoldFont=*,BoldItalicFont=* Black,Ligatures=TeX]
+\setCJKsansfont{Noto Sans CJK HK}[UprightFont=*,ItalicFont=* Medium,SmallCapsFont=* DemiLight,BoldFont=*,BoldItalicFont=* Black,Ligatures=TeX]
+\else\ifnum\value{CJKFonts}=7
+\setCJKmainfont{Noto Sans CJK HK}[UprightFont=*,ItalicFont=* Medium,SmallCapsFont=* DemiLight,BoldFont=*,BoldItalicFont=* Black,Ligatures=TeX]
+\else\ifnum\value{CJKFonts}=8
+\setCJKmainfont{Noto Serif CJK HK}[UprightFont=*,ItalicFont=* Medium,SmallCapsFont=* Light,BoldFont=*,BoldItalicFont=* Black,Ligatures=TeX]
+\fi\fi\fi\fi\fi\fi\fi\fi
+\else\ifnum\value{CJKLanguage}=3
+\ifnum\value{CJKFonts}=1
+\setCJKmainfont{Noto Sans CJK JP}[UprightFont=*,ItalicFont=* Medium,SmallCapsFont=* DemiLight,BoldFont=*,BoldItalicFont=* Black,Ligatures=TeX]
+\setCJKsansfont{Noto Serif CJK JP}[UprightFont=*,ItalicFont=* Medium,SmallCapsFont=* Light,BoldFont=*,BoldItalicFont=* Black,Ligatures=TeX]
+\setCJKmonofont{Noto Sans Mono CJK JP}[Ligatures=TeX]
+\else\ifnum\value{CJKFonts}=2
+\setCJKmainfont{Noto Serif CJK JP}[UprightFont=*,ItalicFont=* Medium,SmallCapsFont=* Light,BoldFont=*,BoldItalicFont=* Black,Ligatures=TeX]
+\setCJKsansfont{Noto Sans CJK JP}[UprightFont=*,ItalicFont=* Medium,SmallCapsFont=* DemiLight,BoldFont=*,BoldItalicFont=* Black,Ligatures=TeX]
+\setCJKmonofont{Noto Sans Mono CJK JP}[Ligatures=TeX]
+\else\ifnum\value{CJKFonts}=3
+\setCJKmainfont{Noto Sans CJK JP}[UprightFont=*,ItalicFont=* Medium,SmallCapsFont=* DemiLight,BoldFont=*,BoldItalicFont=* Black,Ligatures=TeX]
+\setCJKmonofont{Noto Sans Mono CJK JP}[Ligatures=TeX]
+\else\ifnum\value{CJKFonts}=4
+\setCJKmainfont{Noto Serif CJK JP}[UprightFont=*,ItalicFont=* Medium,SmallCapsFont=* Light,BoldFont=*,BoldItalicFont=* Black,Ligatures=TeX]
+\setCJKmonofont{Noto Sans Mono CJK JP}[Ligatures=TeX]
+\else\ifnum\value{CJKFonts}=5
+\setCJKmainfont{Noto Sans CJK JP}[UprightFont=*,ItalicFont=* Medium,SmallCapsFont=* DemiLight,BoldFont=*,BoldItalicFont=* Black,Ligatures=TeX]
+\setCJKsansfont{Noto Serif CJK JP}[UprightFont=*,ItalicFont=* Medium,SmallCapsFont=* Light,BoldFont=*,BoldItalicFont=* Black,Ligatures=TeX]
+\else\ifnum\value{CJKFonts}=6
+\setCJKmainfont{Noto Serif CJK JP}[UprightFont=*,ItalicFont=* Medium,SmallCapsFont=* Light,BoldFont=*,BoldItalicFont=* Black,Ligatures=TeX]
+\setCJKsansfont{Noto Sans CJK JP}[UprightFont=*,ItalicFont=* Medium,SmallCapsFont=* DemiLight,BoldFont=*,BoldItalicFont=* Black,Ligatures=TeX]
+\else\ifnum\value{CJKFonts}=7
+\setCJKmainfont{Noto Sans CJK JP}[UprightFont=*,ItalicFont=* Medium,SmallCapsFont=* DemiLight,BoldFont=*,BoldItalicFont=* Black,Ligatures=TeX]
+\else\ifnum\value{CJKFonts}=8
+\setCJKmainfont{Noto Serif CJK JP}[UprightFont=*,ItalicFont=* Medium,SmallCapsFont=* Light,BoldFont=*,BoldItalicFont=* Black,Ligatures=TeX]
+\fi\fi\fi\fi\fi\fi\fi\fi
+\else\ifnum\value{CJKLanguage}=4
+\ifnum\value{CJKFonts}=1
+\setCJKmainfont{Noto Sans CJK KR}[UprightFont=*,ItalicFont=* Medium,SmallCapsFont=* DemiLight,BoldFont=*,BoldItalicFont=* Black,Ligatures=TeX]
+\setCJKsansfont{Noto Serif CJK KR}[UprightFont=*,ItalicFont=* Medium,SmallCapsFont=* Light,BoldFont=*,BoldItalicFont=* Black,Ligatures=TeX]
+\setCJKmonofont{Noto Sans Mono CJK KR}[Ligatures=TeX]
+\else\ifnum\value{CJKFonts}=2
+\setCJKmainfont{Noto Serif CJK KR}[UprightFont=*,ItalicFont=* Medium,SmallCapsFont=* Light,BoldFont=*,BoldItalicFont=* Black,Ligatures=TeX]
+\setCJKsansfont{Noto Sans CJK KR}[UprightFont=*,ItalicFont=* Medium,SmallCapsFont=* DemiLight,BoldFont=*,BoldItalicFont=* Black,Ligatures=TeX]
+\setCJKmonofont{Noto Sans Mono CJK KR}[Ligatures=TeX]
+\else\ifnum\value{CJKFonts}=3
+\setCJKmainfont{Noto Sans CJK KR}[UprightFont=*,ItalicFont=* Medium,SmallCapsFont=* DemiLight,BoldFont=*,BoldItalicFont=* Black,Ligatures=TeX]
+\setCJKmonofont{Noto Sans Mono CJK KR}[Ligatures=TeX]
+\else\ifnum\value{CJKFonts}=4
+\setCJKmainfont{Noto Serif CJK KR}[UprightFont=*,ItalicFont=* Medium,SmallCapsFont=* Light,BoldFont=*,BoldItalicFont=* Black,Ligatures=TeX]
+\setCJKmonofont{Noto Sans Mono CJK KR}[Ligatures=TeX]
+\else\ifnum\value{CJKFonts}=5
+\setCJKmainfont{Noto Sans CJK KR}[UprightFont=*,ItalicFont=* Medium,SmallCapsFont=* DemiLight,BoldFont=*,BoldItalicFont=* Black,Ligatures=TeX]
+\setCJKsansfont{Noto Serif CJK KR}[UprightFont=*,ItalicFont=* Medium,SmallCapsFont=* Light,BoldFont=*,BoldItalicFont=* Black,Ligatures=TeX]
+\else\ifnum\value{CJKFonts}=6
+\setCJKmainfont{Noto Serif CJK KR}[UprightFont=*,ItalicFont=* Medium,SmallCapsFont=* Light,BoldFont=*,BoldItalicFont=* Black,Ligatures=TeX]
+\setCJKsansfont{Noto Sans CJK KR}[UprightFont=*,ItalicFont=* Medium,SmallCapsFont=* DemiLight,BoldFont=*,BoldItalicFont=* Black,Ligatures=TeX]
+\else\ifnum\value{CJKFonts}=7
+\setCJKmainfont{Noto Sans CJK KR}[UprightFont=*,ItalicFont=* Medium,SmallCapsFont=* DemiLight,BoldFont=*,BoldItalicFont=* Black,Ligatures=TeX]
+\else\ifnum\value{CJKFonts}=8
+\setCJKmainfont{Noto Serif CJK KR}[UprightFont=*,ItalicFont=* Medium,SmallCapsFont=* Light,BoldFont=*,BoldItalicFont=* Black,Ligatures=TeX]
+\fi\fi\fi\fi\fi\fi\fi\fi
+\fi\fi\fi\fi\fi\fi
+\ifnum\value{NotoCJKFamily}=3
+\setfontfamily{\SansTC}{Noto Sans CJK TC}[UprightFont=*,ItalicFont=* Medium,SmallCapsFont=* DemiLight,BoldFont=*,BoldItalicFont=* Black,Ligatures=TeX]
+\setfontfamily{\SerifTC}{Noto Serif CJK TC}[UprightFont=*,ItalicFont=* Medium,SmallCapsFont=* Light,BoldFont=*,BoldItalicFont=* Black,Ligatures=TeX]
+\setfontfamily{\SansSC}{Noto Sans CJK SC}[UprightFont=*,ItalicFont=* Medium,SmallCapsFont=* DemiLight,BoldFont=*,BoldItalicFont=* Black,Ligatures=TeX]
+\setfontfamily{\SerifSC}{Noto Serif CJK SC}[UprightFont=*,ItalicFont=* Medium,SmallCapsFont=* Light,BoldFont=*,BoldItalicFont=* Black,Ligatures=TeX]
+\setfontfamily{\SansHK}{Noto Sans CJK HK}[UprightFont=*,ItalicFont=* Medium,SmallCapsFont=* DemiLight,BoldFont=*,BoldItalicFont=* Black,Ligatures=TeX]
+\setfontfamily{\SerifHK}{Noto Serif CJK HK}[UprightFont=*,ItalicFont=* Medium,SmallCapsFont=* Light,BoldFont=*,BoldItalicFont=* Black,Ligatures=TeX]
+\setfontfamily{\SansJP}{Noto Sans CJK JP}[UprightFont=*,ItalicFont=* Medium,SmallCapsFont=* DemiLight,BoldFont=*,BoldItalicFont=* Black,Ligatures=TeX]
+\setfontfamily{\SerifJP}{Noto Serif CJK JP}[UprightFont=*,ItalicFont=* Medium,SmallCapsFont=* Light,BoldFont=*,BoldItalicFont=* Black,Ligatures=TeX]
+\setfontfamily{\SansKR}{Noto Sans CJK KR}[UprightFont=*,ItalicFont=* Medium,SmallCapsFont=* DemiLight,BoldFont=*,BoldItalicFont=* Black,Ligatures=TeX]
+\setfontfamily{\SerifKR}{Noto Serif CJK KR}[UprightFont=*,ItalicFont=* Medium,SmallCapsFont=* Light,BoldFont=*,BoldItalicFont=* Black,Ligatures=TeX]
+\else\ifnum\value{NotoCJKFamily}=2
+\setfontfamily{\SansTC}{Noto Sans CJK TC}[UprightFont=*,ItalicFont=* Medium,SmallCapsFont=* DemiLight,BoldFont=*,BoldItalicFont=* Black,Ligatures=TeX]
+\setfontfamily{\SerifTC}{Noto Serif CJK TC}[UprightFont=*,ItalicFont=* Medium,SmallCapsFont=* Light,BoldFont=*,BoldItalicFont=* Black,Ligatures=TeX]
+\setfontfamily{\TC}{Noto Serif CJK TC}[UprightFont=*,ItalicFont=* Medium,SmallCapsFont=* Light,BoldFont=*,BoldItalicFont=* Black,Ligatures=TeX]
+\setfontfamily{\SansSC}{Noto Sans CJK SC}[UprightFont=*,ItalicFont=* Medium,SmallCapsFont=* DemiLight,BoldFont=*,BoldItalicFont=* Black,Ligatures=TeX]
+\setfontfamily{\SerifSC}{Noto Serif CJK SC}[UprightFont=*,ItalicFont=* Medium,SmallCapsFont=* Light,BoldFont=*,BoldItalicFont=* Black,Ligatures=TeX]
+\setfontfamily{\SC}{Noto Serif CJK SC}[UprightFont=*,ItalicFont=* Medium,SmallCapsFont=* Light,BoldFont=*,BoldItalicFont=* Black,Ligatures=TeX]
+\setfontfamily{\SansHK}{Noto Sans CJK HK}[UprightFont=*,ItalicFont=* Medium,SmallCapsFont=* DemiLight,BoldFont=*,BoldItalicFont=* Black,Ligatures=TeX]
+\setfontfamily{\SerifHK}{Noto Serif CJK HK}[UprightFont=*,ItalicFont=* Medium,SmallCapsFont=* Light,BoldFont=*,BoldItalicFont=* Black,Ligatures=TeX]
+\setfontfamily{\HK}{Noto Serif CJK HK}[UprightFont=*,ItalicFont=* Medium,SmallCapsFont=* Light,BoldFont=*,BoldItalicFont=* Black,Ligatures=TeX]
+\setfontfamily{\SansJP}{Noto Sans CJK JP}[UprightFont=*,ItalicFont=* Medium,SmallCapsFont=* DemiLight,BoldFont=*,BoldItalicFont=* Black,Ligatures=TeX]
+\setfontfamily{\SerifJP}{Noto Serif CJK JP}[UprightFont=*,ItalicFont=* Medium,SmallCapsFont=* Light,BoldFont=*,BoldItalicFont=* Black,Ligatures=TeX]
+\setfontfamily{\JP}{Noto Serif CJK JP}[UprightFont=*,ItalicFont=* Medium,SmallCapsFont=* Light,BoldFont=*,BoldItalicFont=* Black,Ligatures=TeX]
+\setfontfamily{\SansKR}{Noto Sans CJK JP}[UprightFont=*,ItalicFont=* Medium,SmallCapsFont=* DemiLight,BoldFont=*,BoldItalicFont=* Black,Ligatures=TeX]
+\setfontfamily{\SerifKR}{Noto Serif CJK KR}[UprightFont=*,ItalicFont=* Medium,SmallCapsFont=* Light,BoldFont=*,BoldItalicFont=* Black,Ligatures=TeX]
+\setfontfamily{\KR}{Noto Serif CJK KR}[UprightFont=*,ItalicFont=* Medium,SmallCapsFont=* Light,BoldFont=*,BoldItalicFont=* Black,Ligatures=TeX]
+\else\ifnum\value{NotoCJKFamily}=1
+\setfontfamily{\SansTC}{Noto Sans CJK TC}[UprightFont=*,ItalicFont=* Medium,SmallCapsFont=* DemiLight,BoldFont=*,BoldItalicFont=* Black,Ligatures=TeX]
+\setfontfamily{\SerifTC}{Noto Serif CJK TC}[UprightFont=*,ItalicFont=* Medium,SmallCapsFont=* Light,BoldFont=*,BoldItalicFont=* Black,Ligatures=TeX]
+\setfontfamily{\TC}{Noto Sans CJK TC}[UprightFont=*,ItalicFont=* Medium,SmallCapsFont=* DemiLight,BoldFont=*,BoldItalicFont=* Black,Ligatures=TeX]
+\setfontfamily{\SansSC}{Noto Sans CJK SC}[UprightFont=*,ItalicFont=* Medium,SmallCapsFont=* DemiLight,BoldFont=*,BoldItalicFont=* Black,Ligatures=TeX]
+\setfontfamily{\SerifSC}{Noto Serif CJK SC}[UprightFont=*,ItalicFont=* Medium,SmallCapsFont=* Light,BoldFont=*,BoldItalicFont=* Black,Ligatures=TeX]
+\setfontfamily{\SC}{Noto Sans CJK SC}[UprightFont=*,ItalicFont=* Medium,SmallCapsFont=* DemiLight,BoldFont=*,BoldItalicFont=* Black,Ligatures=TeX]
+\setfontfamily{\SansHK}{Noto Sans CJK HK}[UprightFont=*,ItalicFont=* Medium,SmallCapsFont=* DemiLight,BoldFont=*,BoldItalicFont=* Black,Ligatures=TeX]
+\setfontfamily{\SerifHK}{Noto Serif CJK HK}[UprightFont=*,ItalicFont=* Medium,SmallCapsFont=* Light,BoldFont=*,BoldItalicFont=* Black,Ligatures=TeX]
+\setfontfamily{\HK}{Noto Sans CJK HK}[UprightFont=*,ItalicFont=* Medium,SmallCapsFont=* DemiLight,BoldFont=*,BoldItalicFont=* Black,Ligatures=TeX]
+\setfontfamily{\SansJP}{Noto Sans CJK JP}[UprightFont=*,ItalicFont=* Medium,SmallCapsFont=* DemiLight,BoldFont=*,BoldItalicFont=* Black,Ligatures=TeX]
+\setfontfamily{\SerifJP}{Noto Serif CJK JP}[UprightFont=*,ItalicFont=* Medium,SmallCapsFont=* Light,BoldFont=*,BoldItalicFont=* Black,Ligatures=TeX]
+\setfontfamily{\JP}{Noto Sans CJK JP}[UprightFont=*,ItalicFont=* Medium,SmallCapsFont=* DemiLight,BoldFont=*,BoldItalicFont=* Black,Ligatures=TeX]
+\setfontfamily{\SansKR}{Noto Sans CJK KR}[UprightFont=*,ItalicFont=* Medium,SmallCapsFont=* DemiLight,BoldFont=*,BoldItalicFont=* Black,Ligatures=TeX]
+\setfontfamily{\SerifKR}{Noto Serif CJK KR}[UprightFont=*,ItalicFont=* Medium,SmallCapsFont=* Light,BoldFont=*,BoldItalicFont=* Black,Ligatures=TeX]
+\setfontfamily{\KR}{Noto Sans CJK KR}[UprightFont=*,ItalicFont=* Medium,SmallCapsFont=* DemiLight,BoldFont=*,BoldItalicFont=* Black,Ligatures=TeX]
+\fi\fi\fi\fi
+\usepackage{url,hyperref}
+\hypersetup{colorlinks=false}
+\righthyphenmin=4
+\lefthyphenmin=4
+\pretolerance=5000
+\tolerance=9000
+\emergencystretch=1em
+\setlength{\parindent}{0pt}
+\everymath{\displaystyle}
+\everydisplay{\displaystyle}
+\captionsetup{labelformat=empty}
+\captionsetup[subfigure]{labelformat=empty}
+\renewcommand{\maketitle}{
+\begin{titlepage}
+\begin{center}
+\vspace*{\fill}
+{\huge \bfseries \thetitle\par}
+\vskip 1.5em
+{\Large \theauthor\par}
+\vskip 1em
+{\large \thedate\par}
+\vspace*{\fill}
+\end{center}
+\end{titlepage}
+}
+\usepackage{listings}
+\lstset{
+basicstyle=\ttfamily\scriptsize,
+keywordstyle=\color{blue},
+stringstyle=\color{red},
+commentstyle=\color{green!50!black},
+numberstyle=\small\color{gray},
+numbers=left,
+stepnumber=1,
+numbersep=5pt,
+backgroundcolor=\color{white},
+showspaces=false,
+showstringspaces=false,
+showtabs=false,
+frame=single,
+rulecolor=\color{black},
+tabsize=4,
+captionpos=b,
+breaklines=true,
+breakatwhitespace=false
+}
+\usepackage{csvsimple}\makeatletter\csvset{autotabularcenter/.style={file=#1,after head=\csv@pretable\begin{tabular}{|*{\csv@columncount}{c|}}\csv@tablehead,table head=\hline\csvlinetotablerow\\\hline,late after line=\\,lable foot=\\\hline,late after last line=\csv@tablefoot\end{tabular}\csv@posttable,command=\csvlinetotablerow},autobooktabularcenter/.style={file=#1,after head=\csv@pretable\begin{tabular}{*{\csv@columncount}{c}}\csv@tablehead,table head=\toprule\csvlinetotablerow\\\midrule,late after line=\\,table foot=\\\bottomrule,late after last line=\csv@tablefoot\end{tabular}\csv@posttable,command=\csvlinetotablerow}}\makeatother\newcommand{\csvautotabularcenter}[2][]{\csvloop{autotabularcenter={#2},#1}}\newcommand{\csvautobooktabularcenter}[2][]{\csvloop{autobooktabularcenter={#2},#1}}
+\usepackage{pdfpages}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\makeatletter
+\newcommand{\overleftrightsmallarrow}{\mathpalette{\overarrowsmall@\leftrightarrowfill@}}
+\newcommand{\overrightsmallarrow}{\mathpalette{\overarrowsmall@\rightarrowfill@}}
+\newcommand{\overleftsmallarrow}{\mathpalette{\overarrowsmall@\leftarrowfill@}}
+\newcommand{\overarrowsmall@}[3]{
+\vbox{
+\ialign{
+##\crcr
+#1{\smaller@style{#2}}\crcr
+\noalign{\nointerlineskip}
+$\m@th\hfil#2#3\hfil$\crcr
+}
+}
+}
+\def\smaller@style#1{
+\ifx#1\displaystyle\scriptstyle\else
+\ifx#1\textstyle\scriptstyle\else
+\scriptscriptstyle
+\fi
+\fi
+}
+\makeatother
+\ProvideDocumentCommand{\al}{}{&}
+\ProvideDocumentCommand{\and}{}{\&}
+\ProvideDocumentCommand{\ba}{}{\begin{aligned}}
+\ProvideDocumentCommand{\bct}{}{\begin{center}}
+\ProvideDocumentCommand{\bcs}{}{\begin{cases}}
+\ProvideDocumentCommand{\be}{}{\begin{equation}}
+\ProvideDocumentCommand{\bf}{}{\begin{figure}}
+\ProvideDocumentCommand{\bfH}{}{\begin{figure}[H]}
+\ProvideDocumentCommand{\bg}{m}{\begin{#1}}
+\ProvideDocumentCommand{\bm}{}{\[}
+\ProvideDocumentCommand{\bma}{}{\[\begin{aligned}}
+\ProvideDocumentCommand{\bmac}{}{\[\begin{aligned}\begin{cases}}
+\ProvideDocumentCommand{\bmc}{}{\[\begin{cases}}
+\ProvideDocumentCommand{\btb}{}{\begin{table}}
+\ProvideDocumentCommand{\btbr}{o}{\begin{tabular}{#1}}
+\ProvideDocumentCommand{\btk}{}{\begin{tikzpicture}}
+\ProvideDocumentCommand{\cd}{}{\cdot}
+\ProvideDocumentCommand{\chf}{m}{\chemfig{#1}}
+\ProvideDocumentCommand{\clp}{}{\clearpage}
+\ProvideDocumentCommand{\ctg}{o o m}{\IfNoValueTF{#3}{\IfNoValueTF{#2}{\begin{center}\begin{figure}[H]\centering\includegraphics{#1}\end{figure}\FloatBarrier\end{center}}{\begin{center}\begin{figure}[H]\centering\includegraphics[#1]{#2}\end{figure}\FloatBarrier\end{center}}}{\begin{center}\begin{figure}[H]\centering\includegraphics[#1]{#2}\caption{#3}\end{figure}\FloatBarrier\end{center}}}
+\ProvideDocumentCommand{\ctr}{}{\centering}
+\ProvideDocumentCommand{\df}{m m o}{\IfNoValueTF{#3}{\frac{\mathrm{d}#1}{\mathrm{d}#2}}{\frac{\mathrm{d}^{#1}#2}{\mathrm{d}#3^{#1}}}}
+\ProvideDocumentCommand{\dpre}{m m o}{\IfNoValueTF{#3}{\frac{\mathrm{d}}{\mathrm{d}#2}\left(#1\right)}{\frac{\mathrm{d}^{#1}}{\mathrm{d}#3^{#1}}\left(#2\right)}}
+\ProvideDocumentCommand{\dv}{}{\div}
+\ProvideDocumentCommand{\ed}{m}{\end{#1}}
+\ProvideDocumentCommand{\ea}{}{\end{aligned}}
+\ProvideDocumentCommand{\eam}{}{\end{aligned}\]}
+\ProvideDocumentCommand{\ect}{}{\end{center}}
+\ProvideDocumentCommand{\ecs}{}{\end{cases}}
+\ProvideDocumentCommand{\ecam}{}{\end{cases}\end{aligned}\]}
+\ProvideDocumentCommand{\ecm}{}{\end{cases}\]}
+\ProvideDocumentCommand{\ee}{}{\end{equation}}
+\ProvideDocumentCommand{\ef}{}{\end{figure}}
+\ProvideDocumentCommand{\em}{}{\]}
+\ProvideDocumentCommand{\eq}{}{=}
+\ProvideDocumentCommand{\etb}{}{\end{table}}
+\ProvideDocumentCommand{\etbr}{}{\begin{tabular}}
+\ProvideDocumentCommand{\etk}{}{\end{tikzpicture}}
+\ProvideDocumentCommand{\FB}{}{\FloatBarrier}
+\ProvideDocumentCommand{\fr}{m m}{\frac{#1}{#2}}
+\ProvideDocumentCommand{\ht}{m}{\hat{#1}}
+\ProvideDocumentCommand{\hf}{}{\hfill}
+\ProvideDocumentCommand{\icg}{}{\includegraphics}
+\ProvideDocumentCommand{\itg}{m m o o}{\IfNoValueTF{#4}{\IfNoValueTF{#3}{\int #1\,\mathrm{d}{#2}}{\int_0^{#1}#2\,\mathrm{d}{#3}}}{\int_{#1}^{#2} #3\,\mathrm{d}{#4}}}
+\ProvideDocumentCommand{\La}{}{\Leftarrow}
+\ProvideDocumentCommand{\la}{}{\leftarrow}
+\ProvideDocumentCommand{\ld}{}{\ldots}
+\ProvideDocumentCommand{\Lra}{}{\Leftrightarrow}
+\ProvideDocumentCommand{\lra}{}{\leftrightarrow}
+\ProvideDocumentCommand{\mb}{m}{\mathbf{#1}}
+\ProvideDocumentCommand{\mbb}{m}{\mathbb{#1}}
+\ProvideDocumentCommand{\mbf}{m}{\mathbf{#1}}
+\ProvideDocumentCommand{\mcl}{m}{\mathcal{#1}}
+\ProvideDocumentCommand{\mds}{m}{\mathds{#1}}
+\ProvideDocumentCommand{\mdp}{m}{\[#1\]}
+\ProvideDocumentCommand{\mil}{m}{\(#1\)}
+\ProvideDocumentCommand{\mi}{m}{\mathit{#1}}
+\ProvideDocumentCommand{\mn}{}{-}
+\ProvideDocumentCommand{\ms}{m}{\mathscr{#1}}
+\ProvideDocumentCommand{\mu}{}{\times}
+\ProvideDocumentCommand{\n}{}{\\}
+\ProvideDocumentCommand{\npgb}{o}{\IfNoValueTF{#1}{\nopagebreak}{\nopagebreak{#1}}}
+\ProvideDocumentCommand{\Ns}{m}{\Needspace{#1}}
+\ProvideDocumentCommand{\nth}{o}{\IfNoValueTF{#1}{\Needspace{1\textheight}}{\Needspace{#1\textheight}}}
+\ProvideDocumentCommand{\nthm}{}{\Needspace{1\textheight-1em}}
+\ProvideDocumentCommand{\ol}{m}{\overline{#1}}
+\ProvideDocumentCommand{\ola}{m}{\overleftsmallarrow{#1}}
+\ProvideDocumentCommand{\olra}{m}{\overleftrightsmallarrow{#1}}
+\ProvideDocumentCommand{\ora}{m}{\overrightsmallarrow{#1}}
+\ProvideDocumentCommand{\parallelsum}{}{\mathbin{\!/\mkern-5mu/\!}}
+\ProvideDocumentCommand{\pc}{}{\%}
+\ProvideDocumentCommand{\pf}{m m o}{\IfNoValueTF{#3}{\frac{\partial #1}{\partial #2}}{\frac{\partial^{#1} #2}{\partial #3^{#1}}}}
+\ProvideDocumentCommand{\pgb}{o}{\IfNoValueTF{#1}{\pagebreak}{\pagebreak{#1}}}
+\ProvideDocumentCommand{\pht}{m}{\phantom{#1}}
+\ProvideDocumentCommand{\ppre}{m m o}{\IfNoValueTF{#3}{\partial #2 \left( #1 \right)}{\frac{\partial^{#1}}{\partial #3^{#1}} \left( #2 \right)}}
+\ProvideDocumentCommand{\Ra}{}{\Rightarrow}
+\ProvideDocumentCommand{\ra}{}{\rightarrow}
+\ProvideDocumentCommand{\rlh}{}{\rightleftharpoons}
+\ProvideDocumentCommand{\rl}{}{\relax}
+\ProvideDocumentCommand{\RNum}{m}{\uppercase\expandafter{\romannumeral #1\relax}}
+\ProvideDocumentCommand{\st}{}{*}
+\ProvideDocumentCommand{\tb}{m}{\textbf{#1}}
+\ProvideDocumentCommand{\tc}{m}{\text{\raisebox{.6pt}{\textcircled{\raisebox{-.9pt}{#1}}}}}
+\ProvideDocumentCommand{\ti}{m}{\textit{#1}}
+\ProvideDocumentCommand{\th}{}{\textheight}
+\ProvideDocumentCommand{\ts}{o}{\IfNoValueTF{#1}{\text{\protect\ }}{\text{\protect\foreach\i in{1,2,...,#1}{\protect\ }}}}
+\ProvideDocumentCommand{\tw}{}{\textwidth}
+\ProvideDocumentCommand{\tx}{m}{\text{#1}}
+\ProvideDocumentCommand{\vc}{m}{\vec{#1}}
+\ProvideDocumentCommand{\vf}{}{\vfill}
+\ProvideDocumentCommand{\vsp}{s m}{\IfBooleanTF{#1}{\vspace*{#2}}{\vspace{#2}}}
+\ProvideDocumentCommand{\vsf}{}{\vspace*{\fill}}
+\titleclass{\subsubparagraph}{straight}[\subparagraph]
+\newcounter{subsubparagraph}[subparagraph]
+\titlespacing*{\subsubparagraph}{\parindent}{3.25ex plus 1ex minus .2ex}{1em}
+\titleformat{\section}[block]{\Large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\large\bfseries}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries}{\thesubsubsection}{1em}{}
+\titleformat{\paragraph}{\normalsize\bfseries}{\theparagraph}{1em}{}
+\titleformat{\subparagraph}{\normalsize\bfseries}{\thesubparagraph}{1em}{}
+\titleformat{\subsubparagraph}{\normalsize\bfseries}{\thesubsubparagraph}{1em}{}
+\ProvideDocumentCommand{\sct}{s o}{\IfBooleanTF{#1}{\IfNoValueTF{#2}{\section*}{\section*{#2}}}{\IfNoValueTF{#2}{\section}{\section{#2}}}}
+\ProvideDocumentCommand{\ssc}{s o}{\IfBooleanTF{#1}{\IfNoValueTF{#2}{\subsection*}{\subsection*{#2}}}{\IfNoValueTF{#2}{\subsection}{\subsection{#2}}}}
+\ProvideDocumentCommand{\sssc}{s o}{\IfBooleanTF{#1}{\IfNoValueTF{#2}{\subsubsection*}{\subsubsection*{#2}}}{\IfNoValueTF{#2}{\subsubsection}{\subsubsection{#2}}}}
+\ProvideDocumentCommand{\pr}{s o}{\IfBooleanTF{#1}{\IfNoValueTF{#2}{\paragraph*}{\paragraph*{#2}}}{\IfNoValueTF{#2}{\paragraph}{\paragraph{#2}}}}
+\ProvideDocumentCommand{\spr}{s o}{\IfBooleanTF{#1}{\IfNoValueTF{#2}{\subparagraph*}{\subparagraph*{#2}}}{\IfNoValueTF{#2}{\subparagraph}{\subparagraph{#2}}}}
+\ProvideDocumentCommand{\sspr}{s o}{\IfBooleanTF{#1}{\IfNoValueTF{#2}{\subsubparagraph*}{\subsubparagraph*{#2}}}{\IfNoValueTF{#2}{\subsubparagraph}{\subsubparagraph{#2}}}}
+\renewcommand\theparagraph{\arabic{paragraph}.}
+\renewcommand\thesubparagraph{(\arabic{subparagraph})}
+\renewcommand\thesubsubparagraph{\boxed{\arabic{subsubparagraph}}}
+\titlecontents{section}[2em]{\addvspace{1em}}{\thecontentslabel\quad}{}{\titlerule*[1pc]{.}\contentspage}
+\titlecontents{subsection}[4em]{\addvspace{0.5em}}{\thecontentslabel\quad}{}{\titlerule*[1pc]{.}\contentspage}
+\titlecontents{subsubsection}[6em]{\addvspace{0.5em}}{\thecontentslabel\ }{}{\titlerule*[1pc]{.}\contentspage}
+\ifnum\value{SectionLanguage}=1
+\renewcommand\thesection{第\zhnumber[style={Traditional,Normal}]{\arabic{section}}節}
+\renewcommand\thesubsection{\zhnumber[style={Traditional,Normal}]{\arabic{subsection}}、}
+\renewcommand\thesubsubsection{(\zhnumber[style={Traditional,Normal}]{\arabic{subsubsection}})}
+\else\ifnum\value{SectionLanguage}=2
+\renewcommand\thesection{第\zhnumber[style={Simplified,Normal}]{\arabic{section}}节}
+\renewcommand\thesubsection{\zhnumber[style={Simplified,Normal}]{\arabic{subsection}}、}
+\renewcommand\thesubsubsection{(\zhnumber[style={Simplified,Normal}]{\arabic{subsubsection}})}
+\else
+\renewcommand\thesection{\arabic{section}}
+\renewcommand\thesubsection{\Roman{subsection}}
+\renewcommand\thesubsubsection{\roman{subsubsection}}
+\fi\fi
+\makeatletter
+\@ifclassloaded{article}{}{
+\titleformat{\chapter}[block]{\LARGE\bfseries}{\thechapter}{1em}{}
+\ProvideDocumentCommand{\ch}{s o}{\IfBooleanTF{#1}{\IfNoValueTF{#2}{\chapter*}{\chapter*{#2}}}{\IfNoValueTF{#2}{\chapter}{\chapter{#2}}}}
+\titlecontents{chapter}[0em]{\addvspace{1em}}{\thecontentslabel\quad}{}{\titlerule*[1pc]{.}\contentspage}
+\ifnum\value{SectionLanguage}=1
+\renewcommand\thechapter{第\zhnumber[style={Traditional,Normal}]{\arabic{chapter}}章}
+\else\ifnum\value{SectionLanguage}=2
+\renewcommand\thechapter{第\zhnumber[style={Simplified,Normal}]{\arabic{chapter}}章}
+\else
+\renewcommand\thechapter{Chapter \arabic{chapter}}
+\fi\fi
+}
+\makeatother
+\ifnum\value{ZhRenew}=1
+\renewcommand{\contentsname}{\hfill 目錄\hfill}
+\else\ifnum\value{ZhRenew}=2
+\renewcommand{\contentsname}{\hfill 目录\hfill}
+\fi\fi
+\lstdefinelanguage{STEP}{
+morecomment=[s]{/*}{*/},
+morestring=[b]",
+morestring=[b]'
+}
+
+\begin{document}
+% --- Above is the implementatin of this template --- %
+\title{
+\Large 113 學年度第一學期工程設計科\\
+\huge Arduino PID 自動跟隨車期末專題報告\\
+\Large 113 Academic Year 1st Semester Engineering Design Course\\
+\huge Arduino PID Auto-Following Kart Final Project Report
+}
+\author{30602王品翔\\30608沈威宇\\30627廖宏璿}
+\date{
+\ifnum\value{xeCJK}=1
+\ifnum\value{ZhRenew}=1
+\zhtoday
+\else\today
+\fi
+\else
+\today
+\fi
+}
+\onehalfspacing
+\thispagestyle{empty}\nth\maketitle\setcounter{page}{1}
+\nth\tableofcontents
+\nthm\setcounter{page}{1}
+% Change above to what you want.
+% --- Your document goes here -- %
+\section{前言}
+\subsection{致老師}
+親愛的 溫老師敬和：\\\\
+對於未能及時完全達成公開測試與封閉測試的標準，以及以英語呈現這份專題報告的許多部分，我們深感抱歉。\\\\
+首先，我們了解這份專案需要大量軟硬體調適與修正，也誠摯希望能夠完成這個有益於我們求學和職涯的專案，但礙於學測與段考等時間壓力，我們僅完成軟硬體的設計與組裝，未能完成最後的調適封測，實在抱歉與可惜。\\\\
+次者，雖然我了解全數使用中文更具有連貫性並有助於您的閱讀，但軟體開發、\LaTeX{} 與控制理論的技術內容資源以英文較充足，故以英文呈現許多部分，對於由此給您帶來的不便，我深表歉意。\\\\
+感謝您在二年來課程中的諄諄教誨和耐心支持。
+\subsection{Initial Attempt}
+The project initially explored the creation of a 3D design to visualize the concept and aid in prototyping. Using FreeCAD package in Python3, an early model was constructed and aimed to provide a tangible understanding of possible designs and test the performance of our kart. This model is latter abandoned after we got a rough understanding and consensus on the project and division of labor.
+\subsubsection{3D Design}
+\begin{lstlisting}[language=Python]
+import FreeCAD, Part, Draft
+from FreeCAD import Base
+
+def create_wheel(radius, width, position):
+    wheel = Part.makeCylinder(radius, width)
+    wheel.translate(Base.Vector(position[0], position[1], position[2]))
+    return wheel
+
+def create_kart_body(length, width, height):
+    body = Part.makeBox(length, width, height)
+    return body
+
+def create_kart_frame(length, width, height):
+    frame = Part.makeBox(length, width, height)
+    frame.translate(Base.Vector(0, 0, height / 2))      return frame
+
+def create_arduino(length, width, height):
+    arduino = Part.makeBox(length, width, height)
+    arduino.translate(Base.Vector(10, 10, 0))      return arduino
+
+def create_ultrasonic_sensor(length, width, height, position):
+    sensor = Part.makeBox(length, width, height)
+    sensor.translate(Base.Vector(position[0], position[1], position[2]))
+    return sensor
+
+def create_motor_controller(length, width, height, position):
+    motor_controller = Part.makeBox(length, width, height)
+    motor_controller.translate(Base.Vector(position[0], position[1], position[2]))
+    return motor_controller
+
+def create_rear_wheels():
+    left_motor_wheel = create_wheel(30, 15, (40, 30, 0))      right_motor_wheel = create_wheel(30, 15, (40, -30, 0))      return left_motor_wheel, right_motor_wheel
+
+def create_front_wheel():
+    front_wheel = create_wheel(20, 10, (0, 0, 0))      return front_wheel
+\end{lstlisting}
+\subsubsection{Hardware Unit Test}
+\begin{lstlisting}[language=Python]
+import unittest
+import FreeCAD
+import Part
+from FreeCAD import Base
+
+def create_wheel(radius, width, position):
+    wheel = Part.makeCylinder(radius, width)
+    wheel.translate(Base.Vector(position[0], position[1], position[2]))
+    return wheel
+
+def create_kart_body(length, width, height):
+    body = Part.makeBox(length, width, height)
+    return body
+
+def create_kart_frame(length, width, height):
+    frame = Part.makeBox(length, width, height)
+    frame.translate(Base.Vector(0, 0, height / 2))      return frame
+
+def create_front_wheel():
+    front_wheel = create_wheel(20, 10, (0, 0, 0))      return front_wheel
+
+def create_kart():
+        kart_body = create_kart_body(150, 80, 30)
+    
+        kart_frame = create_kart_frame(150, 80, 20)
+    
+        front_wheel = create_front_wheel()
+    
+        return [kart_body, kart_frame, front_wheel]
+
+class TestKartModel(unittest.TestCase):
+    def setUp(self):
+        """Set up the environment for each test"""
+        self.parts = create_kart()          self.kart_body = self.parts[0]
+        self.kart_frame = self.parts[1]
+        self.front_wheel = self.parts[2]
+
+    def test_kart_body_dimensions(self):
+        """Test the dimensions of the kart body"""
+        length, width, height = 150, 80, 30
+        self.assertEqual(self.kart_body.Length, length)
+        self.assertEqual(self.kart_body.Width, width)
+        self.assertEqual(self.kart_body.Height, height)
+
+    def test_kart_frame_position(self):
+        """Test the position of the kart frame"""
+        expected_position = Base.Vector(0, 0, 10)          frame_position = self.kart_frame.CenterOfMass
+        self.assertEqual(frame_position, expected_position)
+
+    def test_front_wheel_position(self):
+        """Test the position of the front wheel"""
+        expected_position = Base.Vector(0, 0, 0)          wheel_position = self.front_wheel.CenterOfMass
+        self.assertEqual(wheel_position, expected_position)
+
+    def test_wheel_dimensions(self):
+        """Test the dimensions of the front wheel"""
+        radius, width = 20, 10
+        wheel_radius = self.front_wheel.Radius
+        wheel_width = self.front_wheel.Height
+        self.assertEqual(wheel_radius, radius)
+        self.assertEqual(wheel_width, width)
+
+    def test_assembly(self):
+        """Test if all components are assembled correctly"""
+        self.assertIsInstance(self.kart_body, Part.Feature)
+        self.assertIsInstance(self.kart_frame, Part.Feature)
+        self.assertIsInstance(self.front_wheel, Part.Feature)
+        self.assertEqual(len(self.parts), 3)  
+        
+if __name__ == '__main__':
+    unittest.main()
+\end{lstlisting}
+\subsubsection{PID and Arduino Code}
+\begin{lstlising}[language=C++]
+#include <PID_v1.h>
+
+#define LEFT_TRIGGER_PIN  2
+#define LEFT_ECHO_PIN     3
+#define RIGHT_TRIGGER_PIN 4
+#define RIGHT_ECHO_PIN    5
+#define MOTOR_LEFT_PIN    6
+#define MOTOR_RIGHT_PIN   7
+
+double Setpoint, Input, Output;
+double Kp = 1.0, Ki = 0.1, Kd = 0.05; // PID constants, adjust based on testing
+
+PID pid(&Input, &Output, &Setpoint, Kp, Ki, Kd, DIRECT);
+
+long durationLeft, durationRight;
+int distanceLeft, distanceRight;
+int targetDistance = 20; // Target distance from obstacles (in cm)
+
+int motorSpeed = 255; // Maximum speed (adjustable)
+int minDistance = 10; // Minimum distance from the obstacle to stop motors
+
+void setup() {
+  pinMode(LEFT_TRIGGER_PIN, OUTPUT);
+  pinMode(LEFT_ECHO_PIN, INPUT);
+  pinMode(RIGHT_TRIGGER_PIN, OUTPUT);
+  pinMode(RIGHT_ECHO_PIN, INPUT);
+
+  pinMode(MOTOR_LEFT_PIN, OUTPUT);
+  pinMode(MOTOR_RIGHT_PIN, OUTPUT);
+
+  Serial.begin(9600);
+
+  Setpoint = targetDistance;
+  pid.SetMode(AUTOMATIC);
+  pid.SetOutputLimits(-motorSpeed, motorSpeed); // Motor speed limit
+}
+
+void loop() {
+  distanceLeft = getDistance(LEFT_TRIGGER_PIN, LEFT_ECHO_PIN);
+  distanceRight = getDistance(RIGHT_TRIGGER_PIN, RIGHT_ECHO_PIN);
+
+  Serial.print("Left Distance: ");
+  Serial.print(distanceLeft);
+  Serial.print(" cm | Right Distance: ");
+  Serial.println(distanceRight);
+
+  int error = distanceLeft - distanceRight;
+  Input = error;
+
+  pid.Compute();
+
+  if (distanceLeft < minDistance || distanceRight < minDistance) {
+    stopMotors();
+  } else {
+    moveForwardWithPID(Output);
+  }
+
+  delay(50); // Small delay to allow sensors to settle
+}
+
+int getDistance(int triggerPin, int echoPin) {
+  digitalWrite(triggerPin, LOW);
+  delayMicroseconds(2);
+  digitalWrite(triggerPin, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(triggerPin, LOW);
+  durationLeft = pulseIn(echoPin, HIGH);
+  return durationLeft * 0.034 / 2;
+}
+
+void moveForwardWithPID(double pidOutput) {
+  int leftMotorSpeed = motorSpeed - pidOutput;  // Adjust left motor speed
+  int rightMotorSpeed = motorSpeed + pidOutput; // Adjust right motor speed
+  
+  leftMotorSpeed = constrain(leftMotorSpeed, 0, motorSpeed);
+  rightMotorSpeed = constrain(rightMotorSpeed, 0, motorSpeed);
+
+  analogWrite(MOTOR_LEFT_PIN, leftMotorSpeed);
+  analogWrite(MOTOR_RIGHT_PIN, rightMotorSpeed);
+}
+
+void stopMotors() {
+  analogWrite(MOTOR_LEFT_PIN, 0);
+  analogWrite(MOTOR_RIGHT_PIN, 0);
+}
+\end{lstlisting}
+\subsection{Division of Labor}
+We divided each one's responsibility based on their expertise and experience.
+\begin{itemize}
+\item 王品翔 is an expert of 3D modeling and design of microprocessor development board driven bots and karts. He has experienced in CAD modelling, 3D printing, laser cutting, microprocessor development board software etc. and has won awards in Arduino or Cortex microprocessor development boards driven bots competitions. So he's the chef of 3D modelling, hardware designing, and components producing.
+\item 沈威宇 specializes at programming and mark-up languages such as C and LaTeX and also good at advanced mathematics. He has been participating development of machine learning powered financial analysis and algorithmatic trading, Linux virtual machine on Android, microprocessor development board software etc. So he's responsible for PID control system developing, Arduino program developing, and project report making.
+\item 廖宏璿 is also good at hardware and software development for microprocessor development board driven bots and karts and has participated development of active noise cancelling headphones. He is an expertise of physical structure carpentry and assembling, and wiring for microprocessor development boards and bread boards. So he's focused on design and practice of wiring, wood structure assembling, and parameter tuning.
+\end{itemize}
+
+\section{硬體設計、3D 建模與零件製造}
+在這次的車輛設計中，我們以自然界的古老生物——鱟作為靈感來源，結合其生物學特性與流體力學特徵，打造出具有前瞻性與功能性的車輛外形與結構。鱟的流線型身體和穩定行走的構造，為我們提供了在設計中平衡美學與實用性的寶貴啟示。\\\\
+由於跟隨車需要做到即時與大動作地加速與轉彎反饋，我們採用了前驅作為動力系統的核心設計，並在後輪設計採用了萬向滾珠技術，提高了車輛加速與轉彎時的性能，使車輛在移動時能夠實現靈活的大角度轉彎，增加動力使用效率，並保持配重穩定性。\\\\
+這輛車的設計展現了我們對自然生物演化的體悟，也彰顯了我們對未來交通工具的遠見。通過模仿鱟的仿生設計結構，我們希望這樣的跟隨車設計可以具有提高機動性與增加適用場景的潛能，可以為載人、運貨、倉管、軍事、農業等潛在場景特化使用。
+\subsection{木製車底板}
+木製底板作為自動跟隨車的支撐結構，連接並支撐 Arduino 板、萬向輪、麵包板、2 個輪子和 2 個馬達等組件。\\
+截圖：
+\bct\bfH\ctr
+\icg[width=0.5\textwidth]{board_screenshot.jpg}
+\ef\FB\ect
+STEP 模型：
+\begin{lstlisting}[language=STEP]
+ISO-10303-21;
+HEADER;
+/* Generated by software containing ST-Developer
+ * from STEP Tools, Inc. (www.steptools.com) 
+ */
+/* OPTION: using custom renumber hook */
+
+FILE_DESCRIPTION(
+/* description */ ('STEP AP242',
+'CAx-IF Rec.Pracs.---Representation and Presentation of Product Manufa
+cturing Information (PMI)---4.0---2014-10-13',
+'CAx-IF Rec.Pracs.---3D Tessellated Geometry---0.4---2014-09-14','2;1'),
+
+/* implementation_level */ '2;1');
+
+FILE_NAME(
+/* name */ '672886e6614d8b523e010712',
+/* time_stamp */ '2024-11-04T08:33:42Z',
+/* author */ (''),
+/* organization */ (''),
+/* preprocessor_version */ 'ST-DEVELOPER v20',
+/* originating_system */ 'ONSHAPE BY PTC INC, 1.189',
+/* authorisation */ '  ');
+
+FILE_SCHEMA (('AP242_MANAGED_MODEL_BASED_3D_ENGINEERING_MIM_LF { 1 0 10303 442 1 1 4 }'));
+ENDSEC;
+
+DATA;
+#10=SHAPE_REPRESENTATION_RELATIONSHIP('','',#283,#11);
+#11=ADVANCED_BREP_SHAPE_REPRESENTATION('',(#281),#441);
+#12=ORIENTED_EDGE('',*,*,#84,.F.);
+#13=ORIENTED_EDGE('',*,*,#85,.F.);
+#14=ORIENTED_EDGE('',*,*,#86,.T.);
+#15=ORIENTED_EDGE('',*,*,#87,.T.);
+#16=ORIENTED_EDGE('',*,*,#88,.T.);
+#17=ORIENTED_EDGE('',*,*,#89,.F.);
+#18=ORIENTED_EDGE('',*,*,#90,.F.);
+#19=ORIENTED_EDGE('',*,*,#85,.T.);
+#20=ORIENTED_EDGE('',*,*,#91,.T.);
+#21=ORIENTED_EDGE('',*,*,#92,.F.);
+#22=ORIENTED_EDGE('',*,*,#93,.F.);
+#23=ORIENTED_EDGE('',*,*,#89,.T.);
+#24=ORIENTED_EDGE('',*,*,#94,.T.);
+#25=ORIENTED_EDGE('',*,*,#95,.F.);
+#26=ORIENTED_EDGE('',*,*,#96,.F.);
+#27=ORIENTED_EDGE('',*,*,#92,.T.);
+#28=ORIENTED_EDGE('',*,*,#97,.T.);
+#29=ORIENTED_EDGE('',*,*,#98,.F.);
+#30=ORIENTED_EDGE('',*,*,#99,.F.);
+#31=ORIENTED_EDGE('',*,*,#95,.T.);
+#32=ORIENTED_EDGE('',*,*,#100,.T.);
+#33=ORIENTED_EDGE('',*,*,#101,.F.);
+#34=ORIENTED_EDGE('',*,*,#102,.F.);
+#35=ORIENTED_EDGE('',*,*,#98,.T.);
+#36=ORIENTED_EDGE('',*,*,#103,.T.);
+#37=ORIENTED_EDGE('',*,*,#104,.F.);
+#38=ORIENTED_EDGE('',*,*,#105,.F.);
+#39=ORIENTED_EDGE('',*,*,#101,.T.);
+#40=ORIENTED_EDGE('',*,*,#106,.T.);
+#41=ORIENTED_EDGE('',*,*,#107,.F.);
+#42=ORIENTED_EDGE('',*,*,#108,.F.);
+#43=ORIENTED_EDGE('',*,*,#104,.T.);
+#44=ORIENTED_EDGE('',*,*,#109,.T.);
+#45=ORIENTED_EDGE('',*,*,#110,.F.);
+#46=ORIENTED_EDGE('',*,*,#111,.F.);
+#47=ORIENTED_EDGE('',*,*,#107,.T.);
+#48=ORIENTED_EDGE('',*,*,#112,.T.);
+#49=ORIENTED_EDGE('',*,*,#113,.F.);
+#50=ORIENTED_EDGE('',*,*,#114,.F.);
+#51=ORIENTED_EDGE('',*,*,#110,.T.);
+#52=ORIENTED_EDGE('',*,*,#115,.T.);
+#53=ORIENTED_EDGE('',*,*,#116,.F.);
+#54=ORIENTED_EDGE('',*,*,#117,.F.);
+#55=ORIENTED_EDGE('',*,*,#113,.T.);
+#56=ORIENTED_EDGE('',*,*,#118,.F.);
+#57=ORIENTED_EDGE('',*,*,#87,.F.);
+#58=ORIENTED_EDGE('',*,*,#119,.T.);
+#59=ORIENTED_EDGE('',*,*,#116,.T.);
+#60=ORIENTED_EDGE('',*,*,#86,.F.);
+#61=ORIENTED_EDGE('',*,*,#90,.T.);
+#62=ORIENTED_EDGE('',*,*,#93,.T.);
+#63=ORIENTED_EDGE('',*,*,#96,.T.);
+#64=ORIENTED_EDGE('',*,*,#99,.T.);
+#65=ORIENTED_EDGE('',*,*,#102,.T.);
+#66=ORIENTED_EDGE('',*,*,#105,.T.);
+#67=ORIENTED_EDGE('',*,*,#108,.T.);
+#68=ORIENTED_EDGE('',*,*,#111,.T.);
+#69=ORIENTED_EDGE('',*,*,#114,.T.);
+#70=ORIENTED_EDGE('',*,*,#117,.T.);
+#71=ORIENTED_EDGE('',*,*,#119,.F.);
+#72=ORIENTED_EDGE('',*,*,#84,.T.);
+#73=ORIENTED_EDGE('',*,*,#118,.T.);
+#74=ORIENTED_EDGE('',*,*,#115,.F.);
+#75=ORIENTED_EDGE('',*,*,#112,.F.);
+#76=ORIENTED_EDGE('',*,*,#109,.F.);
+#77=ORIENTED_EDGE('',*,*,#106,.F.);
+#78=ORIENTED_EDGE('',*,*,#103,.F.);
+#79=ORIENTED_EDGE('',*,*,#100,.F.);
+#80=ORIENTED_EDGE('',*,*,#97,.F.);
+#81=ORIENTED_EDGE('',*,*,#94,.F.);
+#82=ORIENTED_EDGE('',*,*,#91,.F.);
+#83=ORIENTED_EDGE('',*,*,#88,.F.);
+#84=EDGE_CURVE('',#120,#121,#144,.T.);
+#85=EDGE_CURVE('',#122,#120,#145,.T.);
+#86=EDGE_CURVE('',#122,#123,#146,.T.);
+#87=EDGE_CURVE('',#123,#121,#147,.T.);
+#88=EDGE_CURVE('',#120,#124,#148,.T.);
+#89=EDGE_CURVE('',#125,#124,#149,.T.);
+#90=EDGE_CURVE('',#122,#125,#150,.T.);
+#91=EDGE_CURVE('',#124,#126,#151,.T.);
+#92=EDGE_CURVE('',#127,#126,#152,.T.);
+#93=EDGE_CURVE('',#125,#127,#153,.T.);
+#94=EDGE_CURVE('',#126,#128,#154,.T.);
+#95=EDGE_CURVE('',#129,#128,#155,.T.);
+#96=EDGE_CURVE('',#127,#129,#156,.T.);
+#97=EDGE_CURVE('',#128,#130,#157,.T.);
+#98=EDGE_CURVE('',#131,#130,#158,.T.);
+#99=EDGE_CURVE('',#129,#131,#159,.T.);
+#100=EDGE_CURVE('',#130,#132,#160,.T.);
+#101=EDGE_CURVE('',#133,#132,#161,.T.);
+#102=EDGE_CURVE('',#131,#133,#162,.T.);
+#103=EDGE_CURVE('',#132,#134,#163,.T.);
+#104=EDGE_CURVE('',#135,#134,#164,.T.);
+#105=EDGE_CURVE('',#133,#135,#165,.T.);
+#106=EDGE_CURVE('',#134,#136,#166,.T.);
+#107=EDGE_CURVE('',#137,#136,#167,.T.);
+#108=EDGE_CURVE('',#135,#137,#168,.T.);
+#109=EDGE_CURVE('',#136,#138,#169,.T.);
+#110=EDGE_CURVE('',#139,#138,#170,.T.);
+#111=EDGE_CURVE('',#137,#139,#171,.T.);
+#112=EDGE_CURVE('',#138,#140,#172,.T.);
+#113=EDGE_CURVE('',#141,#140,#173,.T.);
+#114=EDGE_CURVE('',#139,#141,#174,.T.);
+#115=EDGE_CURVE('',#140,#142,#175,.T.);
+#116=EDGE_CURVE('',#143,#142,#176,.T.);
+#117=EDGE_CURVE('',#141,#143,#177,.T.);
+#118=EDGE_CURVE('',#121,#142,#178,.T.);
+#119=EDGE_CURVE('',#123,#143,#179,.T.);
+#120=VERTEX_POINT('',#368);
+#121=VERTEX_POINT('',#369);
+#122=VERTEX_POINT('',#371);
+#123=VERTEX_POINT('',#373);
+#124=VERTEX_POINT('',#377);
+#125=VERTEX_POINT('',#379);
+#126=VERTEX_POINT('',#383);
+#127=VERTEX_POINT('',#385);
+#128=VERTEX_POINT('',#389);
+#129=VERTEX_POINT('',#391);
+#130=VERTEX_POINT('',#395);
+#131=VERTEX_POINT('',#397);
+#132=VERTEX_POINT('',#401);
+#133=VERTEX_POINT('',#403);
+#134=VERTEX_POINT('',#407);
+#135=VERTEX_POINT('',#409);
+#136=VERTEX_POINT('',#413);
+#137=VERTEX_POINT('',#415);
+#138=VERTEX_POINT('',#419);
+#139=VERTEX_POINT('',#421);
+#140=VERTEX_POINT('',#425);
+#141=VERTEX_POINT('',#427);
+#142=VERTEX_POINT('',#431);
+#143=VERTEX_POINT('',#433);
+#144=LINE('',#367,#180);
+#145=LINE('',#370,#181);
+#146=LINE('',#372,#182);
+#147=LINE('',#374,#183);
+#148=LINE('',#376,#184);
+#149=LINE('',#378,#185);
+#150=LINE('',#380,#186);
+#151=LINE('',#382,#187);
+#152=LINE('',#384,#188);
+#153=LINE('',#386,#189);
+#154=LINE('',#388,#190);
+#155=LINE('',#390,#191);
+#156=LINE('',#392,#192);
+#157=LINE('',#394,#193);
+#158=LINE('',#396,#194);
+#159=LINE('',#398,#195);
+#160=LINE('',#400,#196);
+#161=LINE('',#402,#197);
+#162=LINE('',#404,#198);
+#163=LINE('',#406,#199);
+#164=LINE('',#408,#200);
+#165=LINE('',#410,#201);
+#166=LINE('',#412,#202);
+#167=LINE('',#414,#203);
+#168=LINE('',#416,#204);
+#169=LINE('',#418,#205);
+#170=LINE('',#420,#206);
+#171=LINE('',#422,#207);
+#172=LINE('',#424,#208);
+#173=LINE('',#426,#209);
+#174=LINE('',#428,#210);
+#175=LINE('',#430,#211);
+#176=LINE('',#432,#212);
+#177=LINE('',#434,#213);
+#178=LINE('',#436,#214);
+#179=LINE('',#437,#215);
+#180=VECTOR('',#303,1.);
+#181=VECTOR('',#304,1.);
+#182=VECTOR('',#305,1.);
+#183=VECTOR('',#306,1.);
+#184=VECTOR('',#309,1.);
+#185=VECTOR('',#310,1.);
+#186=VECTOR('',#311,1.);
+#187=VECTOR('',#314,1.);
+#188=VECTOR('',#315,1.);
+#189=VECTOR('',#316,1.);
+#190=VECTOR('',#319,1.);
+#191=VECTOR('',#320,1.);
+#192=VECTOR('',#321,1.);
+#193=VECTOR('',#324,1.);
+#194=VECTOR('',#325,1.);
+#195=VECTOR('',#326,1.);
+#196=VECTOR('',#329,1.);
+#197=VECTOR('',#330,1.);
+#198=VECTOR('',#331,1.);
+#199=VECTOR('',#334,1.);
+#200=VECTOR('',#335,1.);
+#201=VECTOR('',#336,1.);
+#202=VECTOR('',#339,1.);
+#203=VECTOR('',#340,1.);
+#204=VECTOR('',#341,1.);
+#205=VECTOR('',#344,1.);
+#206=VECTOR('',#345,1.);
+#207=VECTOR('',#346,1.);
+#208=VECTOR('',#349,1.);
+#209=VECTOR('',#350,1.);
+#210=VECTOR('',#351,1.);
+#211=VECTOR('',#354,1.);
+#212=VECTOR('',#355,1.);
+#213=VECTOR('',#356,1.);
+#214=VECTOR('',#359,1.);
+#215=VECTOR('',#360,1.);
+#216=EDGE_LOOP('',(#12,#13,#14,#15));
+#217=EDGE_LOOP('',(#16,#17,#18,#19));
+#218=EDGE_LOOP('',(#20,#21,#22,#23));
+#219=EDGE_LOOP('',(#24,#25,#26,#27));
+#220=EDGE_LOOP('',(#28,#29,#30,#31));
+#221=EDGE_LOOP('',(#32,#33,#34,#35));
+#222=EDGE_LOOP('',(#36,#37,#38,#39));
+#223=EDGE_LOOP('',(#40,#41,#42,#43));
+#224=EDGE_LOOP('',(#44,#45,#46,#47));
+#225=EDGE_LOOP('',(#48,#49,#50,#51));
+#226=EDGE_LOOP('',(#52,#53,#54,#55));
+#227=EDGE_LOOP('',(#56,#57,#58,#59));
+#228=EDGE_LOOP('',(#60,#61,#62,#63,#64,#65,#66,#67,#68,#69,#70,#71));
+#229=EDGE_LOOP('',(#72,#73,#74,#75,#76,#77,#78,#79,#80,#81,#82,#83));
+#230=FACE_BOUND('',#216,.T.);
+#231=FACE_BOUND('',#217,.T.);
+#232=FACE_BOUND('',#218,.T.);
+#233=FACE_BOUND('',#219,.T.);
+#234=FACE_BOUND('',#220,.T.);
+#235=FACE_BOUND('',#221,.T.);
+#236=FACE_BOUND('',#222,.T.);
+#237=FACE_BOUND('',#223,.T.);
+#238=FACE_BOUND('',#224,.T.);
+#239=FACE_BOUND('',#225,.T.);
+#240=FACE_BOUND('',#226,.T.);
+#241=FACE_BOUND('',#227,.T.);
+#242=FACE_BOUND('',#228,.T.);
+#243=FACE_BOUND('',#229,.T.);
+#244=PLANE('',#285);
+#245=PLANE('',#286);
+#246=PLANE('',#287);
+#247=PLANE('',#288);
+#248=PLANE('',#289);
+#249=PLANE('',#290);
+#250=PLANE('',#291);
+#251=PLANE('',#292);
+#252=PLANE('',#293);
+#253=PLANE('',#294);
+#254=PLANE('',#295);
+#255=PLANE('',#296);
+#256=PLANE('',#297);
+#257=PLANE('',#298);
+#258=ADVANCED_FACE('',(#230),#244,.T.);
+#259=ADVANCED_FACE('',(#231),#245,.F.);
+#260=ADVANCED_FACE('',(#232),#246,.F.);
+#261=ADVANCED_FACE('',(#233),#247,.F.);
+#262=ADVANCED_FACE('',(#234),#248,.F.);
+#263=ADVANCED_FACE('',(#235),#249,.F.);
+#264=ADVANCED_FACE('',(#236),#250,.F.);
+#265=ADVANCED_FACE('',(#237),#251,.F.);
+#266=ADVANCED_FACE('',(#238),#252,.F.);
+#267=ADVANCED_FACE('',(#239),#253,.F.);
+#268=ADVANCED_FACE('',(#240),#254,.F.);
+#269=ADVANCED_FACE('',(#241),#255,.T.);
+#270=ADVANCED_FACE('',(#242),#256,.T.);
+#271=ADVANCED_FACE('',(#243),#257,.F.);
+#272=CLOSED_SHELL('',(#258,#259,#260,#261,#262,#263,#264,#265,#266,#267,
+#268,#269,#270,#271));
+#273=STYLED_ITEM('',(#274),#281);
+#274=PRESENTATION_STYLE_ASSIGNMENT((#275));
+#275=SURFACE_STYLE_USAGE(.BOTH.,#276);
+#276=SURFACE_SIDE_STYLE('',(#277));
+#277=SURFACE_STYLE_FILL_AREA(#278);
+#278=FILL_AREA_STYLE('',(#279));
+#279=FILL_AREA_STYLE_COLOUR('',#280);
+#280=COLOUR_RGB('',0.615686274509804,0.811764705882353,0.929411764705882);
+#281=MANIFOLD_SOLID_BREP('Part 1',#272);
+#282=SHAPE_DEFINITION_REPRESENTATION(#446,#283);
+#283=SHAPE_REPRESENTATION('Part 1',(#284),#441);
+#284=AXIS2_PLACEMENT_3D('',#365,#299,#300);
+#285=AXIS2_PLACEMENT_3D('',#366,#301,#302);
+#286=AXIS2_PLACEMENT_3D('',#375,#307,#308);
+#287=AXIS2_PLACEMENT_3D('',#381,#312,#313);
+#288=AXIS2_PLACEMENT_3D('',#387,#317,#318);
+#289=AXIS2_PLACEMENT_3D('',#393,#322,#323);
+#290=AXIS2_PLACEMENT_3D('',#399,#327,#328);
+#291=AXIS2_PLACEMENT_3D('',#405,#332,#333);
+#292=AXIS2_PLACEMENT_3D('',#411,#337,#338);
+#293=AXIS2_PLACEMENT_3D('',#417,#342,#343);
+#294=AXIS2_PLACEMENT_3D('',#423,#347,#348);
+#295=AXIS2_PLACEMENT_3D('',#429,#352,#353);
+#296=AXIS2_PLACEMENT_3D('',#435,#357,#358);
+#297=AXIS2_PLACEMENT_3D('',#438,#361,#362);
+#298=AXIS2_PLACEMENT_3D('',#439,#363,#364);
+#299=DIRECTION('',(0.,0.,1.));
+#300=DIRECTION('',(1.,0.,0.));
+#301=DIRECTION('',(-1.,0.,0.));
+#302=DIRECTION('',(0.,1.,0.));
+#303=DIRECTION('',(0.,0.,-1.));
+#304=DIRECTION('',(0.,-1.,0.));
+#305=DIRECTION('',(0.,0.,-1.));
+#306=DIRECTION('',(0.,-1.,0.));
+#307=DIRECTION('',(0.,0.,-1.));
+#308=DIRECTION('',(0.,1.,0.));
+#309=DIRECTION('',(1.,0.,0.));
+#310=DIRECTION('',(0.,-1.,0.));
+#311=DIRECTION('',(1.,0.,0.));
+#312=DIRECTION('',(1.,0.,0.));
+#313=DIRECTION('',(0.,-1.,0.));
+#314=DIRECTION('',(0.,0.,1.));
+#315=DIRECTION('',(0.,-1.,0.));
+#316=DIRECTION('',(0.,0.,1.));
+#317=DIRECTION('',(0.,0.,-1.));
+#318=DIRECTION('',(0.,1.,0.));
+#319=DIRECTION('',(1.,0.,0.));
+#320=DIRECTION('',(0.,-1.,0.));
+#321=DIRECTION('',(1.,0.,0.));
+#322=DIRECTION('',(1.,0.,0.));
+#323=DIRECTION('',(0.,-1.,0.));
+#324=DIRECTION('',(0.,0.,1.));
+#325=DIRECTION('',(0.,-1.,0.));
+#326=DIRECTION('',(0.,0.,1.));
+#327=DIRECTION('',(0.,0.,-1.));
+#328=DIRECTION('',(0.,1.,0.));
+#329=DIRECTION('',(1.,0.,0.));
+#330=DIRECTION('',(0.,-1.,0.));
+#331=DIRECTION('',(1.,0.,0.));
+#332=DIRECTION('',(-1.,0.,0.));
+#333=DIRECTION('',(0.,1.,0.));
+#334=DIRECTION('',(0.,0.,-1.));
+#335=DIRECTION('',(0.,-1.,0.));
+#336=DIRECTION('',(0.,0.,-1.));
+#337=DIRECTION('',(0.,0.,-1.));
+#338=DIRECTION('',(0.,1.,0.));
+#339=DIRECTION('',(1.,0.,0.));
+#340=DIRECTION('',(0.,-1.,0.));
+#341=DIRECTION('',(1.,0.,0.));
+#342=DIRECTION('',(-1.,0.,0.));
+#343=DIRECTION('',(0.,1.,0.));
+#344=DIRECTION('',(0.,0.,-1.));
+#345=DIRECTION('',(0.,-1.,0.));
+#346=DIRECTION('',(0.,0.,-1.));
+#347=DIRECTION('',(0.,0.,-1.));
+#348=DIRECTION('',(0.,1.,0.));
+#349=DIRECTION('',(1.,0.,0.));
+#350=DIRECTION('',(0.,-1.,0.));
+#351=DIRECTION('',(1.,0.,0.));
+#352=DIRECTION('',(-1.,0.,0.));
+#353=DIRECTION('',(0.,1.,0.));
+#354=DIRECTION('',(0.,0.,-1.));
+#355=DIRECTION('',(0.,-1.,0.));
+#356=DIRECTION('',(0.,0.,-1.));
+#357=DIRECTION('',(0.,0.,-1.));
+#358=DIRECTION('',(0.,1.,0.));
+#359=DIRECTION('',(1.,0.,0.));
+#360=DIRECTION('',(1.,0.,0.));
+#361=DIRECTION('',(0.,1.,0.));
+#362=DIRECTION('',(1.,0.,0.));
+#363=DIRECTION('',(0.,1.,0.));
+#364=DIRECTION('',(1.,0.,0.));
+#365=CARTESIAN_POINT('',(0.,0.,0.));
+#366=CARTESIAN_POINT('',(0.,0.005,-0.025));
+#367=CARTESIAN_POINT('',(0.,0.,-0.025));
+#368=CARTESIAN_POINT('',(0.,0.,0.));
+#369=CARTESIAN_POINT('',(-6.93889390390723E-18,0.,-0.05));
+#370=CARTESIAN_POINT('',(0.,0.005,0.));
+#371=CARTESIAN_POINT('',(0.,0.005,0.));
+#372=CARTESIAN_POINT('',(0.,0.005,-0.025));
+#373=CARTESIAN_POINT('',(-6.93889390390723E-18,0.005,-0.05));
+#374=CARTESIAN_POINT('',(-6.93889390390723E-18,0.005,-0.05));
+#375=CARTESIAN_POINT('',(0.015,0.005,0.));
+#376=CARTESIAN_POINT('',(0.015,0.,0.));
+#377=CARTESIAN_POINT('',(0.03,0.,0.));
+#378=CARTESIAN_POINT('',(0.03,0.005,0.));
+#379=CARTESIAN_POINT('',(0.03,0.005,0.));
+#380=CARTESIAN_POINT('',(0.015,0.005,0.));
+#381=CARTESIAN_POINT('',(0.03,0.005,0.035));
+#382=CARTESIAN_POINT('',(0.03,0.,0.035));
+#383=CARTESIAN_POINT('',(0.03,0.,0.07));
+#384=CARTESIAN_POINT('',(0.03,0.005,0.07));
+#385=CARTESIAN_POINT('',(0.03,0.005,0.07));
+#386=CARTESIAN_POINT('',(0.03,0.005,0.035));
+#387=CARTESIAN_POINT('',(0.045,0.005,0.07));
+#388=CARTESIAN_POINT('',(0.045,0.,0.07));
+#389=CARTESIAN_POINT('',(0.06,0.,0.07));
+#390=CARTESIAN_POINT('',(0.06,0.005,0.07));
+#391=CARTESIAN_POINT('',(0.06,0.005,0.07));
+#392=CARTESIAN_POINT('',(0.045,0.005,0.07));
+#393=CARTESIAN_POINT('',(0.06,0.005,0.12));
+#394=CARTESIAN_POINT('',(0.06,0.,0.12));
+#395=CARTESIAN_POINT('',(0.06,0.,0.17));
+#396=CARTESIAN_POINT('',(0.06,0.005,0.17));
+#397=CARTESIAN_POINT('',(0.06,0.005,0.17));
+#398=CARTESIAN_POINT('',(0.06,0.005,0.12));
+#399=CARTESIAN_POINT('',(0.075,0.005,0.17));
+#400=CARTESIAN_POINT('',(0.075,0.,0.17));
+#401=CARTESIAN_POINT('',(0.09,0.,0.17));
+#402=CARTESIAN_POINT('',(0.09,0.005,0.17));
+#403=CARTESIAN_POINT('',(0.09,0.005,0.17));
+#404=CARTESIAN_POINT('',(0.075,0.005,0.17));
+#405=CARTESIAN_POINT('',(0.09,0.005,0.12));
+#406=CARTESIAN_POINT('',(0.09,0.,0.12));
+#407=CARTESIAN_POINT('',(0.09,0.,0.07));
+#408=CARTESIAN_POINT('',(0.09,0.005,0.07));
+#409=CARTESIAN_POINT('',(0.09,0.005,0.07));
+#410=CARTESIAN_POINT('',(0.09,0.005,0.12));
+#411=CARTESIAN_POINT('',(0.105,0.005,0.07));
+#412=CARTESIAN_POINT('',(0.105,0.,0.07));
+#413=CARTESIAN_POINT('',(0.12,0.,0.07));
+#414=CARTESIAN_POINT('',(0.12,0.005,0.07));
+#415=CARTESIAN_POINT('',(0.12,0.005,0.07));
+#416=CARTESIAN_POINT('',(0.105,0.005,0.07));
+#417=CARTESIAN_POINT('',(0.12,0.005,0.035));
+#418=CARTESIAN_POINT('',(0.12,0.,0.035));
+#419=CARTESIAN_POINT('',(0.12,0.,0.));
+#420=CARTESIAN_POINT('',(0.12,0.005,0.));
+#421=CARTESIAN_POINT('',(0.12,0.005,0.));
+#422=CARTESIAN_POINT('',(0.12,0.005,0.035));
+#423=CARTESIAN_POINT('',(0.135,0.005,0.));
+#424=CARTESIAN_POINT('',(0.135,0.,0.));
+#425=CARTESIAN_POINT('',(0.15,0.,0.));
+#426=CARTESIAN_POINT('',(0.15,0.005,0.));
+#427=CARTESIAN_POINT('',(0.15,0.005,0.));
+#428=CARTESIAN_POINT('',(0.135,0.005,0.));
+#429=CARTESIAN_POINT('',(0.15,0.005,-0.025));
+#430=CARTESIAN_POINT('',(0.15,0.,-0.025));
+#431=CARTESIAN_POINT('',(0.15,0.,-0.05));
+#432=CARTESIAN_POINT('',(0.15,0.005,-0.05));
+#433=CARTESIAN_POINT('',(0.15,0.005,-0.05));
+#434=CARTESIAN_POINT('',(0.15,0.005,-0.025));
+#435=CARTESIAN_POINT('',(0.075,0.005,-0.05));
+#436=CARTESIAN_POINT('',(0.075,0.,-0.05));
+#437=CARTESIAN_POINT('',(0.075,0.005,-0.05));
+#438=CARTESIAN_POINT('',(0.075,0.005,0.06));
+#439=CARTESIAN_POINT('',(0.075,0.,0.06));
+#440=MECHANICAL_DESIGN_GEOMETRIC_PRESENTATION_REPRESENTATION('',(#273),
+#441);
+#441=(
+GEOMETRIC_REPRESENTATION_CONTEXT(3)
+GLOBAL_UNCERTAINTY_ASSIGNED_CONTEXT((#442))
+GLOBAL_UNIT_ASSIGNED_CONTEXT((#445,#444,#443))
+REPRESENTATION_CONTEXT('Part 1','TOP_LEVEL_ASSEMBLY_PART')
+);
+#442=UNCERTAINTY_MEASURE_WITH_UNIT(LENGTH_MEASURE(5.E-6),#445,
+'DISTANCE_ACCURACY_VALUE','Maximum Tolerance applied to model');
+#443=(
+NAMED_UNIT(*)
+SI_UNIT($,.STERADIAN.)
+SOLID_ANGLE_UNIT()
+);
+#444=(
+NAMED_UNIT(*)
+PLANE_ANGLE_UNIT()
+SI_UNIT($,.RADIAN.)
+);
+#445=(
+LENGTH_UNIT()
+NAMED_UNIT(*)
+SI_UNIT($,.METRE.)
+);
+#446=PRODUCT_DEFINITION_SHAPE('','',#447);
+#447=PRODUCT_DEFINITION('','',#449,#448);
+#448=PRODUCT_DEFINITION_CONTEXT('',#455,'design');
+#449=PRODUCT_DEFINITION_FORMATION_WITH_SPECIFIED_SOURCE('','',#451,
+ .NOT_KNOWN.);
+#450=PRODUCT_RELATED_PRODUCT_CATEGORY('','',(#451));
+#451=PRODUCT('Part 1','Part 1','Part 1',(#453));
+#452=PRODUCT_CATEGORY('','');
+#453=PRODUCT_CONTEXT('',#455,'mechanical');
+#454=APPLICATION_PROTOCOL_DEFINITION('international standard',
+'ap242_managed_model_based_3d_engineering',2011,#455);
+#455=APPLICATION_CONTEXT('managed model based 3d engineering');
+ENDSEC;
+END-ISO-10303-21;
+\end{lstlisting}
+完成品：
+\bct\bfH\ctr\icg[width=0.5\textwidth]{board.jpg}\ef\FB\ect
+
+\section{PID Controller, Software Simulation, Parameters Optimization, and Arduino Code}
+I implemented a PID (Proportional-Integral-Derivative) controller designed to regulate the speed of the auto-following kart with a leader robot. The implementation includes the PID controller logic, a car simulation, a framework for testing various PID configurations, and the Arduino applications.
+\subsection{PID.hpp}
+This header file implements a PID controller that includes traditional PID control logic along with enhancements such as adaptive gain adjustment, adaptive integral term, error history management, and additional derivative term. It is also designed to be compatible with both Arduino and non-Arduino environments.
+\subsubsection{Code}
+\begin{lstlisting}[language=C++}
+#ifndef PID_HPP
+#define PID_HPP
+
+#ifdef ARDUINO
+#include <Arduino.h>
+#include <math.h>
+#define to_string(a) String(a)
+#else
+#include <cmath>
+#include <string>
+#define String string
+using namespace std;
+#endif
+#define MAX(a, b) (((a) > (b)) ? (a) : (b))
+#define MIN(a, b) (((a) < (b)) ? (a) : (b))
+#define ABS(a) ((a) < 0 ? -(a) : (a))
+#define COPYSIGN(a, b) ((b) < 0 ? -ABS(a) : ABS(a))
+#define CLAMP(a, b, c) (MAX(MIN((a), (b)), (c)))
+
+struct Data {
+    unsigned long dt;
+    double e;
+};
+
+struct Node {
+    Data data;
+    Node* prev;
+};
+
+struct List {
+    Node* head;
+    Node* tail;
+    unsigned int size;
+};
+
+class PID {
+public:
+    const double maxIntTm, maxAmp, minKp, maxKp, rTiM, TdM, TddM, eDPm, eDPa;
+    const unsigned long session;
+    double Kp, Ki, Kd, Kdd, preE, preDv, intg, preOut;
+    unsigned long preT;
+    List dtXs;
+
+    PID(double maxIntTm, double maxAmp, double minKp, double maxKp, double rTiM, double TdM, double TddM, double eDPm, double eDPa, unsigned long session, double Kp, double preE=0, unsigned long preT=0)
+        : maxIntTm(maxIntTm), maxAmp(maxAmp), minKp(minKp), maxKp(maxKp), rTiM(rTiM), TdM(TdM), TddM(TddM), eDPm(eDPm), eDPa(eDPa), session(session), Kp(Kp), Ki(0), Kd(0), Kdd(0), preE(preE), preDv(0), intg(0), preOut(0), preT(preT), dtXs({nullptr, nullptr, 0}) {}
+
+    double update(double e, unsigned long timestamp, String* debug = nullptr) {
+        unsigned long dt = timestamp - preT;
+        preT = timestamp;
+
+        if (dt == 0) {
+            if (debug != nullptr) {
+                *debug += "dt=0\n";
+            }
+            return preOut;
+        }
+
+        double amp, ap;
+
+        if (session>0) {
+                unsigned long S = 0;
+                amp = 0;
+                if (dtXs.size > 1) {
+                    Node* pos = dtXs.tail;
+                    while (dtXs.size > 1 && pos != nullptr) {
+                        S += pos->data.dt;
+                        amp = MAX(ABS(pos->data.e), amp);
+                        if (S > session) {
+                            dtXs.head = pos;
+                            Node* cur = pos->prev;
+                            pos->prev = nullptr;
+                            while (cur != nullptr) {
+                                Node* tmp = cur->prev;
+                                delete cur;
+                                cur = tmp;
+                                dtXs.size--;
+                            }
+                            break;
+                        } else pos = pos->prev;
+                    }
+                } else if (dtXs.size == 1) {
+                    amp = ABS(dtXs.tail->data.e);
+                }        
+            ap = exp(-amp / maxAmp);
+        } else {
+            amp=0;
+            ap=1;
+        }
+
+        Ki = Kp * rTiM * ap;
+        Kd = Kp * TdM * ap;
+        Kdd = Kd * TddM;
+
+        double dv = (e - preE) / dt;
+        double dd = (dv - preDv) / dt;
+
+        intg += e * dt;
+        double intTm = Ki * intg;
+        if (ABS(intTm) > maxIntTm) {
+            intg = COPYSIGN(maxIntTm / Ki, intTm);
+            intTm = COPYSIGN(maxIntTm, intTm);
+        }
+
+        double propTm = Kp * e;
+        double dvTm = Kd * dv;
+        double ddTm = Kdd * dd;
+        double out = propTm + intTm + dvTm + ddTm;
+
+        double eDP = e * dv;
+        if (ABS(eDP) > eDPm) {
+            Kp *= (eDP < 0) ? (1+eDPa) : (1-eDPa);
+            Kp = MIN(MAX(Kp, minKp), maxKp);
+        }
+
+        if (debug != nullptr) {
+            *debug += "update() called\ndt: " + to_string(dt) + ", e: " + to_string(e) + ", dv: " + to_string(dv) + ", dd: " + to_string(dd) +", amp: " + to_string(amp) +", ap: " + to_string(ap) + ",\nKp: " + to_string(Kp) + ", Ki: " + to_string(Ki) + ", Kd: " + to_string(Kd) + ", Kdd: " + to_string(Kdd) + ",\npropTm: " + to_string(propTm) + ", intTm: " + to_string(intTm) + ", dvTm: " + to_string(dvTm) + ", ddTm: " + to_string(ddTm) + ",\neDP: " + to_string(eDP) + ", out: " + to_string(out) + "\n";
+        }
+
+        preE = e;
+        preDv = dv;
+        preOut = out;
+
+        if (session>0) {
+            Node* nn = new Node{{dt, e}, dtXs.tail};
+            dtXs.tail = nn;
+            if (dtXs.size == 0) dtXs.head = nn;
+            dtXs.size++;
+       } 
+
+        return out;
+    }
+};
+
+#endif
+\end{lstlisting}
+\subsubsection{Arduino and Non-Arduino Compatibility}
+The header is designed to be compatible with both Arduino and non-Arduino environments. This allows developers to use the same PID controller implementation across different platforms.\\
+Conditional Compilation:
+\begin{lstlisting}[language=C++]
+#ifdef ARDUINO
+#include <Arduino.h>
+#include <math.h>
+#define to_string(a) String(a)
+#else
+#include <cmath>
+#include <string>
+#define String string
+using namespace std;
+#endif
+\end{lstlising}
+\subsubsection{Traditional PID Controller}
+The traditional PID controller is defined by the following equation:
+$$
+u(t) = K_p e(t) + K_i \int_0^t e(\tau) \,\mathrm{d}\tau + K_d \frac{\mathrm{d}e(t)}{\mathrm{d}t},
+$$
+where:
+\begin{itemize}
+\item $u(t)$ is the control output.
+\item $e(t)$ is the error at time $t$, defined as the difference between the desired value and the measured value.
+\item $K_p$, $K_i$, and $K_d$ are the proportional, integral, and derivative gains, respectively.
+\end{itemize}
+\subsubsection{Adaptive Gain Adjustment}
+The proportional gain $K_p$ is dynamically adjusted based on the interaction between the current error $e(t)$ and its rate of change (derivative). This adjustment is designed to improve the responsiveness of the controller to changing conditions. The adaptation can be mathematically expressed as follows:
+$$
+K_p' = K_p \times (1 \pm eDP_a),
+$$
+where:
+\begin{itemize}
+\item $eDP = e(t) \times \frac{de(t)}{dt}$
+\item $eDP_m$ is a threshold that determines when to adjust the proportional gain.
+\item $eDP_a$ is the adjustment factor that scales the change in $K_p$ based on the error’s derivative. 
+\end{itemize}
+The key idea behind this adjustment is to increase the proportional gain when the system is experiencing a large error combined with a significant rate of change, which could indicate an approaching overshoot or oscillation. Conversely, if the error is decreasing but remains large, it may reduce the proportional gain to prevent excessive correction, allowing the system to stabilize more smoothly.
+\subsubsection{Adaptive Integral Term}
+Integral control is essential for eliminating steady-state error; however, it can lead to issues like integral windup, where the integral term accumulates excessively during periods of sustained error. To mitigate this, the integral gain $K_i$ is adaptively computed as follows:
+$$
+K_i = K_p \times rTiM \times ap
+$$
+Where:
+\begin{itemize}
+\item $ap = e^{-\frac{\text{amp}}{\text{maxAmp}}}$
+\item $rTiM$ is a constant that relates to the desired integral time constant.
+\end{itemize}
+The variable $amp$ represents the maximum amplitude of error observed over a session. By using the exponential decay factor $ap$, the contribution of the integral term is diminished during periods of high error, effectively reducing the risk of windup. When the error is within an acceptable range, $ap$ approaches 1, allowing the integral term to contribute effectively to the control output.
+\subsubsection{Error History Management}
+Inspired by the \textbf{Ziegler–Nichols tuning method}, the implementation maintains a history of past errors and their timestamps to calculate the derivative and integral terms accurately. This history management is crucial for two main reasons:
+\begin{itemize}
+\item \textbf{Deriving the Rate of Change}: The derivative term requires knowledge of how fast the error is changing. By storing previous error values in a linked list, we can accurately compute the change in error over time ($\frac{de(t)}{dt}$):
+$$
+  dv = \frac{e(t) - preE}{dt}
+$$
+\item \textbf{Integral Calculation}: The integral of the error is accumulated over time, enabling the controller to respond to persistent deviations from the setpoint:
+$$
+  intg += e(t) \times dt
+$$
+\end{itemize}
+Using a linked list allows for efficient management of this error history. As new errors are added, older entries can be pruned to ensure that only relevant data is retained, which helps avoid excessive memory usage and keeps the calculations focused on the most recent behavior of the system.
+\subsubsection{Additional Derivative Term}
+In addition to the standard derivative term $K_d$, an additional derivative term $K_{dd}$ is included in the PID controller. This term represents a second derivative component, which can be defined as follows:
+$$
+K_{dd} = K_d \times TddM,
+$$
+where $TddM$ is a multiplier that adjusts the impact of the second derivative term. \\
+The inclusion of $K_{dd}$ helps the controller anticipate changes in the error more effectively. By accounting for the acceleration of the error (i.e., how the rate of error change is itself changing), this additional term enhances the damping characteristics of the controller, allowing for more refined control responses, especially in systems that are subject to rapid changes or oscillations.
+\subsubsection{Data Structures}
+\begin{itemize}
+\item \textbf{Data}: Holds the time difference (\texttt{dt}) and error value (\texttt{e}).
+\item \textbf{Node}: Represents an element in the linked list, containing \texttt{Data} and a pointer to the previous node.
+\item \textbf{List}: Manages the linked list, holding pointers to the head and tail nodes and the size of the list.
+\end{itemize}
+\subsubsection{PID Class}
+The \texttt{PID} class encapsulates the PID control logic. It includes:
+\begin{itemize}
+\item \textbf{Member Variables:}
+\begin{itemize}
+\item Control gains: $K_p$, $K_i$, $K_d$, $K_{dd}$ (additional derivative term).
+\item State variables: \texttt{preE}, \texttt{preDv}, \texttt{intg}, \texttt{preOut}, and \texttt{preT}, which store the previous error, derivative, integral term, last output, and last timestamp, respectively.
+\item \texttt{dtXs}: An instance of \texttt{List} to maintain historical error data.
+\end{itemize}
+\item \textbf{Constructor:} Initializes the PID parameters and state variables.
+\item \textbf{Update Method:}
+\begin{itemize}
+\item Takes the current error and timestamp, computes the control output, and updates the internal state.
+\item Implements logic for calculating the adaptive gains, managing error history, and generating the control signal.
+\end{itemize}
+\end{itemize}
+\subsection{testCar.hpp}
+This header file includes a \texttt{Car} class for simulating the motion of a car, a PID controller for adjusting the speed of an auto-following kart based on the distance to a leader car, and several utility functions for data processing and results management.
+\subsubsection{Code}
+\begin{lstlising}[language=C++]
+#ifndef TESTCAR_HPP
+#define TESTCAR_HPP
+
+#include <iostream>
+#include <cmath>
+#include <string>
+#include <vector>
+#include <numeric>
+#include <fstream>
+#include <algorithm>
+#include "PID.hpp"
+using namespace std;
+
+class Car
+{
+  public:
+        Car(double initialSpeed, double initialPosition)
+                : speed(initialSpeed), position(initialPosition) {}
+
+        void updatePosition(double timeInterval)
+        {
+                position += speed * timeInterval;
+        }
+
+        void changeSpeed(double newSpeed)
+        {
+                speed = newSpeed;
+        }
+
+        double getPosition() const
+        {
+                return position;
+        }
+
+        double getSpeed() const
+        {
+                return speed;
+        }
+
+        double speed;
+        double position;
+};
+
+void pidDebug(string message)
+{
+        cout << message;
+}
+
+double sum_last_squared(const std::vector<double> &v, double prop)
+{
+        if (v.empty())
+                return 0.0;
+
+        size_t n = v.size();
+        size_t count = static_cast<size_t>(std::ceil(n * prop));
+        size_t start_index = n - count;
+
+        double sum_of_squares = std::accumulate(v.begin() + start_index, v.end(), 0.0,
+                                                                                        [](double sum, double value) {
+                                                                                                return sum + value * value;
+                                                                                        });
+        return sum_of_squares;
+}
+
+vector<double> velocities(int steps)
+{
+        vector<double> velocities(steps, 0.0);
+        double acceleration = 1;
+        double error = 0.2;
+
+        int phase_length = steps / 6;
+        double velocity = 0.0;
+
+        for (int i = 0; i < phase_length; ++i)
+        {
+                velocity += acceleration + ((i % 3 == 0) ? error : ((i % 3 == 1) ? (-error) : 0));
+                velocities[i] = velocity;
+        }
+
+        for (int i = phase_length; i < 2 * phase_length; ++i)
+        {
+                velocity += ((i % 3 == 0) ? error : ((i % 3 == 1) ? (-error) : 0));
+                velocities[i] = velocity;
+        }
+
+        for (int i = 2 * phase_length; i < 4 * phase_length; ++i)
+        {
+                velocity -= acceleration + ((i % 3 == 0) ? error : ((i % 3 == 1) ? (-error) : 0));
+                velocities[i] = velocity;
+        }
+
+        for (int i = 4 * phase_length; i < 5 * phase_length; ++i)
+        {
+                velocity += acceleration + ((i % 3 == 0) ? error : ((i % 3 == 1) ? (-error) : 0));
+                velocities[i] = velocity;
+        }
+
+        for (int i = 5 * phase_length; i < steps; ++i)
+        {
+                if (ABS(velocity) >= (error * (steps - i)))
+                {
+                        velocity += COPYSIGN(velocity, error);
+                }
+                else
+                {
+                        velocity += ((i % 3 == 0) ? error : ((i % 3 == 1) ? (-error) : 0));
+                }
+                velocities[i] = velocity;
+        }
+
+        return velocities;
+}
+
+vector<double> test(double maxIntTm, double maxAmp, double minKp, double maxKp, double rTiM, double TdM, double TddM, double eDPm, double eDPa, unsigned long session, double Kp, double preE = 0, unsigned long preT = 0, double timeInterval = 10, int steps = 50, bool debug = false)
+{
+        double leaderInitialSpeed = 0;
+        double followerInitialSpeed = 0;
+        double initialDistance = 0;
+
+        vector<double> vec;
+        vector<double> vol = velocities(steps);
+
+        Car leader(leaderInitialSpeed, initialDistance);
+        Car follower(followerInitialSpeed, 0);
+
+        PID pid = PID(maxIntTm, maxAmp, minKp, maxKp, rTiM, TdM, TddM, eDPm, eDPa, session, Kp, preE, preT);
+
+        cout << fixed << setprecision(4);
+
+        for (int i = 0; i < steps; i++)
+        {
+                leader.changeSpeed(leader.getSpeed() + vol[i]);
+                leader.updatePosition(timeInterval);
+                follower.updatePosition(timeInterval);
+
+                double distanceToLeader = leader.getPosition() - follower.getPosition();
+                vec.push_back(distanceToLeader);
+                string* ptr = nullptr;
+                if (debug) {
+            cout << "TimeStep: " << i << ", distanceToLeader: " << distanceToLeader << ", FollowerSpeed: " << follower.getSpeed() << ", LeaderSpeed: " << leader.getSpeed() << "\n";
+
+                    ptr = new string;
+                }
+                double fS = pid.update(distanceToLeader, i * timeInterval, ptr);
+                follower.changeSpeed(follower.getSpeed() + MAX(-511, MIN(fS, 511)));
+                if (debug) {
+            cout << *ptr;
+                    delete ptr;
+                }
+        }
+
+        return vec;
+}
+
+struct pidTest
+{
+        double maxIntTm, maxAmp, minKp, maxKp, rTiM, TdM, TddM, eDPm, eDPa;
+        unsigned long session;
+        double Kp, result;
+};
+
+bool write_results(const vector<pidTest> &data, const string &filename)
+{
+        auto sorted_data = data;
+        sort(sorted_data.begin(), sorted_data.end(), [](const pidTest &a, const pidTest &b) {
+                return a.result < b.result;
+        });
+
+        ofstream outfile(filename);
+        if (!outfile)
+        {
+                cerr << "Error opening file for writing." << endl;
+                return 0;
+        }
+
+        outfile << "maxIntTm,maxAmp,minKp,maxKp,rTiM,TdM,TddM,eDPm,eDPa,session,Kp,result\n";
+
+        for (size_t i = 0; i < sorted_data.size(); ++i)
+        {
+                const pidTest &pt = sorted_data[i];
+                outfile << pt.maxIntTm << "," << pt.maxAmp << "," << pt.minKp << "," << pt.maxKp << ","
+                                << pt.rTiM << "," << pt.TdM << "," << pt.TddM << "," << pt.eDPm << "," << pt.eDPa << ","
+                                << pt.session << "," << pt.Kp << "," << pt.result << "\n";
+        }
+
+        outfile.close();
+        cout << "Data written to " << filename << endl;
+
+        return 1;
+}
+
+struct ParameterRange
+{
+        double start;
+        double end;
+        double step;
+};
+
+#endif
+\end{lstlisting}
+\subsubsection{Car Class}
+The \texttt{Car} class represents a simple vehicle model with basic motion dynamics. It includes attributes for speed and position, as well as methods to update these attributes.
+\subsubsection{PID Debugging Function}
+The \texttt{pidDebug} function is a utility for logging messages related to PID control operations.
+\subsubsection{Sum of Last Squared Values}
+\begin{lstlisting}[language=cpp]
+double sum_last_squared(const std::vector<double> &v, double prop)
+\end{lstlisting}
+Calculates the sum of squares of the last $n \times \text{prop}$ elements of the provided vector \texttt{v}.
+\subsubsection{Velocity Generation}
+\begin{lstlisting}[language=cpp]
+vector<double> velocities(int steps)
+\end{lstlisting}
+Generates a vector of velocity values over a specified number of simulation steps, simulating different phases of motion (acceleration, deceleration, and adjustments).
+\subsubsection{PID Testing Function}
+\begin{lstlisting}[language=cpp]
+vector<double> test(double maxIntTm, double maxAmp, double minKp, double maxKp, double rTiM, double TdM, double TddM, double eDPm, double eDPa, unsigned long session, double Kp, double preE = 0, unsigned long preT = 0, double timeInterval = 10, int steps = 1000)
+\end{lstlisting}
+This function simulates the interaction between a leader car and an auto-following kart using a PID controller to adjust the follower's speed based on the distance to the leader.
+\begin{itemize}
+\item \textbf{Parameters:}
+\begin{itemize}
+\item \texttt{double maxIntTm}: Maximum integral time constant.
+\item \texttt{double maxAmp}: Maximum amplitude of control output.
+\item \texttt{double minKp}: Minimum proportional gain.
+\item \texttt{double maxKp}: Maximum proportional gain.
+\item \texttt{double rTiM}: Reference time interval multiplier.
+\item \texttt{double TdM}: Derivative time multiplier.
+\item \texttt{double TddM}: Second derivative time multiplier.
+\item \texttt{double eDPm}: Maximum error derivative proportionality factor.
+\item \texttt{double eDPa}: Error derivative adjustment factor.
+\item \texttt{unsigned long session}: Session identifier for logging purposes.
+\item \texttt{double Kp}: Initial proportional gain.
+\item \texttt{double preE}: Previous error value (optional, defaults to 0).
+\item \texttt{unsigned long preT}: Previous time value (optional, defaults to 0).
+\item \texttt{double timeInterval}: Time interval for each step of simulation (default is 10).
+\item \texttt{int steps}: Total number of simulation steps (default is 1000).
+\end{itemize}
+\item \textbf{Returns:} A vector containing the distances between the leader and follower over time.
+\end{itemize}
+\subsubsection{PID Test Data Structure}
+\begin{lstlisting}[language=cpp]
+struct pidTest
+{
+double maxIntTm, maxAmp, minKp, maxKp, rTiM, TdM, TddM, eDPm, eDPa;
+unsigned long session;
+double Kp, result;
+};
+\end{lstlisting}
+The \texttt{pidTest} structure is used to store parameters for PID testing, along with the result of the simulation.
+\subsubsection{Result Writing Function}
+\begin{lstlisting}[language=cpp]
+bool write_results(const vector<pidTest> &data, const string &filename)
+\end{lstlisting}
+Writes the results of PID tests to a CSV file for analysis.
+\subsubsection{ParameterRange}
+A structure to define the range of parameters for optimization.
+\begin{itemize}
+\item \textbf{Attributes:}
+\begin{itemize}
+\item \texttt{double start}: The starting value of the parameter range.
+\item \texttt{double end}: The ending value of the parameter range.
+\item \texttt{double step}: The increment step for the parameter.
+\end{itemize}
+\end{itemize}
+\subsection{optimization.hpp}
+This header file defines the optimization functions and structures used to optimize the parameters of a PID controller in a car simulation without multi-threaded processing.
+\subsubsection{Code}
+\begin{lstlising}[language=C++]
+#ifndef OPTIMIZATION_HPP
+#define OPTIMIZATION_HPP
+
+#include "testCar.hpp"
+using namespace std;
+
+int optimize(vector<ParameterRange> ranges)
+{
+    vector<pidTest> results;
+
+        for (double maxIntTm = ranges[0].start; maxIntTm <= ranges[0].end; maxIntTm += ranges[0].step)
+        {
+                for (double maxAmp = ranges[1].start; maxAmp <= ranges[1].end; maxAmp += ranges[1].step)
+                {
+                        for (double minKp = ranges[2].start; minKp <= ranges[2].end; minKp += ranges[2].step)
+                        {
+                                for (double maxKp = max(minKp, ranges[3].start);
+                                         maxKp <= ranges[3].end; maxKp += ranges[3].step)
+                                {
+                                        for (double rTiM = ranges[4].start; rTiM <= ranges[4].end; rTiM += ranges[4].step)
+                                        {
+                                                for (double TdM = ranges[5].start; TdM <= ranges[5].end; TdM += ranges[5].step)
+                                                {
+                                                        for (double TddM = ranges[6].start; TddM <= ranges[6].end; TddM += ranges[6].step)
+                                                        {
+                                                                for (double eDPm = ranges[7].start; eDPm <= ranges[7].end; eDPm += ranges[7].step)
+                                                                {
+                                                                        for (double eDPa = ranges[8].start; eDPa <= ranges[8].end; eDPa += ranges[8].step)
+                                                                        {
+                                                                                for (unsigned long session = ranges[9].start; session <= ranges[9].end; session += ranges[9].step)
+                                                                                {
+                                                                                        for (double Kp = MAX(minKp, ranges[10].start);
+                                                                                                 Kp <= MIN(maxKp, ranges[10].end); Kp += ranges[10].step)
+                                                                                        {
+                                                                                                vector<double> tmp = test(maxIntTm, maxAmp, minKp, maxKp, rTiM, TdM, TddM, eDPm, eDPa, session, Kp);
+                                                                                                double result = sum_last_squared(tmp, 0.5);
+                                                                                                results.push_back(pidTest({maxIntTm, maxAmp, minKp, maxKp, rTiM, TdM, TddM, eDPm, eDPa, session, Kp, result}));
+                                                                                        }
+                                                                                }
+                                                                        }
+                                                                }
+                                                        }
+                                                }
+                                        }
+                                }
+                        }
+                }
+        }
+
+        if (!write_results(results, "results.csv"))
+        {
+                cerr << "Error writing results to file." << endl;
+                return EXIT_FAILURE;
+        }
+
+        return EXIT_SUCCESS;
+}
+
+#endif
+\end{lstlising}
+\subsubsection{Optimize Function}
+Optimizes the parameters of the PID controller based on the provided ranges and writes results to a CSV file.
+\begin{itemize}
+\item \textbf{Parameters:}
+\begin{itemize}
+\item \texttt{vector<ParameterRange> ranges}: A vector containing the ranges of parameters to optimize.
+\end{itemize}
+\item \textbf{Returns:}
+\begin{itemize}
+\item \texttt{int}: Returns \texttt{EXIT\_SUCCESS} (0) if optimization completes successfully, otherwise returns \texttt{EXIT\_FAILURE}.
+\end{itemize}
+\end{itemize}
+\subsection{optimization\_multithread.hpp}
+This header file defines the optimization functions and structures used to optimize the parameters of a PID controller in a car simulation with multi-threaded processing.
+\begin{lstlising}[language=C++]
+#ifndef OPTIMIZATION_MULTITHREAD_HPP
+#define OPTIMIZATION_MULTITHREAD_HPP
+
+#include <vector>
+#include <iostream>
+#include <thread>
+#include <mutex>
+#include <queue>
+#include <atomic>
+#include <chrono>
+#include <iomanip>
+#include <condition_variable>
+#include <cmath>
+#include "testCar.hpp"
+using namespace std;
+
+mutex resultsMutex;
+mutex queueMutex;
+atomic<int> totalCombinations(0);
+atomic<int> processedCombinations(0);
+queue<vector<double>> parameterQueue;
+condition_variable cv;
+
+void displayProgress()
+{
+        while (true)
+        {
+                {
+                        lock_guard<mutex> lock(queueMutex);
+                        if (processedCombinations >= totalCombinations)
+                        {
+                                break;
+                        }
+                        cout << "\rProgress: " << processedCombinations << "/" << totalCombinations
+                                 << " (" << fixed << setprecision(2)
+                                 << (static_cast<double>(processedCombinations) / totalCombinations * 100)
+                                 << "%)          " << flush;
+                }
+                this_thread::sleep_for(chrono::seconds(1));
+        }
+        cout << "\rProgress: 100% Complete!                   " << endl;
+}
+
+size_t calculateSteps(const ParameterRange &range)
+{
+        return static_cast<size_t>(ceil((range.end - range.start) / range.step)) + 1;
+}
+
+void workerFunction(vector<pidTest> &results, atomic<bool> &running)
+{
+    while (running)
+    {
+        vector<double> params;
+
+        {
+            unique_lock<mutex> lock(queueMutex);
+            cv.wait(lock, [] { return !parameterQueue.empty(); });
+            if (parameterQueue.empty())
+            {
+                continue;
+            }
+            params = parameterQueue.front();
+            parameterQueue.pop();
+        }
+
+        vector<double> tmp = test(
+            params[0], params[1], params[2], params[3],
+            params[4], params[5], params[6], params[7],
+            params[8], params[9], params[10]);
+
+        double result = sum_last_squared(tmp, 0.5);
+
+        {
+            lock_guard<mutex> lock(resultsMutex);
+            results.emplace_back(pidTest{
+                params[0], params[1], params[2], params[3],
+                params[4], params[5], params[6], params[7],
+                params[8], static_cast<unsigned long>(params[9]),
+                params[10], result});
+        }
+
+        processedCombinations++;
+        cv.notify_one();
+    }
+}
+
+int optimize(vector<ParameterRange> ranges)
+{
+        totalCombinations = 1;
+        for (const auto &range : ranges)
+        {
+                size_t steps = calculateSteps(range);
+                if (totalCombinations > 0 && steps > SIZE_MAX / totalCombinations)
+                {
+                        cerr << "Error: Too many combinations, would cause overflow" << endl;
+                        return 1;
+                }
+                totalCombinations = totalCombinations * steps;
+        }
+
+        cout << "Total parameter combinations to test: " << totalCombinations << endl;
+
+        for (double maxIntTm = ranges[0].start; maxIntTm <= ranges[0].end; maxIntTm += ranges[0].step)
+        {
+                for (double maxAmp = ranges[1].start; maxAmp <= ranges[1].end; maxAmp += ranges[1].step)
+                {
+                        for (double minKp = ranges[2].start; minKp <= ranges[2].end; minKp += ranges[2].step)
+                        {
+                                for (double maxKp = max(minKp, ranges[3].start);
+                                         maxKp <= ranges[3].end; maxKp += ranges[3].step)
+                                {
+                                        for (double rTiM = ranges[4].start; rTiM <= ranges[4].end; rTiM += ranges[4].step)
+                                        {
+                                                for (double TdM = ranges[5].start; TdM <= ranges[5].end; TdM += ranges[5].step)
+                                                {
+                                                        for (double TddM = ranges[6].start; TddM <= ranges[6].end; TddM += ranges[6].step)
+                                                        {
+                                                                for (double eDPm = ranges[7].start; eDPm <= ranges[7].end; eDPm += ranges[7].step)
+                                                                {
+                                                                        for (double eDPa = ranges[8].start; eDPa <= ranges[8].end; eDPa += ranges[8].step)
+                                                                        {
+                                                                                for (unsigned long session = ranges[9].start; session <= ranges[9].end; session += ranges[9].step)
+                                                                                {
+                                                                                        for (double Kp = MAX(minKp, ranges[10].start);
+                                                                                                 Kp <= MIN(maxKp, ranges[10].end); Kp += ranges[10].step)
+                                                                                        {
+                                                                                                parameterQueue.push(pidTest({maxIntTm, maxAmp, minKp, maxKp, rTiM, TdM, TddM, eDPm, eDPa, session, Kp}));
+                                                                                        }
+                                                                                }
+                                                                        }
+                                                                }
+                                                        }
+                                                }
+                                        }
+                                }
+                        }
+                }
+        }
+
+        vector<pidTest> results;
+        vector<thread> threads;
+        atomic<bool> running(true);
+
+        thread progressThread(displayProgress);
+        unsigned int numThreads = thread::hardware_concurrency();
+        cout << "Using " << numThreads << " threads" << endl;
+
+        for (unsigned int i = 0; i < numThreads; ++i)
+        {
+                threads.emplace_back(workerFunction, ref(results), ref(running));
+        }
+
+        for (auto &thread : threads)
+        {
+                thread.join();
+        }
+
+        running = false;
+        cv.notify_all();
+
+        progressThread.join();
+
+        if (!write_results(results, "results.csv"))
+        {
+                cerr << "Error writing results to file." << endl;
+                return EXIT_FAILURE;
+        }
+
+        return EXIT_SUCCESS;
+}
+
+#endif
+\end{lstlisting}
+\subsubsection{Optimize Function}
+Optimizes the parameters of the PID controller based on the provided ranges and writes results to a CSV file.
+\begin{itemize}
+\item \textbf{Parameters:}
+\begin{itemize}
+\item \texttt{vector<ParameterRange> ranges}: A vector containing the ranges of parameters to optimize.
+\end{itemize}
+\item \textbf{Returns:}
+\begin{itemize}
+\item \texttt{int}: Returns \texttt{EXIT\_SUCCESS} (0) if optimization completes successfully, otherwise returns \texttt{EXIT\_FAILURE}.
+\end{itemize}
+\end{itemize}
+\subsection{main.cpp}
+The code file demonstrates the usage of the \texttt{optimization.hpp} (or \texttt{optimization\_multithread.hpp}) header file to perform parameter optimization for a PID controller. It defines a set of parameter ranges and calls the \texttt{optimize} function to evaluate different combinations of parameters.
+\subsubsection{Code}
+\begin{lstlisting}[language=C++]
+#include "optimization.hpp" // or #include "optimization_multithread.hpp"
+
+int main() {
+    // Note that steps can't be zero
+    vector<ParameterRange> ranges = {
+        {461.9, 461.9, 1},    // maxIntTm
+        {517.9, 517.9, 1},     // maxAmp
+        {0.00265, 0.00265, 1},       // minKp
+        {0.472, 0.472, 1},      // maxKp
+        {1, 1, 1},       // rTiM
+        {65.37, 65.37, 1},       // TdM
+        {1.7, 1.7, 1},        // TddM
+        {125, 125, 1}, // eDPm
+        {0.15, 0.15, 1},    // eDPa
+        {140, 140, 10},       // session
+        {0.2436, 0.2436, 1}      // Kp
+    };
+
+    return optimize(ranges);
+}
+\end{lstlisting}
+\subsubsection{Notes}
+Note that steps can't be zero or the program won't stop.
+\subsection{main.ino}
+This Arduino code is for controlling a differential-drive robot using two ultrasonic sensors to measure distance, a PID (Proportional-Integral-Derivative) controller for speed and direction adjustments, and an L293D motor driver to control the motors based on sensor inputs.
+\subsubsection{Code}
+\begin{lstlisting}[language=C++]
+// Arduino Pins
+#define L293D_LEFT_EN D2
+#define L293D_RIGHT_EN D3
+#define L293D_LEFT_IN1 D5
+#define L293D_LEFT_IN2 D6
+#define L293D_RIGHT_IN1 D7
+#define L293D_RIGHT_IN2 D8
+#define TRIG_LEFT D0
+#define TRIG_RIGHT D1
+#define ECHO_LEFT D9
+#define ECHO_RIGHT D10
+// Constants
+#define HALF_SOUND_SPEED 0.1715
+#define TARGET_DISTANCE 15
+#define DISTANCE_BETWEEN_ULTRASONIC_SENSORS 12
+// Parameters to be tested
+#define ANGULAR_SPEED_MULTIPLIER 0.8
+#define LEFT_POSITIVE_SPEED_MULTIPLIER 1
+#define LEFT_NEGATIVE_SPEED_MULTIPLIER 1.2
+#define RIGHT_POSITIVE_SPEED_MULTIPLIER 1
+#define RIGHT_NEGATIVE_SPEED_MULTIPLIER 1.2
+// 1 for debug, 0 for not
+#define DEBUG 1
+// Adjust the above parameters
+// The below code does not need to be changed
+
+#include "PID.hpp"
+
+PID avgPID(461.9, 517.9, 0.00265, 0.472, 1, 65.37, 1.7, 125, 0.15, 140, 0.2436);
+PID angPID(461.9, 517.9, 0.00265, 0.472, 1, 65.37, 1.7, 125, 0.15, 140, 0.2436);
+double avgV;
+double angV;
+#if DEBUG
+    String* ptr = new String();
+#endif
+
+inline double leftIn() {
+    digitalWrite(TRIG_LEFT, LOW);
+    delayMicroseconds(2);
+    digitalWrite(TRIG_LEFT, HIGH);
+    delayMicroseconds(10);
+    digitalWrite(TRIG_LEFT, LOW);
+    return pulseIn(ECHO_LEFT, HIGH) * HALF_SOUND_SPEED;
+}
+
+inline double rightIn() {
+    digitalWrite(TRIG_RIGHT, LOW);
+    delayMicroseconds(2);
+    digitalWrite(TRIG_RIGHT, HIGH);
+    delayMicroseconds(10);
+    digitalWrite(TRIG_RIGHT, LOW);
+    return pulseIn(ECHO_RIGHT, HIGH) * HALF_SOUND_SPEED;
+}
+
+void setup()
+{ 
+    Serial.begin (9600);
+    pinMode(TRIG_LEFT, OUTPUT);
+    pinMode(TRIG_RIGHT, OUTPUT);
+    pinMode(ECHO_LEFT, INPUT);
+    pinMode(ECHO_RIGHT, INPUT);
+    pinMode(L293D_LEFT_IN1, OUTPUT);
+    pinMode(L293D_LEFT_IN2, OUTPUT);
+    pinMode(L293D_RIGHT_IN1, OUTPUT);
+    pinMode(L293D_RIGHT_IN2, OUTPUT);
+    avgV = 0;
+    angV = 0;
+}
+
+void loop() {
+    double left = leftIn();
+    double right = rightIn();
+    double avg = left + right;
+    double ang = atan2(left - right, DISTANCE_BETWEEN_ULTRASONIC_SENSORS);
+
+    #if DEBUG
+        ptr->clear();
+        avgV += avgPID.update((avg - TARGET_DISTANCE), millis(), ptr);
+        Serial.println("Average Speed PID Update:");
+        Serial.println(*ptr);
+        ptr->clear();
+        angV += angPID.update((ang - TARGET_DISTANCE), millis(), ptr) * ANGULAR_SPEED_MULTIPLIER;
+        Serial.println("Angular Speed Update:");
+        Serial.println(*ptr);
+        ptr->clear();
+    #else
+        avgV += avgPID.update((avg - TARGET_DISTANCE), millis());
+        angV += angPID.update((ang - TARGET_DISTANCE), millis()) * ANGULAR_SPEED_MULTIPLIER;
+    #endif
+
+    double leftV = avgV + angV;
+    double rightV = avgV - angV;
+
+    leftOut(CLAMP(leftV, 255, -255));
+    rightOut(CLAMP(rightV, 255, -255));
+
+    delayMicroseconds(10000);
+}
+
+inline void leftOut(double leftV) {
+    #if DEBUG
+        Serial.println("Left Velocity: " + String(leftV));
+    #endif
+    leftV *= (leftV < 0)?LEFT_NEGATIVE_SPEED_MULTIPLIER:LEFT_POSITIVE_SPEED_MULTIPLIER;
+    #if DEBUG
+        Serial.println("Left Output: " + String(leftV));
+    #endif
+    if (leftV > 0) {
+        analogWrite(L293D_LEFT_IN1, 0);
+        analogWrite(L293D_LEFT_IN2, leftV);
+    } else {
+        analogWrite(L293D_LEFT_IN1, -leftV);
+        analogWrite(L293D_LEFT_IN2, 0);
+    }
+}
+
+inline void rightOut(double rightV) {
+    #if DEBUG
+        Serial.println("Right Velocity: " + String(rightV));
+    #endif
+    rightV *= (rightV < 0)?RIGHT_NEGATIVE_SPEED_MULTIPLIER:RIGHT_POSITIVE_SPEED_MULTIPLIER;
+    #if DEBUG
+        Serial.println("Right Output: " + String(rightV));
+    #endif
+    if (rightV > 0) {
+        analogWrite(L293D_RIGHT_IN1, 0);
+        analogWrite(L293D_RIGHT_IN2, rightV);
+    } else {
+        analogWrite(L293D_RIGHT_IN1, -rightV);
+        analogWrite(L293D_RIGHT_IN2, 0);
+    }
+}
+\end{lstlisting}
+\subsubsection{Pin Definitions}
+\begin{itemize}
+\item \textbf{L293D motor control pins:}
+\begin{itemize}
+\item \texttt{L293D\_LEFT\_EN} and \texttt{L293D\_RIGHT\_EN}: Enable pins for the left and right motors.
+\item \texttt{L293D\_LEFT\_IN1}, \texttt{L293D\_LEFT\_IN2}, \texttt{L293D\_RIGHT\_IN1}, \texttt{L293D\_RIGHT\_IN2}: Input pins for controlling the direction of the motors.
+\end{itemize}
+\item \textbf{Ultrasonic sensor pins:}
+\begin{itemize}
+\item \texttt{TRIG\_LEFT} and \texttt{TRIG\_RIGHT}: Trigger pins for the left and right ultrasonic sensors.
+\item \texttt{ECHO\_LEFT} and \texttt{ECHO\_RIGHT}: Echo pins for the left and right ultrasonic sensors that return the duration of the reflected sound wave.
+\end{itemize}
+\end{itemize}
+\subsubsection{Constants}
+\begin{itemize}
+\item \textbf{HALF\_SOUND\_SPEED}: Constant used to convert the echo time into a distance. The value \texttt{0.1715} is derived from the speed of sound.
+\item \textbf{TARGET\_DISTANCE}: The target distance that the robot should maintain between the two sensors (in centimeters).
+\item \textbf{DISTANCE\_BETWEEN\_ULTRASONIC\_SENSORS}: The distance between the two ultrasonic sensors mounted on the robot, which is used to calculate angular adjustments.
+\end{itemize}
+\subsubsection{PID Tuning Parameters}
+\begin{itemize}
+\item \textbf{PID Controllers (\texttt{avgPID} and \texttt{angPID})}: Two PID controllers are used:
+\begin{itemize}
+\item \texttt{avgPID}: Controls the average speed to keep the robot at the target distance.
+\item \texttt{angPID}: Controls the angular speed to maintain proper alignment based on the sensor readings.
+\end{itemize}
+The values provided for the PID controllers (like 461.9, 517.9, etc.) are the tuning parameters for each PID term (P, I, D).
+\end{itemize}
+\subsubsection{Functions and Code Flow}
+\begin{itemize}
+\item \textbf{\texttt{leftIn()} and \texttt{rightIn()}}: These inline functions trigger the ultrasonic sensors by sending a pulse and measuring the time it takes for the sound to return. The return time is converted into a distance using the formula:
+\[
+\text{distance} = \frac{\text{time} \times \text{speed of sound}}{2}
+\]
+The resulting distance is then returned.
+\item \textbf{\texttt{setup()}}: This function runs once when the program starts. It initializes serial communication, sets pin modes for the motor control and ultrasonic sensors, and initializes the velocity variables (\texttt{avgV} and \texttt{angV}).
+\item \textbf{\texttt{loop()}}: This function runs repeatedly. It does the following:
+\begin{enumerate}
+\item Reads the distance from the left and right ultrasonic sensors using \texttt{leftIn()} and \texttt{rightIn()}.
+\item Calculates the average distance (\texttt{avg}) and the angular difference (\texttt{ang}) between the two sensors.
+\item Applies the PID controllers to adjust the average speed and angular speed to maintain the target distance.
+\item Sets the left and right velocities (\texttt{leftV} and \texttt{rightV}) based on the PID updates and applies any necessary adjustments to control the motors.
+\item Sends the control signals to the motors using \texttt{leftOut()} and \texttt{rightOut()}.
+\end{enumerate}
+\end{itemize}
+\subsubsection{Motor Control (\texttt{leftOut()} and \texttt{rightOut()})}
+\begin{itemize}
+\item \texttt{leftOut()} and \texttt{rightOut()}: These inline functions are responsible for sending control signals to the motor driver (L293D). The functions adjust the speed based on the calculated velocity and apply any speed multipliers to tune motor behavior. The \texttt{analogWrite()} function is used to set the motor speeds, where:
+\begin{itemize}
+\item Positive velocities drive the motors forward.
+\item Negative velocities drive the motors backward.
+\end{itemize}
+\end{itemize}
+\subsubsection{Debugging}
+\begin{itemize}
+\item If \texttt{DEBUG} is set to 1, additional information about the PID updates and motor velocities is printed to the serial monitor for troubleshooting and performance analysis.
+\end{itemize}
+\subsection{Development History}
+The development of this PID (Proportional-Integral-Derivative) controller project is rooted in control theory, a field of engineering that focuses on the behavior of dynamic systems. What makes us take the initiative is the auto-following kart lesson in our living technology class. We aim to make an auto-following kart from scratch with Arduino and wooden boards and make it as quality as possible on a constrained budget.
+\subsubsection{Control Theory and PID Controllers}
+The development of this PID (Proportional-Integral-Derivative) controller project is rooted in control theory, a field of engineering that focuses on the behavior of dynamic systems. PID controllers are a cornerstone of modern control systems. They are designed to automatically adjust system outputs based on feedback to minimize error, allowing for precise control of dynamic systems. The PID controller operates based on three fundamental components:
+\begin{itemize}
+\item \textbf{Proportional Control (P)}: Responds proportionally to the current error value, providing immediate correction based on how far the system is from the desired state.
+\item \textbf{Integral Control (I)}: Addresses accumulated past errors, ensuring that the system reaches the desired state even if there are persistent biases.
+\item \textbf{Derivative Control (D)}: Predicts future errors based on the rate of change of the error, providing a damping effect to reduce overshoot and oscillation.
+\end{itemize}
+The tuning of these parameters is crucial for achieving optimal performance. The traditional Ziegler–Nichols tuning method has served as a foundational approach for many engineers, providing empirical guidelines for setting PID parameters based on system behavior.
+\subsubsection{Initial Implementation}
+The journey began with a simple implementation of the traditional PID controller. The focus was on creating a basic class structure in C++ that encapsulated the PID logic, allowing for straightforward application in simulations.
+\begin{itemize}
+\item \textbf{Key Features}:
+\begin{itemize}
+\item Basic PID calculations.
+\item Initial support for both Arduino and non-Arduino environments through conditional compilation.
+\end{itemize}
+\end{itemize}
+\subsubsection{Enhancements and Adaptive Features}
+As the initial implementation was tested, several limitations became apparent, particularly regarding responsiveness and stability. This prompted the incorporation of advanced features such as:
+\begin{itemize}
+\item \textbf{Adaptive Gain Adjustment}: Inspired by the need for dynamic responsiveness, the proportional gain $K_p$ was made adaptable based on the error's rate of change. This enhancement allowed for better handling of transient behaviors in the system.
+\item \textbf{Adaptive Integral Term}: To mitigate integral windup, the integral gain $K_i$ was adjusted based on observed error amplitude. This feature improved system stability during sustained error conditions.
+\end{itemize}
+\subsubsection{Error History Management}
+To accurately compute the integral and derivative terms, a robust error history management system was implemented. This system utilized a linked list structure to store past error values and timestamps, enabling precise calculations for both the integral and derivative components. The integration of error history management was crucial for implementing more advanced tuning strategies, inspired by established control theory practices.
+\subsubsection{Additional Derivative Term}
+Recognizing the need for improved damping characteristics, an additional derivative term $K_{dd}$ was introduced. This term accounted for the acceleration of error changes, allowing the controller to anticipate and react to rapid fluctuations more effectively.
+\subsubsection{Testing and Simulation Framework}
+With the PID logic in place, attention turned to building a comprehensive simulation framework to test various PID configurations. The introduction of the \texttt{Car} class for simulating follower and leader vehicles added a practical context for evaluating PID performance in a dynamic environment.
+\begin{itemize}
+\item \textbf{PID Testing Function}: A dedicated function was developed to simulate the interaction between the leader and follower karts, providing insights into how different PID parameters affected system behavior.
+\end{itemize}
+\subsubsection{Optimization and Multi-threading}
+To facilitate further exploration of PID parameter tuning, optimization functions were integrated. Utilizing multi-threading allowed for the concurrent evaluation of multiple parameter combinations, greatly enhancing the testing efficiency. The optimization framework also included mechanisms for result logging and progress tracking, making it easier to analyze and visualize outcomes.
+\subsubsection{Arduino Auto-Following Kart}
+We use two ultrasonic sensors to measure the distance on both sides. The difference in distance helps adjust the robot's angular velocity, while the average of both distances adjusts its linear speed. The PID controllers fine-tune these adjustments to ensure the robot stays at the target distance, while adjusting its orientation to keep the two sensors aligned. The L293D motor driver uses these velocity values to control the left and right motors, adjusting the robot's movement accordingly.
+
+\section{硬體結構組裝與線路配置}
+
+\section{硬體參數優化}
+
+\end{document}
