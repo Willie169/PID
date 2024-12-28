@@ -1,6 +1,6 @@
 # PID
 
-This README mainly focuses on the program part. For detailed records, please see the [site](https://Willie169.github.io/PID) version.
+This README mainly focuses on the program part. For detailed records, please see the [site](https://Willie169.github.io/PID) version. However, the [main.ino] is only explained in this README and not mentioned in the site. Apologies for any inconvenience caused by it.
 
 [中文繁體 README（舊）](README-zh-hant.md)
 
@@ -237,6 +237,53 @@ The code file demonstrates the usage of the `optimization.hpp` (or `optimization
 
 Note that steps can't be zero or the program won't stop.
 
+## main.ino
+
+This Arduino code is for controlling a differential-drive robot using two ultrasonic sensors to measure distance, a PID (Proportional-Integral-Derivative) controller for speed and direction adjustments, and an L293D motor driver to control the motors based on sensor inputs. 
+
+### Pin Definitions
+- **L293D motor control pins:**
+  - `L293D_LEFT_EN` and `L293D_RIGHT_EN`: Enable pins for the left and right motors.
+  - `L293D_LEFT_IN1`, `L293D_LEFT_IN2`, `L293D_RIGHT_IN1`, `L293D_RIGHT_IN2`: Input pins for controlling the direction of the motors.
+  
+- **Ultrasonic sensor pins:**
+  - `TRIG_LEFT` and `TRIG_RIGHT`: Trigger pins for the left and right ultrasonic sensors.
+  - `ECHO_LEFT` and `ECHO_RIGHT`: Echo pins for the left and right ultrasonic sensors that return the duration of the reflected sound wave.
+
+### Constants
+- **`HALF_SOUND_SPEED`**: Constant used to convert the echo time into a distance. The value `0.1715` is derived from the speed of sound.
+- **`TARGET_DISTANCE`**: The target distance that the robot should maintain between the two sensors (in centimeters).
+- **`DISTANCE_BETWEEN_ULTRASONIC_SENSORS`**: The distance between the two ultrasonic sensors mounted on the robot, which is used to calculate angular adjustments.
+
+### PID Tuning Parameters
+- **PID Controllers (`avgPID` and `angPID`)**: Two PID controllers are used:
+  - `avgPID`: Controls the average speed to keep the robot at the target distance.
+  - `angPID`: Controls the angular speed to maintain proper alignment based on the sensor readings.
+  
+  The values provided for the PID controllers (like `461.9`, `517.9`, etc.) are the tuning parameters for each PID term (P, I, D).
+
+### Functions and Code Flow
+
+- **`leftIn()` and `rightIn()`**: These inline functions trigger the ultrasonic sensors by sending a pulse and measuring the time it takes for the sound to return. The return time is converted into a distance using the formula `distance = time * speed of sound / 2`. The resulting distance is then returned.
+
+- **`setup()`**: This function runs once when the program starts. It initializes serial communication, sets pin modes for the motor control and ultrasonic sensors, and initializes the velocity variables (`avgV` and `angV`).
+
+- **`loop()`**: This function runs repeatedly. It does the following:
+  1. Reads the distance from the left and right ultrasonic sensors using `leftIn()` and `rightIn()`.
+  2. Calculates the average distance (`avg`) and the angular difference (`ang`) between the two sensors.
+  3. Applies the PID controllers to adjust the average speed and angular speed to maintain the target distance.
+  4. Sets the left and right velocities (`leftV` and `rightV`) based on the PID updates and applies any necessary adjustments to control the motors.
+  5. Sends the control signals to the motors using `leftOut()` and `rightOut()`.
+
+### Motor Control (`leftOut()` and `rightOut()`):
+- **`leftOut()` and `rightOut()`**: These inline functions are responsible for sending control signals to the motor driver (L293D). The functions adjust the speed based on the calculated velocity and apply any speed multipliers to tune motor behavior. The `analogWrite()` function is used to set the motor speeds, where:
+  - Positive velocities drive the motors forward.
+  - Negative velocities drive the motors backward.
+
+### Debugging
+- If `DEBUG` is set to `1`, additional information about the PID updates and motor velocities is printed to the serial monitor for troubleshooting and performance analysis.
+
+
 ## Wooden Board
 
 The wooden board serves as the support structure of the auto-following kart that connects and props the components such as an Arduino board, an Omni wheel, a breadboard, 2 wheels, and 2 motors.
@@ -308,6 +355,10 @@ With the PID logic in place, attention turned to building a comprehensive simula
 ### Optimization and Multi-threading
 
 To facilitate further exploration of PID parameter tuning, optimization functions were integrated. Utilizing multi-threading allowed for the concurrent evaluation of multiple parameter combinations, greatly enhancing the testing efficiency. The optimization framework also included mechanisms for result logging and progress tracking, making it easier to analyze and visualize outcomes.
+
+### Arduino Auto-Following Kart
+
+We use two ultrasonic sensors to measure the distance on both sides. The difference in distance helps adjust the robot's angular velocity, while the average of both distances adjusts its linear speed. The PID controllers fine-tune these adjustments to ensure the robot stays at the target distance, while adjusting its orientation to keep the two sensors aligned. The L293D motor driver uses these velocity values to control the left and right motors, adjusting the robot's movement accordingly.
 
 ## Contributing
 
