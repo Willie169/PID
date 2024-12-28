@@ -495,14 +495,14 @@ morestring=[b]'
 \nthm\setcounter{page}{1}
 % Change above to what you want.
 % --- Your document goes here -- %
-\section{前言}
-\subsection{致老師}
+\section{致老師}
 親愛的 溫老師敬和：\\\\
 對於未能及時完全達成公開測試與封閉測試的標準，以及以英語呈現這份專題報告的許多部分，我們深感抱歉。\\\\
 首先，我們了解這份專案需要大量軟硬體調適與修正，也誠摯希望能夠完成這個有益於我們求學和職涯的專案，但礙於學測與段考等時間壓力，我們僅完成軟硬體的設計與組裝，未能完成最後的調適封測，實在抱歉與可惜。\\\\
 次者，雖然我了解全數使用中文更具有連貫性並有助於您的閱讀，但軟體開發、\LaTeX{} 與控制理論的技術內容資源以英文較充足，故以英文呈現許多部分，對於由此給您帶來的不便，我深表歉意。\\\\
 感謝您在二年來課程中的諄諄教誨和耐心支持。
-\subsection{Initial Attempt}
+\nthm\section{Preparations}
+\subsection{Initial Attempts}
 The project initially explored the creation of a 3D design to visualize the concept and aid in prototyping. Using FreeCAD package in Python3, an early model was constructed and aimed to provide a tangible understanding of possible designs and test the performance of our kart. This model is latter abandoned after we got a rough understanding and consensus on the project and division of labor.
 \subsubsection{3D Design}
 \begin{lstlisting}[language=Python]
@@ -2209,9 +2209,7 @@ The resulting distance is then returned.
 \end{itemize}
 \end{itemize}
 \subsubsection{Debugging}
-\begin{itemize}
-\item If \texttt{DEBUG} is set to 1, additional information about the PID updates and motor velocities is printed to the serial monitor for troubleshooting and performance analysis.
-\end{itemize}
+If \texttt{DEBUG} is set to 1, additional information about the PID updates and motor velocities is printed to the serial monitor for troubleshooting and performance analysis.
 \subsection{Development History}
 The development of this PID (Proportional-Integral-Derivative) controller project is rooted in control theory, a field of engineering that focuses on the behavior of dynamic systems. What makes us take the initiative is the auto-following kart lesson in our living technology class. We aim to make an auto-following kart from scratch with Arduino and wooden boards and make it as quality as possible on a constrained budget.
 \subsubsection{Control Theory and PID Controllers}
