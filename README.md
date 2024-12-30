@@ -1,8 +1,8 @@
 # PID
 
-This README mainly focuses on the program part. For detailed records, please see the [site](https://Willie169.github.io/PID) version. However, the [main.ino] is only explained in this README and not mentioned in the site. Apologies for any inconvenience caused by it.
-
-[中文繁體 README（舊）](README-zh-hant.md)
+- This README is mainly as a documentation for the code, without documentation for 3D models.
+- The [site](https://Willie169.github.io/PID) is the 2nd log, before [main.ino](main.ino) and most 3D models are designed and is not updated after that.
+- [中文繁體 README](README-zh-hant.md) is the machine translation of the 1st log.
 
 This repository implements a PID (Proportional-Integral-Derivative) controller designed to regulate the speed of an auto-following kart with a leader robot. The implementation includes the PID controller logic, a car simulation, and a framework for testing various PID configurations.
 
