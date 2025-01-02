@@ -35,225 +35,14 @@
 首先，我們了解這份專案需要大量軟硬體調適與修正，也誠摯希望能夠完成這個有益於我們求學和職涯的專案，但礙於學測與段考等時間壓力，我們僅完成軟硬體的設計與組裝，未能完成最後的調適封測，實在抱歉與可惜。\\\\
 次者，雖然我了解全數使用中文更具有連貫性並有助於您的閱讀，但軟體開發、\LaTeX{} 與控制理論的技術內容資源以英文較充足，故以英文呈現許多部分，對於由此給您帶來的不便，我深表歉意。\\\\
 感謝您在二年來課程中的諄諄教誨和耐心支持。
-\nthm\section{Preparations}
-\subsection{Initial Attempts}
-The project initially explored the creation of a 3D design to visualize the concept and aid in prototyping. Using FreeCAD package in Python3, an early model was constructed and aimed to provide a tangible understanding of possible designs and test the performance of our kart. This model is latter abandoned after we got a rough understanding and consensus on the project and division of labor.
-\subsubsection{3D Design}
-\begin{lstlisting}[language=Python]
-import FreeCAD, Part, Draft
-from FreeCAD import Base
 
-def create_wheel(radius, width, position):
-    wheel = Part.makeCylinder(radius, width)
-    wheel.translate(Base.Vector(position[0], position[1], position[2]))
-    return wheel
-
-def create_kart_body(length, width, height):
-    body = Part.makeBox(length, width, height)
-    return body
-
-def create_kart_frame(length, width, height):
-    frame = Part.makeBox(length, width, height)
-    frame.translate(Base.Vector(0, 0, height / 2))      return frame
-
-def create_arduino(length, width, height):
-    arduino = Part.makeBox(length, width, height)
-    arduino.translate(Base.Vector(10, 10, 0))      return arduino
-
-def create_ultrasonic_sensor(length, width, height, position):
-    sensor = Part.makeBox(length, width, height)
-    sensor.translate(Base.Vector(position[0], position[1], position[2]))
-    return sensor
-
-def create_motor_controller(length, width, height, position):
-    motor_controller = Part.makeBox(length, width, height)
-    motor_controller.translate(Base.Vector(position[0], position[1], position[2]))
-    return motor_controller
-
-def create_rear_wheels():
-    left_motor_wheel = create_wheel(30, 15, (40, 30, 0))      right_motor_wheel = create_wheel(30, 15, (40, -30, 0))      return left_motor_wheel, right_motor_wheel
-
-def create_front_wheel():
-    front_wheel = create_wheel(20, 10, (0, 0, 0))      return front_wheel
-\end{lstlisting}
-\subsubsection{Hardware Unit Test}
-\begin{lstlisting}[language=Python]
-import unittest
-import FreeCAD
-import Part
-from FreeCAD import Base
-
-def create_wheel(radius, width, position):
-    wheel = Part.makeCylinder(radius, width)
-    wheel.translate(Base.Vector(position[0], position[1], position[2]))
-    return wheel
-
-def create_kart_body(length, width, height):
-    body = Part.makeBox(length, width, height)
-    return body
-
-def create_kart_frame(length, width, height):
-    frame = Part.makeBox(length, width, height)
-    frame.translate(Base.Vector(0, 0, height / 2))      return frame
-
-def create_front_wheel():
-    front_wheel = create_wheel(20, 10, (0, 0, 0))      return front_wheel
-
-def create_kart():
-        kart_body = create_kart_body(150, 80, 30)
-    
-        kart_frame = create_kart_frame(150, 80, 20)
-    
-        front_wheel = create_front_wheel()
-    
-        return [kart_body, kart_frame, front_wheel]
-
-class TestKartModel(unittest.TestCase):
-    def setUp(self):
-        """Set up the environment for each test"""
-        self.parts = create_kart()          self.kart_body = self.parts[0]
-        self.kart_frame = self.parts[1]
-        self.front_wheel = self.parts[2]
-
-    def test_kart_body_dimensions(self):
-        """Test the dimensions of the kart body"""
-        length, width, height = 150, 80, 30
-        self.assertEqual(self.kart_body.Length, length)
-        self.assertEqual(self.kart_body.Width, width)
-        self.assertEqual(self.kart_body.Height, height)
-
-    def test_kart_frame_position(self):
-        """Test the position of the kart frame"""
-        expected_position = Base.Vector(0, 0, 10)          frame_position = self.kart_frame.CenterOfMass
-        self.assertEqual(frame_position, expected_position)
-
-    def test_front_wheel_position(self):
-        """Test the position of the front wheel"""
-        expected_position = Base.Vector(0, 0, 0)          wheel_position = self.front_wheel.CenterOfMass
-        self.assertEqual(wheel_position, expected_position)
-
-    def test_wheel_dimensions(self):
-        """Test the dimensions of the front wheel"""
-        radius, width = 20, 10
-        wheel_radius = self.front_wheel.Radius
-        wheel_width = self.front_wheel.Height
-        self.assertEqual(wheel_radius, radius)
-        self.assertEqual(wheel_width, width)
-
-    def test_assembly(self):
-        """Test if all components are assembled correctly"""
-        self.assertIsInstance(self.kart_body, Part.Feature)
-        self.assertIsInstance(self.kart_frame, Part.Feature)
-        self.assertIsInstance(self.front_wheel, Part.Feature)
-        self.assertEqual(len(self.parts), 3)  
-        
-if __name__ == '__main__':
-    unittest.main()
-\end{lstlisting}
-\subsubsection{PID and Arduino Code}
-\begin{lstlising}[language=C++]
-#include <PID_v1.h>
-
-#define LEFT_TRIGGER_PIN  2
-#define LEFT_ECHO_PIN     3
-#define RIGHT_TRIGGER_PIN 4
-#define RIGHT_ECHO_PIN    5
-#define MOTOR_LEFT_PIN    6
-#define MOTOR_RIGHT_PIN   7
-
-double Setpoint, Input, Output;
-double Kp = 1.0, Ki = 0.1, Kd = 0.05; // PID constants, adjust based on testing
-
-PID pid(&Input, &Output, &Setpoint, Kp, Ki, Kd, DIRECT);
-
-long durationLeft, durationRight;
-int distanceLeft, distanceRight;
-int targetDistance = 20; // Target distance from obstacles (in cm)
-
-int motorSpeed = 255; // Maximum speed (adjustable)
-int minDistance = 10; // Minimum distance from the obstacle to stop motors
-
-void setup() {
-  pinMode(LEFT_TRIGGER_PIN, OUTPUT);
-  pinMode(LEFT_ECHO_PIN, INPUT);
-  pinMode(RIGHT_TRIGGER_PIN, OUTPUT);
-  pinMode(RIGHT_ECHO_PIN, INPUT);
-
-  pinMode(MOTOR_LEFT_PIN, OUTPUT);
-  pinMode(MOTOR_RIGHT_PIN, OUTPUT);
-
-  Serial.begin(9600);
-
-  Setpoint = targetDistance;
-  pid.SetMode(AUTOMATIC);
-  pid.SetOutputLimits(-motorSpeed, motorSpeed); // Motor speed limit
-}
-
-void loop() {
-  distanceLeft = getDistance(LEFT_TRIGGER_PIN, LEFT_ECHO_PIN);
-  distanceRight = getDistance(RIGHT_TRIGGER_PIN, RIGHT_ECHO_PIN);
-
-  Serial.print("Left Distance: ");
-  Serial.print(distanceLeft);
-  Serial.print(" cm | Right Distance: ");
-  Serial.println(distanceRight);
-
-  int error = distanceLeft - distanceRight;
-  Input = error;
-
-  pid.Compute();
-
-  if (distanceLeft < minDistance || distanceRight < minDistance) {
-    stopMotors();
-  } else {
-    moveForwardWithPID(Output);
-  }
-
-  delay(50); // Small delay to allow sensors to settle
-}
-
-int getDistance(int triggerPin, int echoPin) {
-  digitalWrite(triggerPin, LOW);
-  delayMicroseconds(2);
-  digitalWrite(triggerPin, HIGH);
-  delayMicroseconds(10);
-  digitalWrite(triggerPin, LOW);
-  durationLeft = pulseIn(echoPin, HIGH);
-  return durationLeft * 0.034 / 2;
-}
-
-void moveForwardWithPID(double pidOutput) {
-  int leftMotorSpeed = motorSpeed - pidOutput;  // Adjust left motor speed
-  int rightMotorSpeed = motorSpeed + pidOutput; // Adjust right motor speed
-  
-  leftMotorSpeed = constrain(leftMotorSpeed, 0, motorSpeed);
-  rightMotorSpeed = constrain(rightMotorSpeed, 0, motorSpeed);
-
-  analogWrite(MOTOR_LEFT_PIN, leftMotorSpeed);
-  analogWrite(MOTOR_RIGHT_PIN, rightMotorSpeed);
-}
-
-void stopMotors() {
-  analogWrite(MOTOR_LEFT_PIN, 0);
-  analogWrite(MOTOR_RIGHT_PIN, 0);
-}
-\end{lstlisting}
-\subsection{Division of Labor}
+\section{Division of Labor}
 We divided each one's responsibility based on their expertise and experience.
 \begin{itemize}
 \item 王品翔 is an expert of 3D modeling and design of microprocessor development board driven bots and karts. He has experienced in CAD modelling, 3D printing, laser cutting, microprocessor development board software etc. and has won awards in Arduino or Cortex microprocessor development boards driven bots competitions. So he's the chef of 3D modelling, hardware designing, and components producing.
 \item 沈威宇 specializes at programming and mark-up languages such as C and LaTeX and also good at advanced mathematics. He has been participating development of machine learning powered financial analysis and algorithmatic trading, Linux virtual machine on Android, microprocessor development board software etc. So he's responsible for PID control system developing, Arduino program developing, and project report making.
 \item 廖宏璿 is also good at hardware and software development for microprocessor development board driven bots and karts and has participated development of active noise cancelling headphones. He is an expertise of physical structure carpentry and assembling, and wiring for microprocessor development boards and bread boards. So he's focused on design and practice of wiring, wood structure assembling, and parameter tuning.
 \end{itemize}
-
-\section{硬體設計、3D 建模與零件製造}
-在這次的車輛設計中，我們以自然界的古老生物——鱟作為靈感來源，結合其生物學特性與流體力學特徵，打造出具有前瞻性與功能性的車輛外形與結構。鱟的流線型身體和穩定行走的構造，為我們提供了在設計中平衡美學與實用性的寶貴啟示。\\\\
-由於跟隨車需要做到即時與大動作地加速與轉彎反饋，我們採用了前驅作為動力系統的核心設計，並在後輪設計採用了萬向滾珠技術，提高了車輛加速與轉彎時的性能，使車輛在移動時能夠實現靈活的大角度轉彎，增加動力使用效率，並保持配重穩定性。\\\\
-這輛車的設計展現了我們對自然生物演化的體悟，也彰顯了我們對未來交通工具的遠見。通過模仿鱟的仿生設計結構，我們希望這樣的跟隨車設計可以具有提高機動性與增加適用場景的潛能，可以為載人、運貨、倉管、軍事、農業等潛在場景特化使用。
-\ssc s
-\bctf\icg{各圖片}\efct
-\ssc s
-\begin{lstlisting}各step檔案
 
 \section{PID Controller, Software Simulation, Parameters Optimization, and Arduino Code}
 I implemented a PID (Proportional-Integral-Derivative) controller designed to regulate the speed of the auto-following kart with a leader robot. The implementation includes the PID controller logic, a car simulation, a framework for testing various PID configurations, and the Arduino applications.
@@ -1239,8 +1028,6 @@ The resulting distance is then returned.
 \end{itemize}
 \subsubsection{Debugging}
 If \texttt{DEBUG} is set to 1, additional information about the PID updates and motor velocities is printed to the serial monitor for troubleshooting and performance analysis.
-\ssc{tools I used: termux debian vi, texlive, my latex-toolkit and termux-sh Android non root
-
 \subsection{Development History}
 The development of this PID (Proportional-Integral-Derivative) controller project is rooted in control theory, a field of engineering that focuses on the behavior of dynamic systems. What makes us take the initiative is the auto-following kart lesson in our living technology class. We aim to make an auto-following kart from scratch with Arduino and wooden boards and make it as quality as possible on a constrained budget.
 \subsubsection{Control Theory and PID Controllers}
@@ -1279,9 +1066,23 @@ With the PID logic in place, attention turned to building a comprehensive simula
 To facilitate further exploration of PID parameter tuning, optimization functions were integrated. Utilizing multi-threading allowed for the concurrent evaluation of multiple parameter combinations, greatly enhancing the testing efficiency. The optimization framework also included mechanisms for result logging and progress tracking, making it easier to analyze and visualize outcomes.
 \subsubsection{Arduino Auto-Following Kart}
 We use two ultrasonic sensors to measure the distance on both sides. The difference in distance helps adjust the robot's angular velocity, while the average of both distances adjusts its linear speed. The PID controllers fine-tune these adjustments to ensure the robot stays at the target distance, while adjusting its orientation to keep the two sensors aligned. The L293D motor driver uses these velocity values to control the left and right motors, adjusting the robot's movement accordingly.
+\ssc{tools I used: termux debian vi, texlive, my latex-toolkit and termux-sh Android non root
 
-\section{硬體結構組裝與線路配置}
 
-\section{硬體參數優化}
+\section{硬體設計與 3D 建模}
+在這次的車輛設計中，我們以自然界的古老生物——鱟作為靈感來源，結合其生物學特性與流體力學特徵，打造出具有前瞻性與功能性的車輛外形與結構。鱟的流線型身體和穩定行走的構造，為我們提供了在設計中平衡美學與實用性的寶貴啟示。\\\\
+由於跟隨車需要做到即時與大動作地加速與轉彎反饋，我們採用了前驅作為動力系統的核心設計，並在後輪設計採用了萬向滾珠，提高了車輛加速與轉彎時的性能，使車輛在移動時能夠實現靈活的大角度轉彎，增加動力使用效率，並保持配重穩定性。\\\\
+這輛車的設計展現了我們對自然生物演化的體悟，也彰顯了我們對未來交通工具的遠見。通過模仿鱟的仿生設計結構，我們希望這樣的跟隨車設計可以具有提高機動性與增加適用場景的潛能，可以為載人、運貨、倉管、軍事、農業等潛在場景特化使用。
+\ssc s
+\bctf\icg{各圖片}\efct
+\ssc s
+\begin{lstlisting}各step檔案
+
+\section{電路設計}
+
+\section{零件製造與車體組裝}
+
+\section{報告製作}
+LaTeX template 
 
 \end{document}
