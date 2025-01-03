@@ -91,19 +91,20 @@ void loop() {
     double leftV = avgV + angV;
     double rightV = avgV - angV;
 
-    leftOut(CLAMP(leftV, 255, -255));
-    rightOut(CLAMP(rightV, 255, -255));
+    leftOut(leftV);
+    rightOut(rightV);
 
     delayMicroseconds(10000);
 }
 
 inline void leftOut(double leftV) {
     #if DEBUG
-        Serial.println("Left Velocity: " + String(leftV));
+        Serial.println("Left Original Velocity: " + String(leftV));
     #endif
     leftV *= (leftV < 0)?LEFT_NEGATIVE_SPEED_MULTIPLIER:LEFT_POSITIVE_SPEED_MULTIPLIER;
+    leftV = CLAMP(leftV, 255, -255);
     #if DEBUG
-        Serial.println("Left Output: " + String(leftV));
+        Serial.println("Left Outputted Velocity: " + String(leftV));
     #endif
     if (leftV > 0) {
         analogWrite(L293D_LEFT_IN1, 0);
@@ -116,11 +117,12 @@ inline void leftOut(double leftV) {
 
 inline void rightOut(double rightV) {
     #if DEBUG
-        Serial.println("Right Velocity: " + String(rightV));
+        Serial.println("Right Original Velocity: " + String(rightV));
     #endif
     rightV *= (rightV < 0)?RIGHT_NEGATIVE_SPEED_MULTIPLIER:RIGHT_POSITIVE_SPEED_MULTIPLIER;
+    rightV = CLAMP(rightV, 255, -255);
     #if DEBUG
-        Serial.println("Right Output: " + String(rightV));
+        Serial.println("Right Outputted Velocity: " + String(rightV));
     #endif
     if (rightV > 0) {
         analogWrite(L293D_RIGHT_IN1, 0);
