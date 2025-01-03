@@ -1,14 +1,14 @@
 // Arduino Pins
-#define L293D_LEFT_EN D2
-#define L293D_RIGHT_EN D3
-#define L293D_LEFT_IN1 D5
-#define L293D_LEFT_IN2 D6
-#define L293D_RIGHT_IN1 D7
-#define L293D_RIGHT_IN2 D8
-#define TRIG_LEFT D0
-#define TRIG_RIGHT D1
-#define ECHO_LEFT D9
-#define ECHO_RIGHT D10
+#define L293D_LEFT_EN 2
+#define L293D_RIGHT_EN 3
+#define L293D_LEFT_IN1 5
+#define L293D_LEFT_IN2 6
+#define L293D_RIGHT_IN1 7
+#define L293D_RIGHT_IN2 8
+#define TRIG_LEFT 4
+#define TRIG_RIGHT 9
+#define ECHO_LEFT 10
+#define ECHO_RIGHT 11
 // Constants
 #define HALF_SOUND_SPEED 0.1715
 #define TARGET_DISTANCE 15
@@ -74,15 +74,15 @@ void loop() {
     double ang = atan2(left - right, DISTANCE_BETWEEN_ULTRASONIC_SENSORS);
 
     #if DEBUG
-        ptr->clear();
+        *ptr = "";
         avgV += avgPID.update((avg - TARGET_DISTANCE), millis(), ptr);
         Serial.println("Average Speed PID Update:");
         Serial.println(*ptr);
-        ptr->clear();
+        *ptr = "";
         angV += angPID.update((ang - TARGET_DISTANCE), millis(), ptr) * ANGULAR_SPEED_MULTIPLIER;
         Serial.println("Angular Speed Update:");
         Serial.println(*ptr);
-        ptr->clear();
+        *ptr = "";
     #else
         avgV += avgPID.update((avg - TARGET_DISTANCE), millis());
         angV += angPID.update((ang - TARGET_DISTANCE), millis()) * ANGULAR_SPEED_MULTIPLIER;
