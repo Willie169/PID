@@ -50,157 +50,7 @@ I implemented a PID (Proportional-Integral-Derivative) controller designed to re
 \subsection{PID.hpp}
 This header file implements a PID controller that includes traditional PID control logic along with enhancements such as adaptive gain adjustment, adaptive integral term, error history management, and additional derivative term. It is also designed to be compatible with both Arduino and non-Arduino environments.
 \subsubsection{Code}
-\begin{lstlisting}[language=C++}
-#ifndef PID_HPP
-#define PID_HPP
-
-#ifdef ARDUINO
-#include <Arduino.h>
-#include <math.h>
-#define to_string(a) String(a)
-#else
-#include <cmath>
-#include <string>
-#define String string
-using namespace std;
-#endif
-#define MAX(a, b) (((a) > (b)) ? (a) : (b))
-#define MIN(a, b) (((a) < (b)) ? (a) : (b))
-#define ABS(a) ((a) < 0 ? -(a) : (a))
-#define COPYSIGN(a, b) ((b) < 0 ? -ABS(a) : ABS(a))
-#define CLAMP(a, b, c) (MAX(MIN((a), (b)), (c)))
-
-struct Data {
-    unsigned long dt;
-    double e;
-};
-
-struct Node {
-    Data data;
-    Node* prev;
-};
-
-struct List {
-    Node* head;
-    Node* tail;
-    unsigned int size;
-};
-
-class PID {
-public:
-    const double maxIntTm, maxAmp, minKp, maxKp, rTiM, TdM, TddM, eDPm, eDPa;
-    const unsigned long session;
-    double Kp, Ki, Kd, Kdd, preE, preDv, intg, preOut;
-    unsigned long preT;
-    List dtXs;
-
-    PID(double maxIntTm, double maxAmp, double minKp, double maxKp, double rTiM, double TdM, double TddM, double eDPm, double eDPa, unsigned long session, double Kp, double preE=0, unsigned long preT=0)
-        : maxIntTm(maxIntTm), maxAmp(maxAmp), minKp(minKp), maxKp(maxKp), rTiM(rTiM), TdM(TdM), TddM(TddM), eDPm(eDPm), eDPa(eDPa), session(session), Kp(Kp), Ki(0), Kd(0), Kdd(0), preE(preE), preDv(0), intg(0), preOut(0), preT(preT), dtXs({nullptr, nullptr, 0}) {}
-
-    double update(double e, unsigned long timestamp, String* debug = nullptr) {
-        unsigned long dt = timestamp - preT;
-        preT = timestamp;
-
-        if (dt == 0) {
-            if (debug != nullptr) {
-                *debug += "dt=0\n";
-            }
-            return preOut;
-        }
-
-        double amp, ap;
-
-        if (session>0) {
-                unsigned long S = 0;
-                amp = 0;
-                if (dtXs.size > 1) {
-                    Node* pos = dtXs.tail;
-                    while (dtXs.size > 1 && pos != nullptr) {
-                        S += pos->data.dt;
-                        amp = MAX(ABS(pos->data.e), amp);
-                        if (S > session) {
-                            dtXs.head = pos;
-                            Node* cur = pos->prev;
-                            pos->prev = nullptr;
-                            while (cur != nullptr) {
-                                Node* tmp = cur->prev;
-                                delete cur;
-                                cur = tmp;
-                                dtXs.size--;
-                            }
-                            break;
-                        } else pos = pos->prev;
-                    }
-                } else if (dtXs.size == 1) {
-                    amp = ABS(dtXs.tail->data.e);
-                }        
-            ap = exp(-amp / maxAmp);
-        } else {
-            amp=0;
-            ap=1;
-        }
-
-        Ki = Kp * rTiM * ap;
-        Kd = Kp * TdM * ap;
-        Kdd = Kd * TddM;
-
-        double dv = (e - preE) / dt;
-        double dd = (dv - preDv) / dt;
-
-        intg += e * dt;
-        double intTm = Ki * intg;
-        if (ABS(intTm) > maxIntTm) {
-            intg = COPYSIGN(maxIntTm / Ki, intTm);
-            intTm = COPYSIGN(maxIntTm, intTm);
-        }
-
-        double propTm = Kp * e;
-        double dvTm = Kd * dv;
-        double ddTm = Kdd * dd;
-        double out = propTm + intTm + dvTm + ddTm;
-
-        double eDP = e * dv;
-        if (ABS(eDP) > eDPm) {
-            Kp *= (eDP < 0) ? (1+eDPa) : (1-eDPa);
-            Kp = MIN(MAX(Kp, minKp), maxKp);
-        }
-
-        if (debug != nullptr) {
-            *debug += "update() called\ndt: " + to_string(dt) + ", e: " + to_string(e) + ", dv: " + to_string(dv) + ", dd: " + to_string(dd) +", amp: " + to_string(amp) +", ap: " + to_string(ap) + ",\nKp: " + to_string(Kp) + ", Ki: " + to_string(Ki) + ", Kd: " + to_string(Kd) + ", Kdd: " + to_string(Kdd) + ",\npropTm: " + to_string(propTm) + ", intTm: " + to_string(intTm) + ", dvTm: " + to_string(dvTm) + ", ddTm: " + to_string(ddTm) + ",\neDP: " + to_string(eDP) + ", out: " + to_string(out) + "\n";
-        }
-
-        preE = e;
-        preDv = dv;
-        preOut = out;
-
-        if (session>0) {
-            Node* nn = new Node{{dt, e}, dtXs.tail};
-            dtXs.tail = nn;
-            if (dtXs.size == 0) dtXs.head = nn;
-            dtXs.size++;
-       } 
-
-        return out;
-    }
-};
-
-#endif
-\end{lstlisting}
-\subsubsection{Arduino and Non-Arduino Compatibility}
-The header is designed to be compatible with both Arduino and non-Arduino environments. This allows developers to use the same PID controller implementation across different platforms.\\
-Conditional Compilation:
-\begin{lstlisting}[language=C++]
-#ifdef ARDUINO
-#include <Arduino.h>
-#include <math.h>
-#define to_string(a) String(a)
-#else
-#include <cmath>
-#include <string>
-#define String string
-using namespace std;
-#endif
-\end{lstlising}
+\lstinputlisting[language=C++]{PID.hpp}
 \subsubsection{Traditional PID Controller}
 The traditional PID controller is defined by the following equation:
 $$
@@ -280,223 +130,23 @@ The \texttt{PID} class encapsulates the PID control logic. It includes:
 \subsection{testCar.hpp}
 This header file includes a \texttt{Car} class for simulating the motion of a car, a PID controller for adjusting the speed of an auto-following kart based on the distance to a leader car, and several utility functions for data processing and results management.
 \subsubsection{Code}
-\begin{lstlising}[language=C++]
-#ifndef TESTCAR_HPP
-#define TESTCAR_HPP
-
-#include <iostream>
-#include <cmath>
-#include <string>
-#include <vector>
-#include <numeric>
-#include <fstream>
-#include <algorithm>
-#include "PID.hpp"
-using namespace std;
-
-class Car
-{
-  public:
-        Car(double initialSpeed, double initialPosition)
-                : speed(initialSpeed), position(initialPosition) {}
-
-        void updatePosition(double timeInterval)
-        {
-                position += speed * timeInterval;
-        }
-
-        void changeSpeed(double newSpeed)
-        {
-                speed = newSpeed;
-        }
-
-        double getPosition() const
-        {
-                return position;
-        }
-
-        double getSpeed() const
-        {
-                return speed;
-        }
-
-        double speed;
-        double position;
-};
-
-void pidDebug(string message)
-{
-        cout << message;
-}
-
-double sum_last_squared(const std::vector<double> &v, double prop)
-{
-        if (v.empty())
-                return 0.0;
-
-        size_t n = v.size();
-        size_t count = static_cast<size_t>(std::ceil(n * prop));
-        size_t start_index = n - count;
-
-        double sum_of_squares = std::accumulate(v.begin() + start_index, v.end(), 0.0,
-                                                                                        [](double sum, double value) {
-                                                                                                return sum + value * value;
-                                                                                        });
-        return sum_of_squares;
-}
-
-vector<double> velocities(int steps)
-{
-        vector<double> velocities(steps, 0.0);
-        double acceleration = 1;
-        double error = 0.2;
-
-        int phase_length = steps / 6;
-        double velocity = 0.0;
-
-        for (int i = 0; i < phase_length; ++i)
-        {
-                velocity += acceleration + ((i % 3 == 0) ? error : ((i % 3 == 1) ? (-error) : 0));
-                velocities[i] = velocity;
-        }
-
-        for (int i = phase_length; i < 2 * phase_length; ++i)
-        {
-                velocity += ((i % 3 == 0) ? error : ((i % 3 == 1) ? (-error) : 0));
-                velocities[i] = velocity;
-        }
-
-        for (int i = 2 * phase_length; i < 4 * phase_length; ++i)
-        {
-                velocity -= acceleration + ((i % 3 == 0) ? error : ((i % 3 == 1) ? (-error) : 0));
-                velocities[i] = velocity;
-        }
-
-        for (int i = 4 * phase_length; i < 5 * phase_length; ++i)
-        {
-                velocity += acceleration + ((i % 3 == 0) ? error : ((i % 3 == 1) ? (-error) : 0));
-                velocities[i] = velocity;
-        }
-
-        for (int i = 5 * phase_length; i < steps; ++i)
-        {
-                if (ABS(velocity) >= (error * (steps - i)))
-                {
-                        velocity += COPYSIGN(velocity, error);
-                }
-                else
-                {
-                        velocity += ((i % 3 == 0) ? error : ((i % 3 == 1) ? (-error) : 0));
-                }
-                velocities[i] = velocity;
-        }
-
-        return velocities;
-}
-
-vector<double> test(double maxIntTm, double maxAmp, double minKp, double maxKp, double rTiM, double TdM, double TddM, double eDPm, double eDPa, unsigned long session, double Kp, double preE = 0, unsigned long preT = 0, double timeInterval = 10, int steps = 50, bool debug = false)
-{
-        double leaderInitialSpeed = 0;
-        double followerInitialSpeed = 0;
-        double initialDistance = 0;
-
-        vector<double> vec;
-        vector<double> vol = velocities(steps);
-
-        Car leader(leaderInitialSpeed, initialDistance);
-        Car follower(followerInitialSpeed, 0);
-
-        PID pid = PID(maxIntTm, maxAmp, minKp, maxKp, rTiM, TdM, TddM, eDPm, eDPa, session, Kp, preE, preT);
-
-        cout << fixed << setprecision(4);
-
-        for (int i = 0; i < steps; i++)
-        {
-                leader.changeSpeed(leader.getSpeed() + vol[i]);
-                leader.updatePosition(timeInterval);
-                follower.updatePosition(timeInterval);
-
-                double distanceToLeader = leader.getPosition() - follower.getPosition();
-                vec.push_back(distanceToLeader);
-                string* ptr = nullptr;
-                if (debug) {
-            cout << "TimeStep: " << i << ", distanceToLeader: " << distanceToLeader << ", FollowerSpeed: " << follower.getSpeed() << ", LeaderSpeed: " << leader.getSpeed() << "\n";
-
-                    ptr = new string;
-                }
-                double fS = pid.update(distanceToLeader, i * timeInterval, ptr);
-                follower.changeSpeed(follower.getSpeed() + MAX(-511, MIN(fS, 511)));
-                if (debug) {
-            cout << *ptr;
-                    delete ptr;
-                }
-        }
-
-        return vec;
-}
-
-struct pidTest
-{
-        double maxIntTm, maxAmp, minKp, maxKp, rTiM, TdM, TddM, eDPm, eDPa;
-        unsigned long session;
-        double Kp, result;
-};
-
-bool write_results(const vector<pidTest> &data, const string &filename)
-{
-        auto sorted_data = data;
-        sort(sorted_data.begin(), sorted_data.end(), [](const pidTest &a, const pidTest &b) {
-                return a.result < b.result;
-        });
-
-        ofstream outfile(filename);
-        if (!outfile)
-        {
-                cerr << "Error opening file for writing." << endl;
-                return 0;
-        }
-
-        outfile << "maxIntTm,maxAmp,minKp,maxKp,rTiM,TdM,TddM,eDPm,eDPa,session,Kp,result\n";
-
-        for (size_t i = 0; i < sorted_data.size(); ++i)
-        {
-                const pidTest &pt = sorted_data[i];
-                outfile << pt.maxIntTm << "," << pt.maxAmp << "," << pt.minKp << "," << pt.maxKp << ","
-                                << pt.rTiM << "," << pt.TdM << "," << pt.TddM << "," << pt.eDPm << "," << pt.eDPa << ","
-                                << pt.session << "," << pt.Kp << "," << pt.result << "\n";
-        }
-
-        outfile.close();
-        cout << "Data written to " << filename << endl;
-
-        return 1;
-}
-
-struct ParameterRange
-{
-        double start;
-        double end;
-        double step;
-};
-
-#endif
-\end{lstlisting}
+\lstinputlisting[language=C++]{testCar.hpp}
 \subsubsection{Car Class}
 The \texttt{Car} class represents a simple vehicle model with basic motion dynamics. It includes attributes for speed and position, as well as methods to update these attributes.
 \subsubsection{PID Debugging Function}
 The \texttt{pidDebug} function is a utility for logging messages related to PID control operations.
 \subsubsection{Sum of Last Squared Values}
-\begin{lstlisting}[language=cpp]
+\begin{lstlisting}[language=C++]
 double sum_last_squared(const std::vector<double> &v, double prop)
 \end{lstlisting}
 Calculates the sum of squares of the last $n \times \text{prop}$ elements of the provided vector \texttt{v}.
 \subsubsection{Velocity Generation}
-\begin{lstlisting}[language=cpp]
+\begin{lstlisting}[language=C++]
 vector<double> velocities(int steps)
 \end{lstlisting}
 Generates a vector of velocity values over a specified number of simulation steps, simulating different phases of motion (acceleration, deceleration, and adjustments).
 \subsubsection{PID Testing Function}
-\begin{lstlisting}[language=cpp]
+\begin{lstlisting}[language=C++]
 vector<double> test(double maxIntTm, double maxAmp, double minKp, double maxKp, double rTiM, double TdM, double TddM, double eDPm, double eDPa, unsigned long session, double Kp, double preE = 0, unsigned long preT = 0, double timeInterval = 10, int steps = 1000)
 \end{lstlisting}
 This function simulates the interaction between a leader car and an auto-following kart using a PID controller to adjust the follower's speed based on the distance to the leader.
@@ -522,7 +172,7 @@ This function simulates the interaction between a leader car and an auto-followi
 \item \textbf{Returns:} A vector containing the distances between the leader and follower over time.
 \end{itemize}
 \subsubsection{PID Test Data Structure}
-\begin{lstlisting}[language=cpp]
+\begin{lstlisting}[language=C++]
 struct pidTest
 {
 double maxIntTm, maxAmp, minKp, maxKp, rTiM, TdM, TddM, eDPm, eDPa;
@@ -532,7 +182,7 @@ double Kp, result;
 \end{lstlisting}
 The \texttt{pidTest} structure is used to store parameters for PID testing, along with the result of the simulation.
 \subsubsection{Result Writing Function}
-\begin{lstlisting}[language=cpp]
+\begin{lstlisting}[language=C++]
 bool write_results(const vector<pidTest> &data, const string &filename)
 \end{lstlisting}
 Writes the results of PID tests to a CSV file for analysis.
@@ -549,67 +199,7 @@ A structure to define the range of parameters for optimization.
 \subsection{optimization.hpp}
 This header file defines the optimization functions and structures used to optimize the parameters of a PID controller in a car simulation without multi-threaded processing.
 \subsubsection{Code}
-\begin{lstlising}[language=C++]
-#ifndef OPTIMIZATION_HPP
-#define OPTIMIZATION_HPP
-
-#include "testCar.hpp"
-using namespace std;
-
-int optimize(vector<ParameterRange> ranges)
-{
-    vector<pidTest> results;
-
-        for (double maxIntTm = ranges[0].start; maxIntTm <= ranges[0].end; maxIntTm += ranges[0].step)
-        {
-                for (double maxAmp = ranges[1].start; maxAmp <= ranges[1].end; maxAmp += ranges[1].step)
-                {
-                        for (double minKp = ranges[2].start; minKp <= ranges[2].end; minKp += ranges[2].step)
-                        {
-                                for (double maxKp = max(minKp, ranges[3].start);
-                                         maxKp <= ranges[3].end; maxKp += ranges[3].step)
-                                {
-                                        for (double rTiM = ranges[4].start; rTiM <= ranges[4].end; rTiM += ranges[4].step)
-                                        {
-                                                for (double TdM = ranges[5].start; TdM <= ranges[5].end; TdM += ranges[5].step)
-                                                {
-                                                        for (double TddM = ranges[6].start; TddM <= ranges[6].end; TddM += ranges[6].step)
-                                                        {
-                                                                for (double eDPm = ranges[7].start; eDPm <= ranges[7].end; eDPm += ranges[7].step)
-                                                                {
-                                                                        for (double eDPa = ranges[8].start; eDPa <= ranges[8].end; eDPa += ranges[8].step)
-                                                                        {
-                                                                                for (unsigned long session = ranges[9].start; session <= ranges[9].end; session += ranges[9].step)
-                                                                                {
-                                                                                        for (double Kp = MAX(minKp, ranges[10].start);
-                                                                                                 Kp <= MIN(maxKp, ranges[10].end); Kp += ranges[10].step)
-                                                                                        {
-                                                                                                vector<double> tmp = test(maxIntTm, maxAmp, minKp, maxKp, rTiM, TdM, TddM, eDPm, eDPa, session, Kp);
-                                                                                                double result = sum_last_squared(tmp, 0.5);
-                                                                                                results.push_back(pidTest({maxIntTm, maxAmp, minKp, maxKp, rTiM, TdM, TddM, eDPm, eDPa, session, Kp, result}));
-                                                                                        }
-                                                                                }
-                                                                        }
-                                                                }
-                                                        }
-                                                }
-                                        }
-                                }
-                        }
-                }
-        }
-
-        if (!write_results(results, "results.csv"))
-        {
-                cerr << "Error writing results to file." << endl;
-                return EXIT_FAILURE;
-        }
-
-        return EXIT_SUCCESS;
-}
-
-#endif
-\end{lstlising}
+\lstinputlisting[language=C++]{optimization.hpp}
 \subsubsection{Optimize Function}
 Optimizes the parameters of the PID controller based on the provided ranges and writes results to a CSV file.
 \begin{itemize}
@@ -624,180 +214,7 @@ Optimizes the parameters of the PID controller based on the provided ranges and 
 \end{itemize}
 \subsection{optimization\_multithread.hpp}
 This header file defines the optimization functions and structures used to optimize the parameters of a PID controller in a car simulation with multi-threaded processing.
-\begin{lstlising}[language=C++]
-#ifndef OPTIMIZATION_MULTITHREAD_HPP
-#define OPTIMIZATION_MULTITHREAD_HPP
-
-#include <vector>
-#include <iostream>
-#include <thread>
-#include <mutex>
-#include <queue>
-#include <atomic>
-#include <chrono>
-#include <iomanip>
-#include <condition_variable>
-#include <cmath>
-#include "testCar.hpp"
-using namespace std;
-
-mutex resultsMutex;
-mutex queueMutex;
-atomic<int> totalCombinations(0);
-atomic<int> processedCombinations(0);
-queue<vector<double>> parameterQueue;
-condition_variable cv;
-
-void displayProgress()
-{
-        while (true)
-        {
-                {
-                        lock_guard<mutex> lock(queueMutex);
-                        if (processedCombinations >= totalCombinations)
-                        {
-                                break;
-                        }
-                        cout << "\rProgress: " << processedCombinations << "/" << totalCombinations
-                                 << " (" << fixed << setprecision(2)
-                                 << (static_cast<double>(processedCombinations) / totalCombinations * 100)
-                                 << "%)          " << flush;
-                }
-                this_thread::sleep_for(chrono::seconds(1));
-        }
-        cout << "\rProgress: 100% Complete!                   " << endl;
-}
-
-size_t calculateSteps(const ParameterRange &range)
-{
-        return static_cast<size_t>(ceil((range.end - range.start) / range.step)) + 1;
-}
-
-void workerFunction(vector<pidTest> &results, atomic<bool> &running)
-{
-    while (running)
-    {
-        vector<double> params;
-
-        {
-            unique_lock<mutex> lock(queueMutex);
-            cv.wait(lock, [] { return !parameterQueue.empty(); });
-            if (parameterQueue.empty())
-            {
-                continue;
-            }
-            params = parameterQueue.front();
-            parameterQueue.pop();
-        }
-
-        vector<double> tmp = test(
-            params[0], params[1], params[2], params[3],
-            params[4], params[5], params[6], params[7],
-            params[8], params[9], params[10]);
-
-        double result = sum_last_squared(tmp, 0.5);
-
-        {
-            lock_guard<mutex> lock(resultsMutex);
-            results.emplace_back(pidTest{
-                params[0], params[1], params[2], params[3],
-                params[4], params[5], params[6], params[7],
-                params[8], static_cast<unsigned long>(params[9]),
-                params[10], result});
-        }
-
-        processedCombinations++;
-        cv.notify_one();
-    }
-}
-
-int optimize(vector<ParameterRange> ranges)
-{
-        totalCombinations = 1;
-        for (const auto &range : ranges)
-        {
-                size_t steps = calculateSteps(range);
-                if (totalCombinations > 0 && steps > SIZE_MAX / totalCombinations)
-                {
-                        cerr << "Error: Too many combinations, would cause overflow" << endl;
-                        return 1;
-                }
-                totalCombinations = totalCombinations * steps;
-        }
-
-        cout << "Total parameter combinations to test: " << totalCombinations << endl;
-
-        for (double maxIntTm = ranges[0].start; maxIntTm <= ranges[0].end; maxIntTm += ranges[0].step)
-        {
-                for (double maxAmp = ranges[1].start; maxAmp <= ranges[1].end; maxAmp += ranges[1].step)
-                {
-                        for (double minKp = ranges[2].start; minKp <= ranges[2].end; minKp += ranges[2].step)
-                        {
-                                for (double maxKp = max(minKp, ranges[3].start);
-                                         maxKp <= ranges[3].end; maxKp += ranges[3].step)
-                                {
-                                        for (double rTiM = ranges[4].start; rTiM <= ranges[4].end; rTiM += ranges[4].step)
-                                        {
-                                                for (double TdM = ranges[5].start; TdM <= ranges[5].end; TdM += ranges[5].step)
-                                                {
-                                                        for (double TddM = ranges[6].start; TddM <= ranges[6].end; TddM += ranges[6].step)
-                                                        {
-                                                                for (double eDPm = ranges[7].start; eDPm <= ranges[7].end; eDPm += ranges[7].step)
-                                                                {
-                                                                        for (double eDPa = ranges[8].start; eDPa <= ranges[8].end; eDPa += ranges[8].step)
-                                                                        {
-                                                                                for (unsigned long session = ranges[9].start; session <= ranges[9].end; session += ranges[9].step)
-                                                                                {
-                                                                                        for (double Kp = MAX(minKp, ranges[10].start);
-                                                                                                 Kp <= MIN(maxKp, ranges[10].end); Kp += ranges[10].step)
-                                                                                        {
-                                                                                                parameterQueue.push(pidTest({maxIntTm, maxAmp, minKp, maxKp, rTiM, TdM, TddM, eDPm, eDPa, session, Kp}));
-                                                                                        }
-                                                                                }
-                                                                        }
-                                                                }
-                                                        }
-                                                }
-                                        }
-                                }
-                        }
-                }
-        }
-
-        vector<pidTest> results;
-        vector<thread> threads;
-        atomic<bool> running(true);
-
-        thread progressThread(displayProgress);
-        unsigned int numThreads = thread::hardware_concurrency();
-        cout << "Using " << numThreads << " threads" << endl;
-
-        for (unsigned int i = 0; i < numThreads; ++i)
-        {
-                threads.emplace_back(workerFunction, ref(results), ref(running));
-        }
-
-        for (auto &thread : threads)
-        {
-                thread.join();
-        }
-
-        running = false;
-        cv.notify_all();
-
-        progressThread.join();
-
-        if (!write_results(results, "results.csv"))
-        {
-                cerr << "Error writing results to file." << endl;
-                return EXIT_FAILURE;
-        }
-
-        return EXIT_SUCCESS;
-}
-
-#endif
-\end{lstlisting}
+\lstinputlisting[language=C++]{optimization_multithread.hpp}
 \subsubsection{Optimize Function}
 Optimizes the parameters of the PID controller based on the provided ranges and writes results to a CSV file.
 \begin{itemize}
@@ -813,167 +230,13 @@ Optimizes the parameters of the PID controller based on the provided ranges and 
 \subsection{main.cpp}
 The code file demonstrates the usage of the \texttt{optimization.hpp} (or \texttt{optimization\_multithread.hpp}) header file to perform parameter optimization for a PID controller. It defines a set of parameter ranges and calls the \texttt{optimize} function to evaluate different combinations of parameters.
 \subsubsection{Code}
-\begin{lstlisting}[language=C++]
-#include "optimization.hpp" // or #include "optimization_multithread.hpp"
-
-int main() {
-    // Note that steps can't be zero
-    vector<ParameterRange> ranges = {
-        {461.9, 461.9, 1},    // maxIntTm
-        {517.9, 517.9, 1},     // maxAmp
-        {0.00265, 0.00265, 1},       // minKp
-        {0.472, 0.472, 1},      // maxKp
-        {1, 1, 1},       // rTiM
-        {65.37, 65.37, 1},       // TdM
-        {1.7, 1.7, 1},        // TddM
-        {125, 125, 1}, // eDPm
-        {0.15, 0.15, 1},    // eDPa
-        {140, 140, 10},       // session
-        {0.2436, 0.2436, 1}      // Kp
-    };
-
-    return optimize(ranges);
-}
-\end{lstlisting}
+\lstinputlisting[language=C++]{main.cpp}
 \subsubsection{Notes}
 Note that steps can't be zero or the program won't stop.
 \subsection{main.ino}
 This Arduino code is for controlling a differential-drive robot using two ultrasonic sensors to measure distance, a PID (Proportional-Integral-Derivative) controller for speed and direction adjustments, and an L293D motor driver to control the motors based on sensor inputs.
-\subsubsection{Code}
-\begin{lstlisting}[language=C++]
-// Arduino Pins
-#define L293D_LEFT_EN D2
-#define L293D_RIGHT_EN D3
-#define L293D_LEFT_IN1 D5
-#define L293D_LEFT_IN2 D6
-#define L293D_RIGHT_IN1 D7
-#define L293D_RIGHT_IN2 D8
-#define TRIG_LEFT D0
-#define TRIG_RIGHT D1
-#define ECHO_LEFT D9
-#define ECHO_RIGHT D10
-// Constants
-#define HALF_SOUND_SPEED 0.1715
-#define TARGET_DISTANCE 15
-#define DISTANCE_BETWEEN_ULTRASONIC_SENSORS 12
-// Parameters to be tested
-#define ANGULAR_SPEED_MULTIPLIER 0.8
-#define LEFT_POSITIVE_SPEED_MULTIPLIER 1
-#define LEFT_NEGATIVE_SPEED_MULTIPLIER 1.2
-#define RIGHT_POSITIVE_SPEED_MULTIPLIER 1
-#define RIGHT_NEGATIVE_SPEED_MULTIPLIER 1.2
-// 1 for debug, 0 for not
-#define DEBUG 1
-// Adjust the above parameters
-// The below code does not need to be changed
-
-#include "PID.hpp"
-
-PID avgPID(461.9, 517.9, 0.00265, 0.472, 1, 65.37, 1.7, 125, 0.15, 140, 0.2436);
-PID angPID(461.9, 517.9, 0.00265, 0.472, 1, 65.37, 1.7, 125, 0.15, 140, 0.2436);
-double avgV;
-double angV;
-#if DEBUG
-    String* ptr = new String();
-#endif
-
-inline double leftIn() {
-    digitalWrite(TRIG_LEFT, LOW);
-    delayMicroseconds(2);
-    digitalWrite(TRIG_LEFT, HIGH);
-    delayMicroseconds(10);
-    digitalWrite(TRIG_LEFT, LOW);
-    return pulseIn(ECHO_LEFT, HIGH) * HALF_SOUND_SPEED;
-}
-
-inline double rightIn() {
-    digitalWrite(TRIG_RIGHT, LOW);
-    delayMicroseconds(2);
-    digitalWrite(TRIG_RIGHT, HIGH);
-    delayMicroseconds(10);
-    digitalWrite(TRIG_RIGHT, LOW);
-    return pulseIn(ECHO_RIGHT, HIGH) * HALF_SOUND_SPEED;
-}
-
-void setup()
-{ 
-    Serial.begin (9600);
-    pinMode(TRIG_LEFT, OUTPUT);
-    pinMode(TRIG_RIGHT, OUTPUT);
-    pinMode(ECHO_LEFT, INPUT);
-    pinMode(ECHO_RIGHT, INPUT);
-    pinMode(L293D_LEFT_IN1, OUTPUT);
-    pinMode(L293D_LEFT_IN2, OUTPUT);
-    pinMode(L293D_RIGHT_IN1, OUTPUT);
-    pinMode(L293D_RIGHT_IN2, OUTPUT);
-    avgV = 0;
-    angV = 0;
-}
-
-void loop() {
-    double left = leftIn();
-    double right = rightIn();
-    double avg = left + right;
-    double ang = atan2(left - right, DISTANCE_BETWEEN_ULTRASONIC_SENSORS);
-
-    #if DEBUG
-        ptr->clear();
-        avgV += avgPID.update((avg - TARGET_DISTANCE), millis(), ptr);
-        Serial.println("Average Speed PID Update:");
-        Serial.println(*ptr);
-        ptr->clear();
-        angV += angPID.update((ang - TARGET_DISTANCE), millis(), ptr) * ANGULAR_SPEED_MULTIPLIER;
-        Serial.println("Angular Speed Update:");
-        Serial.println(*ptr);
-        ptr->clear();
-    #else
-        avgV += avgPID.update((avg - TARGET_DISTANCE), millis());
-        angV += angPID.update((ang - TARGET_DISTANCE), millis()) * ANGULAR_SPEED_MULTIPLIER;
-    #endif
-
-    double leftV = avgV + angV;
-    double rightV = avgV - angV;
-
-    leftOut(CLAMP(leftV, 255, -255));
-    rightOut(CLAMP(rightV, 255, -255));
-
-    delayMicroseconds(10000);
-}
-
-inline void leftOut(double leftV) {
-    #if DEBUG
-        Serial.println("Left Velocity: " + String(leftV));
-    #endif
-    leftV *= (leftV < 0)?LEFT_NEGATIVE_SPEED_MULTIPLIER:LEFT_POSITIVE_SPEED_MULTIPLIER;
-    #if DEBUG
-        Serial.println("Left Output: " + String(leftV));
-    #endif
-    if (leftV > 0) {
-        analogWrite(L293D_LEFT_IN1, 0);
-        analogWrite(L293D_LEFT_IN2, leftV);
-    } else {
-        analogWrite(L293D_LEFT_IN1, -leftV);
-        analogWrite(L293D_LEFT_IN2, 0);
-    }
-}
-
-inline void rightOut(double rightV) {
-    #if DEBUG
-        Serial.println("Right Velocity: " + String(rightV));
-    #endif
-    rightV *= (rightV < 0)?RIGHT_NEGATIVE_SPEED_MULTIPLIER:RIGHT_POSITIVE_SPEED_MULTIPLIER;
-    #if DEBUG
-        Serial.println("Right Output: " + String(rightV));
-    #endif
-    if (rightV > 0) {
-        analogWrite(L293D_RIGHT_IN1, 0);
-        analogWrite(L293D_RIGHT_IN2, rightV);
-    } else {
-        analogWrite(L293D_RIGHT_IN1, -rightV);
-        analogWrite(L293D_RIGHT_IN2, 0);
-    }
-}
-\end{lstlisting}
+\subsubsection[language=C++]{Code}
+\lstinputlisting[language=C++]{main.ino}
 \subsubsection{Pin Definitions}
 \begin{itemize}
 \item \textbf{L293D motor control pins:}
@@ -1029,6 +292,10 @@ The resulting distance is then returned.
 \end{itemize}
 \subsubsection{Debugging}
 If \texttt{DEBUG} is set to 1, additional information about the PID updates and motor velocities is printed to the serial monitor for troubleshooting and performance analysis.
+\subsection{all.ino}
+Combining \texttt{PID.hpp} and \texttt{main.ino} in one file.
+\subsubsection[language=C++]{Code}
+\lstinputlisting[language=C++]{all.ino}
 \subsection{Development History}
 The development of this PID (Proportional-Integral-Derivative) controller project is rooted in control theory, a field of engineering that focuses on the behavior of dynamic systems. What makes us take the initiative is the auto-following kart lesson in our living technology class. We aim to make an auto-following kart from scratch with Arduino and wooden boards and make it as quality as possible on a constrained budget.
 \subsubsection{Control Theory and PID Controllers}
@@ -2142,11 +1409,11 @@ When designing a template, I carefully select packages, fonts, and define custom
 \end{itemize}
 The culmination of my efforts is a template available on GitHub (\href{https://github.com/Willie169/LaTeX-ToolKit}{https://github.com/Willie169/LaTeX-ToolKit}), which I have also used for this report.  
 \subsection{\LaTeX{} Code}
-\subsubsection{template/template.tex}
-\lstinputlisting{template/template.tex}
-\subsubsection{template/document.tex}
-\lstinputlisting{template/document.tex}
-\subsubsection{Arduino PID 自動跟隨車期末專題報告.tex}
-\lstinputlisting{Arduino PID 自動跟隨車期末專題報告.tex}
+\subsubsection{Template}
+\lstinputlisting[language=TeX]{template/template.tex}
+\subsubsection{Example Document}
+\lstinputlisting[language=TeX]{template/document.tex}
+\subsubsection{Arduino PID 自動跟隨車期末專題報告}
+\lstinputlisting[language=TeX]{Arduino PID 自動跟隨車期末專題報告.tex}
 
 \end{document}
