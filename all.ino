@@ -260,4 +260,3 @@ inline void rightOut(double rightV) {
         analogWrite(L293D_RIGHT_IN2, 0);
     }
 }
-
