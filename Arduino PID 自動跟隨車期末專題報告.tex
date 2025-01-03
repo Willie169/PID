@@ -1,4 +1,4 @@
-\documentclass[a4paper,12pt]{report}
+\documentclass[a4paper,12pt]{article}
 \usepackage[margin=1.27cm,foot=0.77cm]{geometry}
 \setcounter{secnumdepth}{6}
 \setcounter{tocdepth}{3}
@@ -37,12 +37,13 @@
 感謝您在二年來課程中的諄諄教誨和耐心支持。
 
 \section{Division of Labor}
-We divided each one's responsibility based on their expertise and experience.
+To maximize efficiency and leverage each member's expertise, we divided responsibilities as follows:
 \begin{itemize}
-\item 王品翔 is an expert of 3D modeling and design of microprocessor development board driven bots and karts. He has experienced in CAD modelling, 3D printing, laser cutting, microprocessor development board software etc. and has won awards in Arduino or Cortex microprocessor development boards driven bots competitions. So he's the chef of 3D modelling, hardware designing, and components producing.
-\item 沈威宇 specializes at programming and mark-up languages such as C and LaTeX and also good at advanced mathematics. He has been participating development of machine learning powered financial analysis and algorithmatic trading, Linux virtual machine on Android, microprocessor development board software etc. So he's responsible for PID control system developing, Arduino program developing, and project report making.
-\item 廖宏璿 is also good at hardware and software development for microprocessor development board driven bots and karts and has participated development of active noise cancelling headphones. He is an expertise of physical structure carpentry and assembling, and wiring for microprocessor development boards and bread boards. So he's focused on design and practice of wiring, wood structure assembling, and parameter tuning.
+\item 王品翔: An expert in 3D modeling, wiring, structural engineering, and the design of microprocessor-driven bots and karts. With extensive experience in CAD modeling, 3D printing, laser cutting, and microprocessor software development, as well as a track record of winning awards in microprocessor-based bot competitions, he leads the 3D modeling, hardware design, and component production aspects of the project.
+\item 沈威宇: Specializing in programming and markup languages such as C, C++, and LaTeX, with a strong foundation in advanced mathematics and physics. His portfolio includes developing machine learning-powered financial analysis tools, algorithmic trading systems, Linux virtual machines on Android, microprocessor-driven bots, and software projects in C++, Python, Node.js, and Java. He is responsible for the PID control system, Arduino programming, and the creation of the project report.
+\item 廖宏璿: Skilled in carpentry, wiring, structural engineering, and programmatic analysis in social sciences. He has contributed to projects like active noise-canceling headphones, microprocessor-driven bots, and social data algorithmic analysis. With expertise in designing and assembling physical structures, wiring microprocessor boards, and breadboards for active motion systems, he focuses on wiring design, wood structure assembly, and parameter tuning.
 \end{itemize}
+While roles are defined, teamwork remains at the heart of our approach, with all members actively supporting one another to achieve project goals.
 
 \section{PID Controller, Software Simulation, Parameters Optimization, and Arduino Code}
 I implemented a PID (Proportional-Integral-Derivative) controller designed to regulate the speed of the auto-following kart with a leader robot. The implementation includes the PID controller logic, a car simulation, a framework for testing various PID configurations, and the Arduino applications.
@@ -1038,6 +1039,10 @@ The development of this PID (Proportional-Integral-Derivative) controller projec
 \item \textbf{Derivative Control (D)}: Predicts future errors based on the rate of change of the error, providing a damping effect to reduce overshoot and oscillation.
 \end{itemize}
 The tuning of these parameters is crucial for achieving optimal performance. The traditional Ziegler–Nichols tuning method has served as a foundational approach for many engineers, providing empirical guidelines for setting PID parameters based on system behavior.
+\subsubsection{Development Tools}
+Balancing heavy academic responsibilities, including preparation for the GSAT, I primarily developed the advanced PID controller, simulation framework, and Arduino implementation using Linux emulation environments on my Android phone. This allowed me to utilize commuting time efficiently and maximize productivity during otherwise idle periods.\\
+Leveraging my research on Android tools, such as \textbf{Android Non Root} (\href{https://github.com/Willie169/Android-Non-Root}{https://github.com/Willie169/Android-Non-Root}) and \textbf{Termux Sh} (\href{https://github.com/Willie169/termux-sh}{https://github.com/Willie169/termux-sh}), I set up isolated Linux virtual environments on Termux to streamline my development process. A Debian Bookworm ARM64 proot environment served as the primary development platform due to its optimal performance and lightweight setup, a Debian Bookworm AMD64 QEMU system emulation installed for testing in a more realistic, computer-like environment, and an Alpine 3.21 Virt AMD64 QEMU system emulation configured for running Docker containers cloned from GitHub and GitLab repositories.\\
+During development, I employed a suite of powerful and versatile tools. I primarily used \texttt{Vim} for editing to enhance coding speed and convenience, \texttt{G++} and \texttt{GCC} for compilation to run C and C++ programs, \texttt{GDB} for debugging to identify and resolve complex issues, and \texttt{git} for versioning to ensure my work remained organized, traceable, and collaborative-ready. These tools not only facilitated seamless development but also prepared me to adopt professional practices in future large-scale projects.
 \subsubsection{Initial Implementation}
 The journey began with a simple implementation of the traditional PID controller. The focus was on creating a basic class structure in C++ that encapsulated the PID logic, allowing for straightforward application in simulations.
 \begin{itemize}
@@ -1066,23 +1071,1080 @@ With the PID logic in place, attention turned to building a comprehensive simula
 To facilitate further exploration of PID parameter tuning, optimization functions were integrated. Utilizing multi-threading allowed for the concurrent evaluation of multiple parameter combinations, greatly enhancing the testing efficiency. The optimization framework also included mechanisms for result logging and progress tracking, making it easier to analyze and visualize outcomes.
 \subsubsection{Arduino Auto-Following Kart}
 We use two ultrasonic sensors to measure the distance on both sides. The difference in distance helps adjust the robot's angular velocity, while the average of both distances adjusts its linear speed. The PID controllers fine-tune these adjustments to ensure the robot stays at the target distance, while adjusting its orientation to keep the two sensors aligned. The L293D motor driver uses these velocity values to control the left and right motors, adjusting the robot's movement accordingly.
-\ssc{tools I used: termux debian vi, texlive, my latex-toolkit and termux-sh Android non root
-
 
 \section{硬體設計與 3D 建模}
 在這次的車輛設計中，我們以自然界的古老生物——鱟作為靈感來源，結合其生物學特性與流體力學特徵，打造出具有前瞻性與功能性的車輛外形與結構。鱟的流線型身體和穩定行走的構造，為我們提供了在設計中平衡美學與實用性的寶貴啟示。\\\\
 由於跟隨車需要做到即時與大動作地加速與轉彎反饋，我們採用了前驅作為動力系統的核心設計，並在後輪設計採用了萬向滾珠，提高了車輛加速與轉彎時的性能，使車輛在移動時能夠實現靈活的大角度轉彎，增加動力使用效率，並保持配重穩定性。\\\\
 這輛車的設計展現了我們對自然生物演化的體悟，也彰顯了我們對未來交通工具的遠見。通過模仿鱟的仿生設計結構，我們希望這樣的跟隨車設計可以具有提高機動性與增加適用場景的潛能，可以為載人、運貨、倉管、軍事、農業等潛在場景特化使用。
-\ssc s
-\bctf\icg{各圖片}\efct
-\ssc s
-\begin{lstlisting}各step檔案
+\subsection{建模圖片}
+\begin{center}\begin{figure}[H]\centering
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+\centering
+\includegraphics[width=\textwidth]{model_images/18650  battery.png}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+\centering
+\includegraphics[width=\textwidth]{model_images/BATTERY HOLDER x2 18650 parts.png}
+\end{minipage}
+\hfill
+\end{figure}\FloatBarrier\end{center}
+\begin{center}\begin{figure}[H]\centering
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+\centering
+\includegraphics[width=\textwidth]{model_images/BATTERY HOLDER x2 parts.png}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+\centering
+\includegraphics[width=\textwidth]{model_images/wemosd1r1.png}
+\end{minipage}
+\hfill
+\end{figure}\FloatBarrier\end{center}
+\begin{center}\begin{figure}[H]\centering
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+\centering
+\includegraphics[width=\textwidth]{model_images/HC-04HC-04 parts.png}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+\centering
+\includegraphics[width=\textwidth]{model_images/HC-04HC-04.png}
+\end{minipage}
+\hfill
+\end{figure}\FloatBarrier\end{center}
+\begin{center}\begin{figure}[H]\centering
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+\centering
+\includegraphics[width=\textwidth]{model_images/MiniBreadboard.png}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+\centering
+\includegraphics[width=\textwidth]{model_images/One side TT Motor v1.png}
+\end{minipage}
+\hfill
+\end{figure}\FloatBarrier\end{center}
+\begin{center}\begin{figure}[H]\centering
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+\centering
+\includegraphics[width=\textwidth]{model_images/Porta baterias 2x18650.png}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+\centering
+\includegraphics[width=\textwidth]{model_images/Porta baterias 2x18650 (1).png}
+\end{minipage}
+\hfill
+\end{figure}\FloatBarrier\end{center}
+\begin{center}\begin{figure}[H]\centering
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+\centering
+\includegraphics[width=\textwidth]{model_images/Part Studio 1.png}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+\centering
+\includegraphics[width=\textwidth]{model_images/Part Studio 1 (1).png}
+\end{minipage}
+\hfill
+\end{figure}\FloatBarrier\end{center}
+\begin{center}\begin{figure}[H]\centering\includegraphic[width=0.8\textwidth]{model_images/Assembly 1 (1).png}\end{figure}\FloatBarrier\end{center}
+\begin{center}\begin{figure}[H]\centering\includegraphic[width=0.8\textwidth]{model_images/Assembly 1 (2).png}\end{figure}\FloatBarrier\end{center}
+\begin{center}\begin{figure}[H]\centering\includegraphic[width=0.8\textwidth]{model_images/Assembly 1 (3).png}\end{figure}\FloatBarrier\end{center}
+\begin{center}\begin{figure}[H]\centering\includegraphic[width=0.8\textwidth]{model_images/Assembly 1 (4).png}\end{figure}\FloatBarrier\end{center}
+\begin{center}\begin{figure}[H]\centering\includegraphic[width=0.8\textwidth]{model_images/Assembly 1 (5).png}\end{figure}\FloatBarrier\end{center}
+\begin{center}\begin{figure}[H]\centering\includegraphic[width=0.8\textwidth]{model_images/Assembly 1 (6).png}\end{figure}\FloatBarrier\end{center}
+\begin{center}\begin{figure}[H]\centering\includegraphic[width=0.8\textwidth]{model_images/Assembly 1.png}\end{figure}\FloatBarrier\end{center}
+\begin{center}\begin{figure}[H]\centering
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+\centering
+\includegraphics[width=\textwidth]{model_images/Screenshot_1.jpg}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+\centering
+\includegraphics[width=\textwidth]{model_images/Screenshot_2.jpg}
+\end{minipage}
+\hfill
+\end{figure}\FloatBarrier\end{center}
+\begin{center}\begin{figure}[H]\centering
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+\centering
+\includegraphics[width=\textwidth]{model_images/Screenshot_3.jpg}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+\centering
+\includegraphics[width=\textwidth]{model_images/Screenshot_4.jpg}
+\end{minipage}
+\hfill
+\end{figure}\FloatBarrier\end{center}
+\begin{center}\begin{figure}[H]\centering\includegraphic[width=0.8\textwidth]{model_images/Wheel D65x25.png}\end{figure}\FloatBarrier\end{center}
+\begin{center}\begin{figure}[H]\centering\includegraphic[width=0.8\textwidth]{model_images/car _ Assembly 1 1.png}\end{figure}\FloatBarrier\end{center}
+\begin{center}\begin{figure}[H]\centering\includegraphic[width=0.8\textwidth]{model_images/car _ Assembly 1 2.png}\end{figure}\FloatBarrier\end{center}
+\begin{center}\begin{figure}[H]\centering\includegraphic[width=0.8\textwidth]{model_images/car _ Assembly 1 3.png}\end{figure}\FloatBarrier\end{center}
+\begin{center}\begin{figure}[H]\centering\includegraphic[width=0.8\textwidth]{model_images/car _ Assembly 1 4.png}\end{figure}\FloatBarrier\end{center}
+\subsection{STEP 檔}
+\subsubsection{Assembly 1/Assembly 1 - Bateria 18650 (1).step}
+\lstinputlisting{Assembly 1/Assembly 1 - Bateria 18650 (1).step}
+\subsubsection{Assembly 1/Assembly 1 - Bateria 18650.step}
+\lstinputlisting{Assembly 1/Assembly 1 - Bateria 18650.step}
+\subsubsection{Assembly 1/Assembly 1 - Contacto_Helice_v2.0 (1).step}
+\lstinputlisting{Assembly 1/Assembly 1 - Contacto_Helice_v2.0 (1).step}
+\subsubsection{Assembly 1/Assembly 1 - Contacto_Helice_v2.0.step}
+\lstinputlisting{Assembly 1/Assembly 1 - Contacto_Helice_v2.0.step}
+\subsubsection{Assembly 1/Assembly 1 - Contacto_plano_v1.0 (1).step}
+\lstinputlisting{Assembly 1/Assembly 1 - Contacto_plano_v1.0 (1).step}
+\subsubsection{Assembly 1/Assembly 1 - Contacto_plano_v1.0.step}
+\lstinputlisting{Assembly 1/Assembly 1 - Contacto_plano_v1.0.step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Array (1).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Array (1).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Array (2).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Array (2).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Array (3).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Array (3).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Array (4).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Array (4).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Array (5).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Array (5).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Array (6).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Array (6).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Array (7).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Array (7).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Array.step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Array.step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Array001 (1).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Array001 (1).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Array001 (2).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Array001 (2).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Array001 (3).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Array001 (3).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Array001 (4).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Array001 (4).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Array001 (5).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Array001 (5).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Array001 (6).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Array001 (6).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Array001 (7).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Array001 (7).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Array001.step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Array001.step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Array002 (1).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Array002 (1).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Array002 (2).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Array002 (2).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Array002 (3).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Array002 (3).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Array002 (4).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Array002 (4).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Array002 (5).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Array002 (5).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Array002 (6).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Array002 (6).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Array002 (7).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Array002 (7).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Array002.step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Array002.step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Array002002 (1).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Array002002 (1).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Array002002 (2).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Array002002 (2).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Array002002 (3).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Array002002 (3).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Array002002 (4).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Array002002 (4).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Array002002 (5).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Array002002 (5).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Array002002 (6).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Array002002 (6).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Array002002 (7).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Array002002 (7).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Array002002 (8).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Array002002 (8).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Array002002 (9).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Array002002 (9).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Array002002 (10).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Array002002 (10).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Array002002 (11).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Array002002 (11).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Array002002 (12).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Array002002 (12).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Array002002 (13).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Array002002 (13).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Array002002.step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Array002002.step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Array002003 (1).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Array002003 (1).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Array002003 (2).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Array002003 (2).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Array002003 (3).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Array002003 (3).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Array002003 (4).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Array002003 (4).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Array002003 (5).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Array002003 (5).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Array002003 (6).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Array002003 (6).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Array002003 (7).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Array002003 (7).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Array002003 (8).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Array002003 (8).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Array002003 (9).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Array002003 (9).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Array002003 (10).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Array002003 (10).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Array002003 (11).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Array002003 (11).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Array002003 (12).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Array002003 (12).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Array002003 (13).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Array002003 (13).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Array002003.step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Array002003.step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Array003 (1).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Array003 (1).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Array003 (2).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Array003 (2).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Array003 (3).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Array003 (3).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Array003 (4).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Array003 (4).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Array003 (5).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Array003 (5).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Array003 (6).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Array003 (6).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Array003 (7).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Array003 (7).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Array003.step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Array003.step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Array005 (1).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Array005 (1).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Array005 (2).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Array005 (2).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Array005 (3).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Array005 (3).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Array005 (4).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Array005 (4).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Array005 (5).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Array005 (5).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Array005 (6).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Array005 (6).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Array005 (7).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Array005 (7).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Array005.step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Array005.step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Clone_of_Array002002 (1).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Clone_of_Array002002 (1).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Clone_of_Array002002 (2).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Clone_of_Array002002 (2).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Clone_of_Array002002 (3).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Clone_of_Array002002 (3).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Clone_of_Array002002 (4).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Clone_of_Array002002 (4).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Clone_of_Array002002 (5).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Clone_of_Array002002 (5).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Clone_of_Array002002 (6).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Clone_of_Array002002 (6).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Clone_of_Array002002 (7).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Clone_of_Array002002 (7).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Clone_of_Array002002 (8).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Clone_of_Array002002 (8).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Clone_of_Array002002 (9).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Clone_of_Array002002 (9).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Clone_of_Array002002 (10).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Clone_of_Array002002 (10).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Clone_of_Array002002 (11).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Clone_of_Array002002 (11).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Clone_of_Array002002 (12).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Clone_of_Array002002 (12).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Clone_of_Array002002 (13).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Clone_of_Array002002 (13).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Clone_of_Array002002.step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Clone_of_Array002002.step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Clone_of_Array002003 (1).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Clone_of_Array002003 (1).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Clone_of_Array002003 (2).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Clone_of_Array002003 (2).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Clone_of_Array002003 (3).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Clone_of_Array002003 (3).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Clone_of_Array002003 (4).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Clone_of_Array002003 (4).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Clone_of_Array002003 (5).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Clone_of_Array002003 (5).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Clone_of_Array002003 (6).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Clone_of_Array002003 (6).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Clone_of_Array002003 (7).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Clone_of_Array002003 (7).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Clone_of_Array002003 (8).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Clone_of_Array002003 (8).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Clone_of_Array002003 (9).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Clone_of_Array002003 (9).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Clone_of_Array002003 (10).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Clone_of_Array002003 (10).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Clone_of_Array002003 (11).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Clone_of_Array002003 (11).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Clone_of_Array002003 (12).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Clone_of_Array002003 (12).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Clone_of_Array002003 (13).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Clone_of_Array002003 (13).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Clone_of_Array002003.step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Clone_of_Array002003.step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Clone_of_Fusion002 (1).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Clone_of_Fusion002 (1).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Clone_of_Fusion002.step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Clone_of_Fusion002.step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Clone_of_Fusion003 (1).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Clone_of_Fusion003 (1).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Clone_of_Fusion003.step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Clone_of_Fusion003.step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Fillet (1).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Fillet (1).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Fillet.step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Fillet.step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Fillet001 (1).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Fillet001 (1).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Fillet001 (2).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Fillet001 (2).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Fillet001 (3).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Fillet001 (3).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Fillet001.step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Fillet001.step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Fusion (1).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Fusion (1).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Fusion (2).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Fusion (2).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Fusion (3).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Fusion (3).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Fusion.step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Fusion.step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Fusion001 (1).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Fusion001 (1).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Fusion001 (2).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Fusion001 (2).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Fusion001 (3).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Fusion001 (3).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Fusion001.step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Fusion001.step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Fusion002 (1).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Fusion002 (1).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Fusion002 (2).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Fusion002 (2).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Fusion002 (3).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Fusion002 (3).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Fusion002 (4).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Fusion002 (4).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Fusion002 (5).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Fusion002 (5).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Fusion002 (6).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Fusion002 (6).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Fusion002 (7).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Fusion002 (7).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Fusion002 (8).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Fusion002 (8).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Fusion002 (9).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Fusion002 (9).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Fusion002 (10).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Fusion002 (10).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Fusion002 (11).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Fusion002 (11).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Fusion002 (12).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Fusion002 (12).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Fusion002 (13).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Fusion002 (13).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Fusion002 (14).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Fusion002 (14).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Fusion002 (15).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Fusion002 (15).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Fusion002 (16).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Fusion002 (16).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Fusion002 (17).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Fusion002 (17).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Fusion002 (18).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Fusion002 (18).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Fusion002 (19).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Fusion002 (19).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Fusion002 (20).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Fusion002 (20).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Fusion002 (21).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Fusion002 (21).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Fusion002 (22).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Fusion002 (22).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Fusion002 (23).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Fusion002 (23).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Fusion002 (24).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Fusion002 (24).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Fusion002 (25).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Fusion002 (25).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Fusion002 (26).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Fusion002 (26).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Fusion002 (27).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Fusion002 (27).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Fusion002 (28).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Fusion002 (28).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Fusion002 (29).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Fusion002 (29).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Fusion002 (30).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Fusion002 (30).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Fusion002 (31).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Fusion002 (31).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Fusion002.step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Fusion002.step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Integrados (1).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Integrados (1).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Integrados (2).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Integrados (2).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Integrados (3).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Integrados (3).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Integrados (4).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Integrados (4).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Integrados (5).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Integrados (5).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Integrados.step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Integrados.step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad003 (1).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad003 (1).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad003.step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad003.step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad005 (1).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad005 (1).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad005 (2).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad005 (2).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad005 (3).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad005 (3).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad005.step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad005.step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad006 (1).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad006 (1).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad006 (2).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad006 (2).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad006 (3).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad006 (3).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad006.step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad006.step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad008 (1).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad008 (1).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad008 (2).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad008 (2).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad008 (3).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad008 (3).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad008 (4).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad008 (4).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad008 (5).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad008 (5).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad008 (6).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad008 (6).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad008 (7).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad008 (7).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad008.step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad008.step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad009 (1).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad009 (1).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad009 (2).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad009 (2).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad009 (3).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad009 (3).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad009 (4).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad009 (4).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad009 (5).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad009 (5).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad009 (6).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad009 (6).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad009 (7).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad009 (7).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad009 (8).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad009 (8).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad009 (9).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad009 (9).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad009 (10).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad009 (10).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad009 (11).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad009 (11).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad009 (12).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad009 (12).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad009 (13).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad009 (13).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad009 (14).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad009 (14).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad009 (15).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad009 (15).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad009 (16).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad009 (16).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad009 (17).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad009 (17).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad009 (18).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad009 (18).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad009 (19).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad009 (19).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad009 (20).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad009 (20).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad009 (21).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad009 (21).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad009 (22).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad009 (22).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad009 (23).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad009 (23).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad009 (24).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad009 (24).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad009 (25).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad009 (25).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad009 (26).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad009 (26).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad009 (27).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad009 (27).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad009 (28).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad009 (28).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad009 (29).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad009 (29).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad009 (30).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad009 (30).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad009 (31).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad009 (31).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad009 (32).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad009 (32).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad009 (33).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad009 (33).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad009 (34).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad009 (34).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad009 (35).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad009 (35).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad009 (36).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad009 (36).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad009 (37).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad009 (37).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad009 (38).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad009 (38).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad009 (39).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad009 (39).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad009 (40).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad009 (40).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad009 (41).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad009 (41).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad009 (42).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad009 (42).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad009 (43).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad009 (43).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad009 (44).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad009 (44).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad009 (45).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad009 (45).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad009 (46).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad009 (46).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad009 (47).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad009 (47).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad009 (48).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad009 (48).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad009 (49).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad009 (49).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad009 (50).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad009 (50).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad009 (51).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad009 (51).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad009 (52).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad009 (52).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad009 (53).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad009 (53).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad009 (54).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad009 (54).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad009 (55).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad009 (55).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad009 (56).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad009 (56).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad009 (57).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad009 (57).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad009 (58).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad009 (58).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad009 (59).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad009 (59).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad009 (60).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad009 (60).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad009 (61).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad009 (61).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad009 (62).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad009 (62).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad009 (63).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad009 (63).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad009 (64).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad009 (64).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad009 (65).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad009 (65).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad009 (66).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad009 (66).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad009 (67).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad009 (67).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad009 (68).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad009 (68).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad009 (69).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad009 (69).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad009 (70).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad009 (70).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad009 (71).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad009 (71).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad009 (72).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad009 (72).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad009 (73).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad009 (73).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad009 (74).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad009 (74).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad009 (75).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad009 (75).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad009 (76).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad009 (76).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad009 (77).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad009 (77).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad009 (78).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad009 (78).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad009 (79).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad009 (79).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad009 (80).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad009 (80).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad009 (81).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad009 (81).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad009 (82).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad009 (82).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad009 (83).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad009 (83).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad009 (84).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad009 (84).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad009 (85).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad009 (85).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad009 (86).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad009 (86).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad009 (87).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad009 (87).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad009 (88).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad009 (88).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad009 (89).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad009 (89).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad009 (90).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad009 (90).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad009 (91).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad009 (91).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad009 (92).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad009 (92).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad009 (93).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad009 (93).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad009 (94).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad009 (94).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad009 (95).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad009 (95).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Pad009.step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Pad009.step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Placa (1).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Placa (1).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Placa.step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Placa.step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Scale004 (1).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Scale004 (1).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Scale004.step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Scale004.step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Scale027 (1).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Scale027 (1).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Scale027.step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Scale027.step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Scale028 (1).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Scale028 (1).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Scale028.step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Scale028.step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Scale029 (1).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Scale029 (1).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Scale029.step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Scale029.step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Scale030 (1).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Scale030 (1).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Scale030.step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Scale030.step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Scale031 (1).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Scale031 (1).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Scale031.step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Scale031.step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Scale032 (1).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Scale032 (1).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Scale032.step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Scale032.step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Scale033 (1).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Scale033 (1).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Scale033.step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Scale033.step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Scale034 (1).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Scale034 (1).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Scale034.step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Scale034.step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Scale035 (1).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Scale035 (1).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Scale035.step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Scale035.step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Scale036 (1).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Scale036 (1).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Scale036.step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Scale036.step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Scale037 (1).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Scale037 (1).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Scale037.step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Scale037.step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Scale038 (1).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Scale038 (1).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Scale038.step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Scale038.step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Scale039 (1).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Scale039 (1).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Scale039.step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Scale039.step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Scale040 (1).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Scale040 (1).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Scale040.step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Scale040.step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Scale041 (1).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Scale041 (1).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Scale041.step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Scale041.step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Scale042 (1).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Scale042 (1).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Scale042.step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Scale042.step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Scale043 (1).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Scale043 (1).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Scale043.step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Scale043.step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Scale044 (1).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Scale044 (1).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Scale044.step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Scale044.step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Scale045 (1).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Scale045 (1).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Scale045.step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Scale045.step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Scale046 (1).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Scale046 (1).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Scale046.step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Scale046.step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Scale047 (1).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Scale047 (1).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Scale047.step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Scale047.step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Scale048 (1).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Scale048 (1).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Scale048.step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Scale048.step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Scale049 (1).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Scale049 (1).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04Scale049.step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04Scale049.step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04ShapeString004 (1).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04ShapeString004 (1).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04ShapeString004.step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04ShapeString004.step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04ShapeString005 (1).step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04ShapeString005 (1).step}
+\subsubsection{Assembly 1/Assembly 1 - HC-04ShapeString005.step}
+\lstinputlisting{Assembly 1/Assembly 1 - HC-04ShapeString005.step}
+\subsubsection{Assembly 1/Assembly 1 - Part 1 (1).step}
+\lstinputlisting{Assembly 1/Assembly 1 - Part 1 (1).step}
+\subsubsection{Assembly 1/Assembly 1 - Part 1.step}
+\lstinputlisting{Assembly 1/Assembly 1 - Part 1.step}
+\subsubsection{Assembly 1/Assembly 1 - Part 2 (1).step}
+\lstinputlisting{Assembly 1/Assembly 1 - Part 2 (1).step}
+\subsubsection{Assembly 1/Assembly 1 - Part 2.step}
+\lstinputlisting{Assembly 1/Assembly 1 - Part 2.step}
+\subsubsection{Assembly 1/Assembly 1 - Porta baterias 2x18650.step}
+\lstinputlisting{Assembly 1/Assembly 1 - Porta baterias 2x18650.step}
+\subsubsection{Assembly 1/Assembly 1 - remache_v1.0 (1).step          Assembly 1 - remache_v1.0 (2).step          Assembly 1 - remache_v1.0 (3).step}
+\lstinputlisting{Assembly 1/Assembly 1 - remache_v1.0 (1).step          Assembly 1 - remache_v1.0 (2).step          Assembly 1 - remache_v1.0 (3).step}
+\subsubsection{Assembly 1/Assembly 1 - remache_v1.0.step}
+\lstinputlisting{Assembly 1/Assembly 1 - remache_v1.0.step}
+\subsubsection{Assembly 1/Assembly 1 (1).step}
+\lstinputlisting{Assembly 1/Assembly 1 (1).step}
+\subsubsection{Assembly 1/Assembly 1 (2).step}
+\lstinputlisting{Assembly 1/Assembly 1 (2).step}
+\subsubsection{Assembly 1/Assembly 1 (3).step}
+\lstinputlisting{Assembly 1/Assembly 1 (3).step}
+\subsubsection{Assembly 1/Assembly 1 (4).step}
+\lstinputlisting{Assembly 1/Assembly 1 (4).step}
+\subsubsection{Assembly 1/Assembly 1 (5).step}
+\lstinputlisting{Assembly 1/Assembly 1 (5).step}
+\subsubsection{Assembly 1/Assembly 1 (6).step}
+\lstinputlisting{Assembly 1/Assembly 1 (6).step}
+\subsubsection{Assembly 1/Assembly 1 (7).step}
+\lstinputlisting{Assembly 1/Assembly 1 (7).step}
+\subsubsection{Assembly 1/Assembly 1 (8).step}
+\lstinputlisting{Assembly 1/Assembly 1 (8).step}
+\subsubsection{Assembly 1/Assembly 1 (9).step}
+\lstinputlisting{Assembly 1/Assembly 1 (9).step}
+\subsubsection{Assembly 1/Assembly 1 (10).step}
+\lstinputlisting{Assembly 1/Assembly 1 (10).step}
+\subsubsection{Assembly 1/Assembly 1 (11).step}
+\lstinputlisting{Assembly 1/Assembly 1 (11).step}
+\subsubsection{Assembly 1/Assembly 1 (12).step}
+\lstinputlisting{Assembly 1/Assembly 1 (12).step}
+\subsubsection{Assembly 1/Assembly 1 (13).step}
+\lstinputlisting{Assembly 1/Assembly 1 (13).step}
+\subsubsection{Assembly 1/Assembly 1 (14).step}
+\lstinputlisting{Assembly 1/Assembly 1 (14).step}
+\subsubsection{Assembly 1/Assembly 1 (15).step}
+\lstinputlisting{Assembly 1/Assembly 1 (15).step}
+\subsubsection{Assembly 1/Assembly 1 (16).step}
+\lstinputlisting{Assembly 1/Assembly 1 (16).step}
+\subsubsection{Assembly 1/Assembly 1 (17).step}
+\lstinputlisting{Assembly 1/Assembly 1 (17).step}
+\subsubsection{Assembly 1/Assembly 1 (18).step}
+\lstinputlisting{Assembly 1/Assembly 1 (18).step}
+\subsubsection{Assembly 1/Assembly 1 (19).step}
+\lstinputlisting{Assembly 1/Assembly 1 (19).step}
+\subsubsection{Assembly 1/Assembly 1 (20).step}
+\lstinputlisting{Assembly 1/Assembly 1 (20).step}
+\subsubsection{Assembly 1/Assembly 1 (21).step}
+\lstinputlisting{Assembly 1/Assembly 1 (21).step}
+\subsubsection{Assembly 1/Assembly 1 (22).step}
+\lstinputlisting{Assembly 1/Assembly 1 (22).step}
+\subsubsection{Assembly 1/Assembly 1 (23).step}
+\lstinputlisting{Assembly 1/Assembly 1 (23).step}
+\subsubsection{Assembly 1/Assembly 1 (24).step}
+\lstinputlisting{Assembly 1/Assembly 1 (24).step}
+\subsubsection{Assembly 1/Assembly 1 (25).step}
+\lstinputlisting{Assembly 1/Assembly 1 (25).step}
+\subsubsection{Assembly 1/Assembly 1 (26).step}
+\lstinputlisting{Assembly 1/Assembly 1 (26).step}
+\subsubsection{Assembly 1/Assembly 1 (27).step}
+\lstinputlisting{Assembly 1/Assembly 1 (27).step}
+\subsubsection{Assembly 1/Assembly 1 (28).step}
+\lstinputlisting{Assembly 1/Assembly 1 (28).step}
+\subsubsection{Assembly 1/Assembly 1 (29).step}
+\lstinputlisting{Assembly 1/Assembly 1 (29).step}
+\subsubsection{Assembly 1/Assembly 1 (30).step}
+\lstinputlisting{Assembly 1/Assembly 1 (30).step}
+\subsubsection{Assembly 1/Assembly 1 (31).step}
+\lstinputlisting{Assembly 1/Assembly 1 (31).step}
+\subsubsection{Assembly 1/Assembly 1 (32).step}
+\lstinputlisting{Assembly 1/Assembly 1 (32).step}
+\subsubsection{Assembly 1/Assembly 1 (33).step}
+\lstinputlisting{Assembly 1/Assembly 1 (33).step}
+\subsubsection{Assembly 1/Assembly 1 (34).step}
+\lstinputlisting{Assembly 1/Assembly 1 (34).step}
+\subsubsection{Assembly 1/Assembly 1 (35).step}
+\lstinputlisting{Assembly 1/Assembly 1 (35).step}
+\subsubsection{Assembly 1/Assembly 1 (36).step}
+\lstinputlisting{Assembly 1/Assembly 1 (36).step}
+\subsubsection{Assembly 1/Assembly 1 (37).step}
+\lstinputlisting{Assembly 1/Assembly 1 (37).step}
+\subsubsection{Assembly 1/Assembly 1 (38).step}
+\lstinputlisting{Assembly 1/Assembly 1 (38).step}
+\subsubsection{Assembly 1/Assembly 1 (39).step}
+\lstinputlisting{Assembly 1/Assembly 1 (39).step}
+\subsubsection{Assembly 1/Assembly 1 (40).step}
+\lstinputlisting{Assembly 1/Assembly 1 (40).step}
+\subsubsection{Assembly 1/Assembly 1 (41).step}
+\lstinputlisting{Assembly 1/Assembly 1 (41).step}
+\subsubsection{Assembly 1/Assembly 1 (42).step}
+\lstinputlisting{Assembly 1/Assembly 1 (42).step}
+\subsubsection{Assembly 1/Assembly 1 (43).step}
+\lstinputlisting{Assembly 1/Assembly 1 (43).step}
+\subsubsection{Assembly 1/Assembly 1 (44).step}
+\lstinputlisting{Assembly 1/Assembly 1 (44).step}
+\subsubsection{Assembly 1/Assembly 1 (45).step}
+\lstinputlisting{Assembly 1/Assembly 1 (45).step}
+\subsubsection{Assembly 1/Assembly 1 (46).step}
+\lstinputlisting{Assembly 1/Assembly 1 (46).step}
+\subsubsection{Assembly 1/Assembly 1 (47).step}
+\lstinputlisting{Assembly 1/Assembly 1 (47).step}
+\subsubsection{Assembly 1/Assembly 1 (48).step}
+\lstinputlisting{Assembly 1/Assembly 1 (48).step}
+\subsubsection{Assembly 1/Assembly 1 (49).step}
+\lstinputlisting{Assembly 1/Assembly 1 (49).step}
+\subsubsection{Assembly 1/Assembly 1 (50).step}
+\lstinputlisting{Assembly 1/Assembly 1 (50).step}
+\subsubsection{Assembly 1/Assembly 1 (51).step}
+\lstinputlisting{Assembly 1/Assembly 1 (51).step}
+\subsubsection{Assembly 1/Assembly 1 (52).step}
+\lstinputlisting{Assembly 1/Assembly 1 (52).step}
+\subsubsection{Assembly 1/Assembly 1 (53).step}
+\lstinputlisting{Assembly 1/Assembly 1 (53).step}
+\subsubsection{Assembly 1/Assembly 1 (54).step}
+\lstinputlisting{Assembly 1/Assembly 1 (54).step}
+\subsubsection{Assembly 1/Assembly 1 (55).step}
+\lstinputlisting{Assembly 1/Assembly 1 (55).step}
+\subsubsection{Assembly 1/Assembly 1 (56).step}
+\lstinputlisting{Assembly 1/Assembly 1 (56).step}
+\subsubsection{Assembly 1/Assembly 1 (57).step}
+\lstinputlisting{Assembly 1/Assembly 1 (57).step}
+\subsubsection{Assembly 1/Assembly 1 (58).step}
+\lstinputlisting{Assembly 1/Assembly 1 (58).step}
+\subsubsection{Assembly 1/Assembly 1 (59).step}
+\lstinputlisting{Assembly 1/Assembly 1 (59).step}
+\subsubsection{Assembly 1/Assembly 1 (60).step}
+\lstinputlisting{Assembly 1/Assembly 1 (60).step}
+\subsubsection{Assembly 1/Assembly 1 (61).step}
+\lstinputlisting{Assembly 1/Assembly 1 (61).step}
+\subsubsection{Assembly 1/Assembly 1 (62).step}
+\lstinputlisting{Assembly 1/Assembly 1 (62).step}
+\subsubsection{Assembly 1/Assembly 1 (63).step}
+\lstinputlisting{Assembly 1/Assembly 1 (63).step}
+\subsubsection{Assembly 1/Assembly 1 (64).step}
+\lstinputlisting{Assembly 1/Assembly 1 (64).step}
+\subsubsection{Assembly 1/Assembly 1 (65).step}
+\lstinputlisting{Assembly 1/Assembly 1 (65).step}
+\subsubsection{Assembly 1/Assembly 1 (66).step}
+\lstinputlisting{Assembly 1/Assembly 1 (66).step}
+\subsubsection{Assembly 1/Assembly 1 (67).step}
+\lstinputlisting{Assembly 1/Assembly 1 (67).step}
+\subsubsection{Assembly 1/Assembly 1 (68).step}
+\lstinputlisting{Assembly 1/Assembly 1 (68).step}
+\subsubsection{Assembly 1/Assembly 1 (69).step}
+\lstinputlisting{Assembly 1/Assembly 1 (69).step}
+\subsubsection{Assembly 1/Assembly 1 (70).step}
+\lstinputlisting{Assembly 1/Assembly 1 (70).step}
+\subsubsection{Assembly 1/Assembly 1 (71).step}
+\lstinputlisting{Assembly 1/Assembly 1 (71).step}
+\subsubsection{Assembly 1/Assembly 1 (72).step}
+\lstinputlisting{Assembly 1/Assembly 1 (72).step}
+\subsubsection{Assembly 1/Assembly 1 (73).step}
+\lstinputlisting{Assembly 1/Assembly 1 (73).step}
+\subsubsection{Assembly 1/Assembly 1 (74).step}
+\lstinputlisting{Assembly 1/Assembly 1 (74).step}
+\subsubsection{Assembly 1/Assembly 1 (75).step}
+\lstinputlisting{Assembly 1/Assembly 1 (75).step}
+\subsubsection{Assembly 1/Assembly 1 (76).step}
+\lstinputlisting{Assembly 1/Assembly 1 (76).step}
+\subsubsection{Assembly 1/Assembly 1 (77).step}
+\lstinputlisting{Assembly 1/Assembly 1 (77).step}
+\subsubsection{Assembly 1/Assembly 1 (78).step}
+\lstinputlisting{Assembly 1/Assembly 1 (78).step}
+\subsubsection{Assembly 1/Assembly 1 (79).step}
+\lstinputlisting{Assembly 1/Assembly 1 (79).step}
+\subsubsection{Assembly 1/Assembly 1 (80).step}
+\lstinputlisting{Assembly 1/Assembly 1 (80).step}
+\subsubsection{Assembly 1/Assembly 1 (81).step}
+\lstinputlisting{Assembly 1/Assembly 1 (81).step}
+\subsubsection{Assembly 1/Assembly 1 (82).step}
+\lstinputlisting{Assembly 1/Assembly 1 (82).step}
+\subsubsection{Assembly 1/Assembly 1 (83).step}
+\lstinputlisting{Assembly 1/Assembly 1 (83).step}
+\subsubsection{Assembly 1/Assembly 1 (84).step}
+\lstinputlisting{Assembly 1/Assembly 1 (84).step}
+\subsubsection{Assembly 1/Assembly 1 (85).step}
+\lstinputlisting{Assembly 1/Assembly 1 (85).step}
+\subsubsection{Assembly 1/Assembly 1 (86).step}
+\lstinputlisting{Assembly 1/Assembly 1 (86).step}
+\subsubsection{Assembly 1/Assembly 1 (87).step}
+\lstinputlisting{Assembly 1/Assembly 1 (87).step}
+\subsubsection{Assembly 1/Assembly 1 (88).step}
+\lstinputlisting{Assembly 1/Assembly 1 (88).step}
+\subsubsection{Assembly 1/Assembly 1 (89).step}
+\lstinputlisting{Assembly 1/Assembly 1 (89).step}
+\subsubsection{Assembly 1/Assembly 1 (90).step}
+\lstinputlisting{Assembly 1/Assembly 1 (90).step}
+\subsubsection{Assembly 1/Assembly 1 (91).step}
+\lstinputlisting{Assembly 1/Assembly 1 (91).step}
+\subsubsection{Assembly 1/Assembly 1 (92).step}
+\lstinputlisting{Assembly 1/Assembly 1 (92).step}
+\subsubsection{Assembly 1/Assembly 1 (93).step}
+\lstinputlisting{Assembly 1/Assembly 1 (93).step}
+\subsubsection{Assembly 1/Assembly 1 (94).step}
+\lstinputlisting{Assembly 1/Assembly 1 (94).step}
+\subsubsection{Assembly 1/Assembly 1 (95).step}
+\lstinputlisting{Assembly 1/Assembly 1 (95).step}
+\subsubsection{Assembly 1/Assembly 1 (96).step}
+\lstinputlisting{Assembly 1/Assembly 1 (96).step}
+\subsubsection{Assembly 1/Assembly 1 (97).step}
+\lstinputlisting{Assembly 1/Assembly 1 (97).step}
+\subsubsection{Assembly 1/Assembly 1 (98).step}
+\lstinputlisting{Assembly 1/Assembly 1 (98).step}
+\subsubsection{Assembly 1/Assembly 1 (99).step}
+\lstinputlisting{Assembly 1/Assembly 1 (99).step}
+\subsubsection{Assembly 1/Assembly 1 (100).step}
+\lstinputlisting{Assembly 1/Assembly 1 (100).step}
+\subsubsection{Assembly 1/Assembly 1 (101).step}
+\lstinputlisting{Assembly 1/Assembly 1 (101).step}
+\subsubsection{Assembly 1/Assembly 1 (102).step}
+\lstinputlisting{Assembly 1/Assembly 1 (102).step}
+\subsubsection{Assembly 1/Assembly 1 (103).step}
+\lstinputlisting{Assembly 1/Assembly 1 (103).step}
+\subsubsection{Assembly 1/Assembly 1 (104).step}
+\lstinputlisting{Assembly 1/Assembly 1 (104).step}
+\subsubsection{Assembly 1/Assembly 1 (105).step}
+\lstinputlisting{Assembly 1/Assembly 1 (105).step}
+\subsubsection{Assembly 1/Assembly 1 (106).step}
+\lstinputlisting{Assembly 1/Assembly 1 (106).step}
+\subsubsection{Assembly 1/Assembly 1 (107).step}
+\lstinputlisting{Assembly 1/Assembly 1 (107).step}
+\subsubsection{Assembly 1/Assembly 1 (108).step}
+\lstinputlisting{Assembly 1/Assembly 1 (108).step}
+\subsubsection{Assembly 1/Assembly 1 (109).step}
+\lstinputlisting{Assembly 1/Assembly 1 (109).step}
+\subsubsection{Assembly 1/Assembly 1 (110).step}
+\lstinputlisting{Assembly 1/Assembly 1 (110).step}
+\subsubsection{Assembly 1/Assembly 1 (111).step}
+\lstinputlisting{Assembly 1/Assembly 1 (111).step}
+\subsubsection{Assembly 1/Assembly 1 (112).step}
+\lstinputlisting{Assembly 1/Assembly 1 (112).step}
+\subsubsection{Assembly 1/Assembly 1 (113).step}
+\lstinputlisting{Assembly 1/Assembly 1 (113).step}
+\subsubsection{Assembly 1/Assembly 1 (114).step}
+\lstinputlisting{Assembly 1/Assembly 1 (114).step}
+\subsubsection{Assembly 1/Assembly 1 (115).step}
+\lstinputlisting{Assembly 1/Assembly 1 (115).step}
+\subsubsection{Assembly 1/Assembly 1 (116).step}
+\lstinputlisting{Assembly 1/Assembly 1 (116).step}
+\subsubsection{Assembly 1/Assembly 1 (117).step}
+\lstinputlisting{Assembly 1/Assembly 1 (117).step}
+\subsubsection{Assembly 1/Assembly 1 (118).step}
+\lstinputlisting{Assembly 1/Assembly 1 (118).step}
+\subsubsection{Assembly 1/Assembly 1 (119).step}
+\lstinputlisting{Assembly 1/Assembly 1 (119).step}
+\subsubsection{Assembly 1/Assembly 1 (120).step}
+\lstinputlisting{Assembly 1/Assembly 1 (120).step}
+\subsubsection{Assembly 1/Assembly 1 (121).step}
+\lstinputlisting{Assembly 1/Assembly 1 (121).step}
+\subsubsection{Assembly 1/Assembly 1 (122).step}
+\lstinputlisting{Assembly 1/Assembly 1 (122).step}
+\subsubsection{Assembly 1/Assembly 1 (123).step}
+\lstinputlisting{Assembly 1/Assembly 1 (123).step}
+\subsubsection{Assembly 1/Assembly 1 (124).step}
+\lstinputlisting{Assembly 1/Assembly 1 (124).step}
+\subsubsection{Assembly 1/Assembly 1 (125).step}
+\lstinputlisting{Assembly 1/Assembly 1 (125).step}
+\subsubsection{Assembly 1/Assembly 1 (126).step}
+\lstinputlisting{Assembly 1/Assembly 1 (126).step}
+\subsubsection{Assembly 1/Assembly 1 (127).step}
+\lstinputlisting{Assembly 1/Assembly 1 (127).step}
+\subsubsection{Assembly 1/Assembly 1 (128).step}
+\lstinputlisting{Assembly 1/Assembly 1 (128).step}
+\subsubsection{Assembly 1/Assembly 1 (129).step}
+\lstinputlisting{Assembly 1/Assembly 1 (129).step}
+\subsubsection{Assembly 1/Assembly 1.step}
+\lstinputlisting{Assembly 1/Assembly 1.step}
 
 \section{電路設計}
 
 \section{零件製造與車體組裝}
 
-\section{報告製作}
-LaTeX template 
+\section{Report Writing}
+\subsection{My \LaTeX{} Learning Journey}
+My journey with \LaTeX{} began when I realized the limitations of traditional word processors for creating professional-looking documents, especially those involving mathematical equations and technical formatting. These features are critical for my studies and research in advanced mathematics and physics.\\\\
+With prior experience in programming languages such as HTML, C++, and JavaScript, I quickly grasped the basic syntax of \LaTeX. I created numerous \LaTeX{} documents on math and science, including my \textbf{tw-gifted-k12-notes} (\href{https://github.com/Willie169/tw-gifted-k12-notes}{https://github.com/Willie169/tw-gifted-k12-notes}) project and many entries in my Learning Portfolio.\\\\
+I expanded my knowledge of \LaTeX{} packages and commands by consulting resources such as \textbf{Overleaf} (\href{https://www.overleaf.com}{https://www.overleaf.com}), \textbf{TeX - LaTeX Stack Exchange} (\href{https://tex.stackexchange.com}{https://tex.stackexchange.com}), and package documentation from \textbf{CTAN - Comprehensive TEX Archive Network} (\href{https://ctan.org}{https://ctan.org}).\\\\
+As I became more proficient in \LaTeX, I ventured into designing templates specifically for \XeTeX, with a focus on enhancing usability for CJK users.
+\subsection{Template Design}
+When designing a template, I carefully select packages, fonts, and define custom commands to ensure compatibility with diverse document types. Below are the key aspects of my template:  
+\begin{itemize}  
+\item \textbf{Document Aesthetics:} Packages like \texttt{nowidow}, \texttt{titlesec}, and \texttt{titling} enable fine control over spacing, section styles, and title layouts.  
+\item \textbf{Mathematical and Scientific Typesetting:} For advanced notations and formulae, I utilize packages such as \texttt{amsmath}, \texttt{mathtools}, \texttt{nicematrix}, \texttt{physics}, and \texttt{mhchem}.  
+\item \textbf{Graphics and Tables:} The \texttt{graphicx}, \texttt{tikz}, \texttt{subcaption}, and \texttt{longtable} packages allow the creation of professional-quality tables and illustrations.  
+\item \textbf{Fonts and Localization:} I integrate multilingual support with \texttt{fontspec}, \texttt{xeCJK}, and \texttt{zhnumber}, using fonts like TeX Gyre, STIX 2 Math, and Noto CJK to seamlessly handle Chinese and other non-Latin characters.  
+\item \textbf{Customization:} Using \texttt{etoolbox}, \texttt{xparse}, and \texttt{tcolorbox}, I create reusable components and custom behaviors, such as styled boxes and command shortcuts.  
+\end{itemize}
+The culmination of my efforts is a template available on GitHub (\href{https://github.com/Willie169/LaTeX-ToolKit}{https://github.com/Willie169/LaTeX-ToolKit}), which I have also used for this report.  
+\subsection{Template Code}
+\subsubsection{template/template.tex}
+\lstinputlisting{template/template.tex}
+\subsubsection{template/document.tex}
+\lstinputlisting{template/document.tex}
 
 \end{document}
