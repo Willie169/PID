@@ -22,9 +22,10 @@
 \begin{document}
 \title{
 \Large 113 學年度第一學期工程設計科\\
-\huge Arduino PID 自動跟隨車期末專題報告\\
+\LARGE Arduino PID 自動跟隨車期末專題報告\\\mbox{}\\
 \Large 113 Academic Year 1st Semester Engineering Design Course\\
-\huge Arduino PID Auto-Following Kart Final Project Report
+\LARGE Arduino PID Auto-Following Kart Final Project Report
+\mbox{}\\\mbox{}\\\mbox{}\\\mbox{}\\
 }
 \author{30602王品翔\\30608沈威宇\\30627廖宏璿}
 \date{\temtoday}
@@ -128,14 +129,14 @@ While roles are defined, teamwork remains at the heart of our approach, with all
 \end{minipage}
 \hfill
 \end{figure}\FloatBarrier\end{center}
-\begin{center}\begin{figure}[H]\centering\includegraphics[width=0.8\textwidth]{./model_images/a1.png}\end{figure}\FloatBarrier\end{center}
-\begin{center}\begin{figure}[H]\centering\includegraphics[width=0.8\textwidth]{./model_images/a2.png}\end{figure}\FloatBarrier\end{center}
-\begin{center}\begin{figure}[H]\centering\includegraphics[width=0.8\textwidth]{./model_images/a3.png}\end{figure}\FloatBarrier\end{center}
-\begin{center}\begin{figure}[H]\centering\includegraphics[width=0.8\textwidth]{./model_images/a4.png}\end{figure}\FloatBarrier\end{center}
-\begin{center}\begin{figure}[H]\centering\includegraphics[width=0.8\textwidth]{./model_images/a5.png}\end{figure}\FloatBarrier\end{center}
-\begin{center}\begin{figure}[H]\centering\includegraphics[width=0.8\textwidth]{./model_images/a6.png}\end{figure}\FloatBarrier\end{center}
-\begin{center}\begin{figure}[H]\centering\includegraphics[width=0.8\textwidth]{./model_images/a7.png}\end{figure}\FloatBarrier\end{center}
-\begin{center}\begin{figure}[H]\centering\includegraphics[width=0.8\textwidth]{./model_images/a8.png}\end{figure}\FloatBarrier\end{center}
+\begin{center}\begin{figure}[H]\centering\includegraphics[height=0.45\textheight]{./model_images/a1.png}\end{figure}\FloatBarrier\end{center}
+\begin{center}\begin{figure}[H]\centering\includegraphics[height=0.45\textheight]{./model_images/a2.png}\end{figure}\FloatBarrier\end{center}
+\begin{center}\begin{figure}[H]\centering\includegraphics[height=0.45\textheight]{./model_images/a3.png}\end{figure}\FloatBarrier\end{center}
+\begin{center}\begin{figure}[H]\centering\includegraphics[height=0.45\textheight]{./model_images/a4.png}\end{figure}\FloatBarrier\end{center}
+\begin{center}\begin{figure}[H]\centering\includegraphics[height=0.45\textheight]{./model_images/a5.png}\end{figure}\FloatBarrier\end{center}
+\begin{center}\begin{figure}[H]\centering\includegraphics[height=0.45\textheight]{./model_images/a6.png}\end{figure}\FloatBarrier\end{center}
+\begin{center}\begin{figure}[H]\centering\includegraphics[height=0.45\textheight]{./model_images/a7.png}\end{figure}\FloatBarrier\end{center}
+\begin{center}\begin{figure}[H]\centering\includegraphics[height=0.45\textheight]{./model_images/a8.png}\end{figure}\FloatBarrier\end{center}
 \subsection{工作截圖}
 \begin{center}\begin{figure}[H]\centering
 \hfill
@@ -168,7 +169,85 @@ While roles are defined, teamwork remains at the heart of our approach, with all
 \begin{center}\begin{figure}[H]\centering\includegraphics[width=0.8\textwidth]{./model_images/c3.png}\end{figure}\FloatBarrier\end{center}
 \begin{center}\begin{figure}[H]\centering\includegraphics[width=0.8\textwidth]{./model_images/c4.png}\end{figure}\FloatBarrier\end{center}
 \subsection{STEP Code}
-由於字數過多，此報告不錄，詳見 \href{https://github.com/Willie169/PID/blob/main/Assembly1.step}{https://github.com/Willie169/PID/blob/main/Assembly1.step}、\href{https://github.com/Willie169/PID/tree/main/Assembly1Parts}{https://github.com/Willie169/PID/tree/main/Assembly1Parts} 與 \href{https://cad.onshape.com/documents/f7a359a8ce08ec67cc3e345a/w/035f3c5c07b7aef9f0c724e2/e/421fc2c32759e962c6ebb50d?renderMode=0\&uiState=677054b852367f3ed3cc1e16}{https://cad.onshape.com/documents/f7a359a8ce08ec67cc3e345a/w/035f3c5c07b7aef9f0c724e2/e/421fc2c32759e962c6ebb50d?renderMode=0\&uiState=677054b852367f3ed3cc1e16}。
+由於字數過多，共2785701行，故此報告僅錄部分，完整版請詳見以下連結
+\begin{itemize}
+\item \href{https://github.com/Willie169/PID/blob/main/Assembly1.step}{https://github.com/Willie169/PID/blob/main/Assembly1.step}
+\item \href{https://github.com/Willie169/PID/tree/main/Assembly1Parts}{https://github.com/Willie169/PID/tree/main/Assembly1Parts}
+\item \href{https://cad.onshape.com/documents/f7a359a8ce08ec67cc3e345a/w/035f3c5c07b7aef9f0c724e2/e/421fc2c32759e962c6ebb50d}{https://cad.onshape.com/documents/f7a359a8ce08ec67cc3e345a/w/035f3c5c07b7aef9f0c724e2/e/421fc2c32759e962c6ebb50d}
+\end{itemize}
+\lstinputlisting{./Assembly1Parts/Assembly 1.step}
+
+\section{車體設計、電路配置與 Arduino 板實測}
+\setcounter{subsection}{1}\phantomsection
+\addcontentsline{toc}{subsection}{\thesubsection\hspace{1em}
+車體設計}
+\includepdf[pages=1,fitpaper=true]{./廖宏璿.pdf}
+\setcounter{subsection}{2}\phantomsection
+\addcontentsline{toc}{subsection}{\thesubsection\hspace{1em}
+電路配置與接線}
+\includepdf[pages=2,fitpaper=true]{./廖宏璿.pdf}
+\setcounter{subsection}{3}\phantomsection
+\addcontentsline{toc}{subsection}{\thesubsection\hspace{1em}
+Arduino D1 WiFi 板測試}
+\includepdf[pages=3,fitpaper=true]{./廖宏璿.pdf}
+\setcounter{subsection}{4}\phantomsection
+\addcontentsline{toc}{subsection}{\thesubsection\hspace{1em}
+Arduino UNO R3 板測試}
+\includepdf[pages=4,fitpaper=true]{./廖宏璿.pdf}
+\setcounter{subsection}{5}
+\subsection{零件與車體照片}
+\begin{center}\begin{figure}[H]\centering
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+\centering
+\includegraphics[width=\textwidth]{./photos/a.jpg}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+\centering
+\includegraphics[width=\textwidth]{./photos/b.jpg}
+\end{minipage}
+\hfill
+\end{figure}\FloatBarrier\end{center}
+\begin{center}\begin{figure}[H]\centering
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+\centering
+\includegraphics[width=\textwidth]{./photos/c.jpg}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+\centering
+\includegraphics[width=\textwidth]{./photos/d.jpg}
+\end{minipage}
+\hfill
+\end{figure}\FloatBarrier\end{center}
+\begin{center}\begin{figure}[H]\centering
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+\centering
+\includegraphics[width=\textwidth]{./photos/e.jpg}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+\centering
+\includegraphics[width=\textwidth]{./photos/f.jpg}
+\end{minipage}
+\hfill
+\end{figure}\FloatBarrier\end{center}
+\begin{center}\begin{figure}[H]\centering
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+\centering
+\includegraphics[width=\textwidth]{./photos/g.jpg}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+\centering
+\includegraphics[width=\textwidth]{./photos/h.jpg}
+\end{minipage}
+\hfill
+\end{figure}\FloatBarrier\end{center}
 
 \section{PID Controller, Software Simulation, Parameters Optimization, and Arduino Code}
 I implemented a PID (Proportional-Integral-Derivative) controller designed to regulate the speed of the auto-following kart with a leader robot. The implementation includes the PID controller logic, a car simulation, a framework for testing various PID configurations, and the Arduino applications.
@@ -420,7 +499,7 @@ If \texttt{DEBUG} is set to 1, additional information about the PID updates and 
 \subsection{all.ino}
 Combining \texttt{PID.hpp} and \texttt{main.ino} in one file.
 \subsubsection{Code}
-請見「附錄—— all.ino」。
+\lstinputlisting[language=C++]{all.ino}
 \subsection{Development History}
 The development of this PID (Proportional-Integral-Derivative) controller project is rooted in control theory, a field of engineering that focuses on the behavior of dynamic systems. What makes us take the initiative is the auto-following kart lesson in our living technology class. We aim to make an auto-following kart from scratch with Arduino and wooden boards and make it as quality as possible on a constrained budget.
 \subsubsection{Control Theory and PID Controllers}
@@ -504,66 +583,6 @@ We use two ultrasonic sensors to measure the distance on both sides. The differe
 \hfill
 \end{figure}\FloatBarrier\end{center}
 
-\section{車體設計、電路配置與 Arduino 板實測}
-\phantomsection\addcontentsline{toc}{subsection}{車體設計}
-\phantomsection\addcontentsline{toc}{subsection}{電路配置與接線}
-\phantomsection\addcontentsline{toc}{subsection}{Arduino D1 WiFi 板測試}
-\phantomsection\addcontentsline{toc}{subsection}{Arduino UNO R3 板測試}
-\includepdf[pages=-,fitpaper=true]{./廖宏璿.pdf}
-\subsection{零件與車體照片}
-\begin{center}\begin{figure}[H]\centering
-\hfill
-\begin{minipage}[t]{0.45\textwidth}
-\centering
-\includegraphics[width=\textwidth]{./photos/a.jpg}
-\end{minipage}
-\hfill
-\begin{minipage}[t]{0.45\textwidth}
-\centering
-\includegraphics[width=\textwidth]{./photos/b.jpg}
-\end{minipage}
-\hfill
-\end{figure}\FloatBarrier\end{center}
-\begin{center}\begin{figure}[H]\centering
-\hfill
-\begin{minipage}[t]{0.45\textwidth}
-\centering
-\includegraphics[width=\textwidth]{./photos/c.jpg}
-\end{minipage}
-\hfill
-\begin{minipage}[t]{0.45\textwidth}
-\centering
-\includegraphics[width=\textwidth]{./photos/d.jpg}
-\end{minipage}
-\hfill
-\end{figure}\FloatBarrier\end{center}
-\begin{center}\begin{figure}[H]\centering
-\hfill
-\begin{minipage}[t]{0.45\textwidth}
-\centering
-\includegraphics[width=\textwidth]{./photos/e.jpg}
-\end{minipage}
-\hfill
-\begin{minipage}[t]{0.45\textwidth}
-\centering
-\includegraphics[width=\textwidth]{./photos/f.jpg}
-\end{minipage}
-\hfill
-\end{figure}\FloatBarrier\end{center}
-\begin{center}\begin{figure}[H]\centering
-\hfill
-\begin{minipage}[t]{0.45\textwidth}
-\centering
-\includegraphics[width=\textwidth]{./photos/g.jpg}
-\end{minipage}
-\hfill
-\begin{minipage}[t]{0.45\textwidth}
-\centering
-\includegraphics[width=\textwidth]{./photos/h.jpg}
-\end{minipage}
-\hfill
-\end{figure}\FloatBarrier\end{center}
-
 \section{Report Writing}
 \subsection{My \LaTeX{} Learning Journey}
 My journey with \LaTeX{} began when I realized the limitations of traditional word processors for creating professional-looking documents, especially those involving mathematical equations and technical formatting. These features are critical for my studies and research in advanced mathematics and physics.\\\\
@@ -579,25 +598,7 @@ When designing a template, I carefully select packages, fonts, and define custom
 \item \textbf{Fonts and Localization:} I integrate multilingual support with \texttt{fontspec}, \texttt{xeCJK}, and \texttt{zhnumber}, using fonts like TeX Gyre, STIX 2 Math, and Noto CJK to seamlessly handle Chinese and other non-Latin characters.  \item \textbf{Customization:} Using \texttt{etoolbox}, \texttt{xparse}, and \texttt{tcolorbox}, I create reusable components and custom behaviors, such as styled boxes and command shortcuts.  
 \end{itemize}
 The culmination of my efforts is a template available on GitHub (\href{https://github.com/Willie169/LaTeX-ToolKit}{https://github.com/Willie169/LaTeX-ToolKit}), which I have also used for this report.  
-\subsection{\LaTeX{} Code}
-請見「附錄—— \LaTeX{} Code」。
-\subsection{C++ 輔助程式}
-請見「附錄——報告製作 C++ 輔助程式」。
-
-\section{附錄}
-\subsection{all.ino}
-\lstinputlisting[language=C++]{./all.ino}
-\subsection{\LaTeX{} Code}
-\subsubsection{Template}
+\subsection{\LaTeX{} Template Code}
 \lstinputlisting[language=TeX]{./LaTeX-ToolKit/template.tex}
-\subsubsection{Example Document}
-\lstinputlisting[language=TeX]{./LaTeX-ToolKit/document.tex}
-\subsubsection{Arduino PID 自動跟隨車期末專題報告}
-\lstinputlisting[language=TeX]{./Arduino PID 自動跟隨車期末專題報告.tex}
-\subsection{報告製作 C++ 輔助程式}
-\sssc{CJKFontSettingsGen.cpp}
-\lstinputlisting[language=C++]{./LaTeX-ToolKit/CJKFontSettingsGen.cpp}
-\sssc{paragraph2itemize.cpp}
-\lstinputlisting[language=C++]{./LaTeX-ToolKit/paragraph2itemize.cpp}
 
 \end{document}

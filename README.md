@@ -4,6 +4,7 @@ This repository implements a PID (Proportional-Integral-Derivative) controller d
 
 READMEs:
 
+- [`Arduino PID 自動跟隨車期末專題報告.pdf`](Arduino PID 自動跟隨車期末專題報告.pdf), [`Arduino PID 自動跟隨車期末專題報告.tex`](Arduino PID 自動跟隨車期末專題報告.tex): final project report.
 - [`code-readme-en.md`](code-readme-en.md): documentation for the C++ and Arduino code.
 - [`https://Willie169.github.io/PID`](https://Willie169.github.io/PID): the 2nd log.
 - [`first-log-zh-hant.md`](first-log-zh-hant.md): the Zh-Hant translation of the 1st log.
