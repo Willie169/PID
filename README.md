@@ -1,6 +1,6 @@
 # PID
 
-This repository implements a PID (Proportional-Integral-Derivative) controller designed to regulate the speed of an auto-following kart with a leader robot. The implementation includes the PID controller logic, a car simulation, and a framework for testing various PID configurations.
+This repository implements a PID (Proportional-Integral-Derivative) controller designed to regulate the speed of an auto-following kart with a leader robot. The implementation includes the controller logic, a car simulation, a testing and optimizing framework, and an Arduino practice.
 
 READMEs:
 
