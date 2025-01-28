@@ -1,0 +1,12 @@
+﻿Name,Quantity,Component
+"U1",1," Arduino Uno R3"
+"DIST1",1," Ultrasonic Distance Sensor (4-pin)"
+"R1, R2",2,"1 kΩ Resistor"
+"D1",1,"Green LED"
+"D2",1,"Red LED"
+"SERVO1",1,"Positional Micro Servo"
+"Bat1",1,"4 batteries, AA, no 1.5V Battery"
+"U2",1," H-bridge Motor Driver"
+"M1",1," DC Motor"
+"K1, K2",2," Relay DPDT"
+"M2",1," Hobby Gearmotor"
