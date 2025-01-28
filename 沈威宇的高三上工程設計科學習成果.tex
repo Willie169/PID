@@ -1,0 +1,598 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[margin=1.27cm,foot=0.77cm]{geometry}
+\setcounter{secnumdepth}{6}
+\setcounter{tocdepth}{3}
+\newcounter{xeCJK}
+\setcounter{xeCJK}{1}
+\newcounter{Fonts}
+\setcounter{Fonts}{1}
+\newcounter{STIXMath}
+\setcounter{STIXMath}{1}
+\newcounter{CJKFonts}
+\setcounter{CJKFonts}{1}
+\newcounter{CJKLanguage}
+\setcounter{CJKLanguage}{0}
+\newcounter{NotoCJKFamily}
+\setcounter{NotoCJKFamily}{0}
+\newcounter{SectionLanguage}
+\setcounter{SectionLanguage}{1}
+\newcounter{ZhRenew}
+\setcounter{ZhRenew}{1}
+\input{./LaTeX-ToolKit/template.tex}
+\begin{document}
+\title{
+\Large 113 學年度第一學期工程設計科\\
+\LARGE Arduino PID 自動跟隨車期末專題報告\\\mbox{}\\
+\Large 113 Academic Year 1st Semester Engineering Design Course\\
+\LARGE Arduino PID Auto-Following Kart Final Project Report
+\mbox{}\\\mbox{}\\\mbox{}\\\mbox{}\\
+}
+\author{30602王品翔\\30608沈威宇\\30627廖宏璿}
+\date{\temtoday}
+\titletocdoc
+
+\section{Division of Labor}
+To maximize efficiency and leverage each member's expertise, we divided responsibilities as follows:
+\begin{itemize}
+\item 王品翔: An expert in 3D modeling, wiring, structural engineering, and the design of microprocessor-driven bots and karts. With extensive experience in CAD modeling, 3D printing, laser cutting, and microprocessor software development, as well as a track record of winning awards in microprocessor-based bot competitions, he leads the 3D modeling, hardware design, and component production aspects of the project.
+\item 沈威宇: Specializing in programming and markup languages such as C, C++, and LaTeX, with a strong foundation in advanced mathematics and physics. His portfolio includes developing machine learning-powered financial analysis tools, algorithmic trading systems, Linux virtual machines on Android, microprocessor-driven bots, and software projects in C++, Python, Node.js, and Java. He is responsible for the PID control system, Arduino programming, and the creation of the project report.
+\item 廖宏璿: Skilled in carpentry, wiring, structural engineering, and programmatic analysis in social sciences. He has contributed to projects like active noise-canceling headphones, microprocessor-driven bots, and social data algorithmic analysis. With expertise in designing and assembling physical structures, wiring microprocessor boards, and breadboards for active motion systems, he focuses on wiring design, wood structure assembly, and parameter tuning.
+\end{itemize}
+While roles are defined, teamwork remains at the heart of our approach, with all members actively supporting one another to achieve project goals.
+
+\section{硬體設計與 3D 建模}
+在這次的車輛設計中，我們以自然界的古老生物——鱟作為靈感來源，結合其生物學特性與流體力學特徵，打造出具有前瞻性與功能性的車輛外形與結構。鱟的流線型身體和穩定行走的構造，為我們提供了在設計中平衡美學與實用性的寶貴啟示。\\\\
+由於跟隨車需要做到即時與大動作地加速與轉彎反饋，我們採用了前驅作為動力系統的核心設計，並在後輪設計採用了萬向滾珠，提高了車輛加速與轉彎時的性能，使車輛在移動時能夠實現靈活的大角度轉彎，增加動力使用效率，並保持配重穩定性。\\\\
+這輛車的設計展現了我們對自然生物演化的體悟，也彰顯了我們對未來交通工具的遠見。通過模仿鱟的仿生設計結構，我們希望這樣的跟隨車設計可以具有提高機動性與增加適用場景的潛能，可以為載人、運貨、倉管、軍事、農業等潛在場景特化使用。
+\subsection{建模圖片}
+\begin{center}\begin{figure}[H]\centering
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+\centering
+\includegraphics[width=\textwidth]{./model_images/1.png}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+\centering
+\includegraphics[width=\textwidth]{./model_images/2.png}
+\end{minipage}
+\hfill
+\end{figure}\FloatBarrier\end{center}
+\begin{center}\begin{figure}[H]\centering
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+\centering
+\includegraphics[width=\textwidth]{./model_images/3.png}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+\centering
+\includegraphics[width=\textwidth]{./model_images/4.png}
+\end{minipage}
+\hfill
+\end{figure}\FloatBarrier\end{center}
+\begin{center}\begin{figure}[H]\centering
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+\centering
+\includegraphics[width=\textwidth]{./model_images/5.png}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+\centering
+\includegraphics[width=\textwidth]{./model_images/6.png}
+\end{minipage}
+\hfill
+\end{figure}\FloatBarrier\end{center}
+\begin{center}\begin{figure}[H]\centering
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+\centering
+\includegraphics[width=\textwidth]{./model_images/7.png}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+\centering
+\includegraphics[width=\textwidth]{./model_images/8.png}
+\end{minipage}
+\hfill
+\end{figure}\FloatBarrier\end{center}
+\begin{center}\begin{figure}[H]\centering
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+\centering
+\includegraphics[width=\textwidth]{./model_images/9.png}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+\centering
+\includegraphics[width=\textwidth]{./model_images/10.png}
+\end{minipage}
+\hfill
+\end{figure}\FloatBarrier\end{center}
+\begin{center}\begin{figure}[H]\centering
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+\centering
+\includegraphics[width=\textwidth]{./model_images/11.png}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+\centering
+\includegraphics[width=\textwidth]{./model_images/12.png}
+\end{minipage}
+\hfill
+\end{figure}\FloatBarrier\end{center}
+\begin{center}\begin{figure}[H]\centering\includegraphics[height=0.45\textheight]{./model_images/a1.png}\end{figure}\FloatBarrier\end{center}
+\begin{center}\begin{figure}[H]\centering\includegraphics[height=0.45\textheight]{./model_images/a2.png}\end{figure}\FloatBarrier\end{center}
+\begin{center}\begin{figure}[H]\centering\includegraphics[height=0.45\textheight]{./model_images/a3.png}\end{figure}\FloatBarrier\end{center}
+\begin{center}\begin{figure}[H]\centering\includegraphics[height=0.45\textheight]{./model_images/a4.png}\end{figure}\FloatBarrier\end{center}
+\begin{center}\begin{figure}[H]\centering\includegraphics[height=0.45\textheight]{./model_images/a5.png}\end{figure}\FloatBarrier\end{center}
+\begin{center}\begin{figure}[H]\centering\includegraphics[height=0.45\textheight]{./model_images/a6.png}\end{figure}\FloatBarrier\end{center}
+\begin{center}\begin{figure}[H]\centering\includegraphics[height=0.45\textheight]{./model_images/a7.png}\end{figure}\FloatBarrier\end{center}
+\begin{center}\begin{figure}[H]\centering\includegraphics[height=0.45\textheight]{./model_images/a8.png}\end{figure}\FloatBarrier\end{center}
+\subsection{工作截圖}
+\begin{center}\begin{figure}[H]\centering
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+\centering
+\includegraphics[width=\textwidth]{./model_images/Screenshot_1.jpg}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+\centering
+\includegraphics[width=\textwidth]{./model_images/Screenshot_2.jpg}
+\end{minipage}
+\hfill
+\end{figure}\FloatBarrier\end{center}
+\begin{center}\begin{figure}[H]\centering
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+\centering
+\includegraphics[width=\textwidth]{./model_images/Screenshot_3.jpg}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+\centering
+\includegraphics[width=\textwidth]{./model_images/Screenshot_4.jpg}
+\end{minipage}
+\hfill
+\end{figure}\FloatBarrier\end{center}
+\begin{center}\begin{figure}[H]\centering\includegraphics[width=0.8\textwidth]{./model_images/c1.png}\end{figure}\FloatBarrier\end{center}
+\begin{center}\begin{figure}[H]\centering\includegraphics[width=0.8\textwidth]{./model_images/c2.png}\end{figure}\FloatBarrier\end{center}
+\begin{center}\begin{figure}[H]\centering\includegraphics[width=0.8\textwidth]{./model_images/c3.png}\end{figure}\FloatBarrier\end{center}
+\begin{center}\begin{figure}[H]\centering\includegraphics[width=0.8\textwidth]{./model_images/c4.png}\end{figure}\FloatBarrier\end{center}
+\subsection{STEP Code}
+由於字數過多，共2785701行，故此報告僅錄部分，完整版請詳見以下連結
+\begin{itemize}
+\item \href{https://github.com/Willie169/PID/blob/main/Assembly1.step}{https://github.com/Willie169/PID/blob/main/Assembly1.step}
+\item \href{https://github.com/Willie169/PID/tree/main/Assembly1Parts}{https://github.com/Willie169/PID/tree/main/Assembly1Parts}
+\item \href{https://cad.onshape.com/documents/f7a359a8ce08ec67cc3e345a/w/035f3c5c07b7aef9f0c724e2/e/421fc2c32759e962c6ebb50d}{https://cad.onshape.com/documents/f7a359a8ce08ec67cc3e345a/w/035f3c5c07b7aef9f0c724e2/e/421fc2c32759e962c6ebb50d}
+\end{itemize}
+\lstinputlisting{./Assembly1Parts/Assembly 1.step}
+
+\section{車體設計、電路配置與 Arduino 板實測}
+\setcounter{subsection}{1}\phantomsection
+\addcontentsline{toc}{subsection}{\thesubsection\hspace{1em}
+車體設計}
+\includepdf[pages=1,fitpaper=true]{./廖宏璿.pdf}
+\setcounter{subsection}{2}\phantomsection
+\addcontentsline{toc}{subsection}{\thesubsection\hspace{1em}
+電路配置與接線}
+\includepdf[pages=2,fitpaper=true]{./廖宏璿.pdf}
+\setcounter{subsection}{3}\phantomsection
+\addcontentsline{toc}{subsection}{\thesubsection\hspace{1em}
+Arduino D1 WiFi 板測試}
+\includepdf[pages=3,fitpaper=true]{./廖宏璿.pdf}
+\setcounter{subsection}{4}\phantomsection
+\addcontentsline{toc}{subsection}{\thesubsection\hspace{1em}
+Arduino UNO R3 板測試}
+\includepdf[pages=4,fitpaper=true]{./廖宏璿.pdf}
+\setcounter{subsection}{5}
+\subsection{零件與車體照片}
+\begin{center}\begin{figure}[H]\centering
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+\centering
+\includegraphics[width=\textwidth]{./photos/a.jpg}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+\centering
+\includegraphics[width=\textwidth]{./photos/b.jpg}
+\end{minipage}
+\hfill
+\end{figure}\FloatBarrier\end{center}
+\begin{center}\begin{figure}[H]\centering
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+\centering
+\includegraphics[width=\textwidth]{./photos/c.jpg}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+\centering
+\includegraphics[width=\textwidth]{./photos/d.jpg}
+\end{minipage}
+\hfill
+\end{figure}\FloatBarrier\end{center}
+\begin{center}\begin{figure}[H]\centering
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+\centering
+\includegraphics[width=\textwidth]{./photos/e.jpg}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+\centering
+\includegraphics[width=\textwidth]{./photos/f.jpg}
+\end{minipage}
+\hfill
+\end{figure}\FloatBarrier\end{center}
+\begin{center}\begin{figure}[H]\centering
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+\centering
+\includegraphics[width=\textwidth]{./photos/g.jpg}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+\centering
+\includegraphics[width=\textwidth]{./photos/h.jpg}
+\end{minipage}
+\hfill
+\end{figure}\FloatBarrier\end{center}
+
+\section{PID Controller, Software Simulation, Parameters Optimization, and Arduino Code}
+I implemented a PID (Proportional-Integral-Derivative) controller designed to regulate the speed of the auto-following kart with a leader robot. The implementation includes the PID controller logic, a car simulation, a framework for testing various PID configurations, and the Arduino applications.
+\subsection{PID.hpp}
+This header file implements a PID controller that includes traditional PID control logic along with enhancements such as adaptive gain adjustment, adaptive integral term, error history management, and additional derivative term. It is also designed to be compatible with both Arduino and non-Arduino environments.
+\subsubsection{Code}
+\lstinputlisting[language=C++]{./PID.hpp}
+\subsubsection{Traditional PID Controller}
+The traditional PID controller is defined by the following equation:
+$$
+u(t) = K_p e(t) + K_i \int_0^t e(\tau) \,\mathrm{d}\tau + K_d \frac{\mathrm{d}e(t)}{\mathrm{d}t},
+$$
+where:
+\begin{itemize}
+\item $u(t)$ is the control output.
+\item $e(t)$ is the error at time $t$, defined as the difference between the desired value and the measured value.
+\item $K_p$, $K_i$, and $K_d$ are the proportional, integral, and derivative gains, respectively.
+\end{itemize}
+\subsubsection{Adaptive Gain Adjustment}
+The proportional gain $K_p$ is dynamically adjusted based on the interaction between the current error $e(t)$ and its rate of change (derivative). This adjustment is designed to improve the responsiveness of the controller to changing conditions. The adaptation can be mathematically expressed as follows:
+$$
+K_p' = K_p \times (1 \pm eDP_a),
+$$
+where:
+\begin{itemize}
+\item $eDP = e(t) \times \frac{de(t)}{dt}$
+\item $eDP_m$ is a threshold that determines when to adjust the proportional gain.
+\item $eDP_a$ is the adjustment factor that scales the change in $K_p$ based on the error’s derivative. 
+\end{itemize}
+The key idea behind this adjustment is to increase the proportional gain when the system is experiencing a large error combined with a significant rate of change, which could indicate an approaching overshoot or oscillation. Conversely, if the error is decreasing but remains large, it may reduce the proportional gain to prevent excessive correction, allowing the system to stabilize more smoothly.
+\subsubsection{Adaptive Integral Term}
+Integral control is essential for eliminating steady-state error; however, it can lead to issues like integral windup, where the integral term accumulates excessively during periods of sustained error. To mitigate this, the integral gain $K_i$ is adaptively computed as follows:
+$$
+K_i = K_p \times rTiM \times ap
+$$
+Where:
+\begin{itemize}
+\item $ap = e^{-\frac{\text{amp}}{\text{maxAmp}}}$
+\item $rTiM$ is a constant that relates to the desired integral time constant.
+\end{itemize}
+The variable $amp$ represents the maximum amplitude of error observed over a session. By using the exponential decay factor $ap$, the contribution of the integral term is diminished during periods of high error, effectively reducing the risk of windup. When the error is within an acceptable range, $ap$ approaches 1, allowing the integral term to contribute effectively to the control output.
+\subsubsection{Error History Management}
+Inspired by the \textbf{Ziegler–Nichols tuning method}, the implementation maintains a history of past errors and their timestamps to calculate the derivative and integral terms accurately. This history management is crucial for two main reasons:
+\begin{itemize}
+\item \textbf{Deriving the Rate of Change}: The derivative term requires knowledge of how fast the error is changing. By storing previous error values in a linked list, we can accurately compute the change in error over time ($\frac{de(t)}{dt}$):
+$$
+  dv = \frac{e(t) - preE}{dt}
+$$
+\item \textbf{Integral Calculation}: The integral of the error is accumulated over time, enabling the controller to respond to persistent deviations from the setpoint:
+$$
+  intg += e(t) \times dt
+$$
+\end{itemize}
+Using a linked list allows for efficient management of this error history. As new errors are added, older entries can be pruned to ensure that only relevant data is retained, which helps avoid excessive memory usage and keeps the calculations focused on the most recent behavior of the system.
+\subsubsection{Additional Derivative Term}
+In addition to the standard derivative term $K_d$, an additional derivative term $K_{dd}$ is included in the PID controller. This term represents a second derivative component, which can be defined as follows:
+$$
+K_{dd} = K_d \times TddM,
+$$
+where $TddM$ is a multiplier that adjusts the impact of the second derivative term. \\
+The inclusion of $K_{dd}$ helps the controller anticipate changes in the error more effectively. By accounting for the acceleration of the error (i.e., how the rate of error change is itself changing), this additional term enhances the damping characteristics of the controller, allowing for more refined control responses, especially in systems that are subject to rapid changes or oscillations.
+\subsubsection{Data Structures}
+\begin{itemize}
+\item \textbf{Data}: Holds the time difference (\texttt{dt}) and error value (\texttt{e}).
+\item \textbf{Node}: Represents an element in the linked list, containing \texttt{Data} and a pointer to the previous node.
+\item \textbf{List}: Manages the linked list, holding pointers to the head and tail nodes and the size of the list.
+\end{itemize}
+\subsubsection{PID Class}
+The \texttt{PID} class encapsulates the PID control logic. It includes:
+\begin{itemize}
+\item \textbf{Member Variables:}
+\begin{itemize}
+\item Control gains: $K_p$, $K_i$, $K_d$, $K_{dd}$ (additional derivative term).
+\item State variables: \texttt{preE}, \texttt{preDv}, \texttt{intg}, \texttt{preOut}, and \texttt{preT}, which store the previous error, derivative, integral term, last output, and last timestamp, respectively.
+\item \texttt{dtXs}: An instance of \texttt{List} to maintain historical error data.
+\end{itemize}
+\item \textbf{Constructor:} Initializes the PID parameters and state variables.
+\item \textbf{Update Method:}
+\begin{itemize}
+\item Takes the current error and timestamp, computes the control output, and updates the internal state.
+\item Implements logic for calculating the adaptive gains, managing error history, and generating the control signal.
+\end{itemize}
+\end{itemize}
+\subsection{testCar.hpp}
+This header file includes a \texttt{Car} class for simulating the motion of a car, a PID controller for adjusting the speed of an auto-following kart based on the distance to a leader car, and several utility functions for data processing and results management.
+\subsubsection{Code}
+\lstinputlisting[language=C++]{./testCar.hpp}
+\subsubsection{Car Class}
+The \texttt{Car} class represents a simple vehicle model with basic motion dynamics. It includes attributes for speed and position, as well as methods to update these attributes.
+\subsubsection{PID Debugging Function}
+The \texttt{pidDebug} function is a utility for logging messages related to PID control operations.
+\subsubsection{Sum of Last Squared Values}
+\begin{lstlisting}[language=C++]
+double sum_last_squared(const std::vector<double> &v, double prop)
+\end{lstlisting}
+Calculates the sum of squares of the last $n \times \text{prop}$ elements of the provided vector \texttt{v}.
+\subsubsection{Velocity Generation}
+\begin{lstlisting}[language=C++]
+vector<double> velocities(int steps)
+\end{lstlisting}
+Generates a vector of velocity values over a specified number of simulation steps, simulating different phases of motion (acceleration, deceleration, and adjustments).
+\subsubsection{PID Testing Function}
+\begin{lstlisting}[language=C++]
+vector<double> test(double maxIntTm, double maxAmp, double minKp, double maxKp, double rTiM, double TdM, double TddM, double eDPm, double eDPa, unsigned long session, double Kp, double preE = 0, unsigned long preT = 0, double timeInterval = 10, int steps = 1000)
+\end{lstlisting}
+This function simulates the interaction between a leader car and an auto-following kart using a PID controller to adjust the follower's speed based on the distance to the leader.
+\begin{itemize}
+\item \textbf{Parameters:}
+\begin{itemize}
+\item \texttt{double maxIntTm}: Maximum integral time constant.
+\item \texttt{double maxAmp}: Maximum amplitude of control output.
+\item \texttt{double minKp}: Minimum proportional gain.
+\item \texttt{double maxKp}: Maximum proportional gain.
+\item \texttt{double rTiM}: Reference time interval multiplier.
+\item \texttt{double TdM}: Derivative time multiplier.
+\item \texttt{double TddM}: Second derivative time multiplier.
+\item \texttt{double eDPm}: Maximum error derivative proportionality factor.
+\item \texttt{double eDPa}: Error derivative adjustment factor.
+\item \texttt{unsigned long session}: Session identifier for logging purposes.
+\item \texttt{double Kp}: Initial proportional gain.
+\item \texttt{double preE}: Previous error value (optional, defaults to 0).
+\item \texttt{unsigned long preT}: Previous time value (optional, defaults to 0).
+\item \texttt{double timeInterval}: Time interval for each step of simulation (default is 10).
+\item \texttt{int steps}: Total number of simulation steps (default is 1000).
+\end{itemize}
+\item \textbf{Returns:} A vector containing the distances between the leader and follower over time.
+\end{itemize}
+\subsubsection{PID Test Data Structure}
+\begin{lstlisting}[language=C++]
+struct pidTest
+{
+double maxIntTm, maxAmp, minKp, maxKp, rTiM, TdM, TddM, eDPm, eDPa;
+unsigned long session;
+double Kp, result;
+};
+\end{lstlisting}
+The \texttt{pidTest} structure is used to store parameters for PID testing, along with the result of the simulation.
+\subsubsection{Result Writing Function}
+\begin{lstlisting}[language=C++]
+bool write_results(const vector<pidTest> &data, const string &filename)
+\end{lstlisting}
+Writes the results of PID tests to a CSV file for analysis.
+\subsubsection{ParameterRange}
+A structure to define the range of parameters for optimization.
+\begin{itemize}
+\item \textbf{Attributes:}
+\begin{itemize}
+\item \texttt{double start}: The starting value of the parameter range.
+\item \texttt{double end}: The ending value of the parameter range.
+\item \texttt{double step}: The increment step for the parameter.
+\end{itemize}
+\end{itemize}
+\subsection{optimization.hpp}
+This header file defines the optimization functions and structures used to optimize the parameters of a PID controller in a car simulation without multi-threaded processing.
+\subsubsection{Code}
+\lstinputlisting[language=C++]{./optimization.hpp}
+\subsubsection{Optimize Function}
+Optimizes the parameters of the PID controller based on the provided ranges and writes results to a CSV file.
+\begin{itemize}
+\item \textbf{Parameters:}
+\begin{itemize}
+\item \texttt{vector<ParameterRange> ranges}: A vector containing the ranges of parameters to optimize.
+\end{itemize}
+\item \textbf{Returns:}
+\begin{itemize}
+\item \texttt{int}: Returns \texttt{EXIT\_SUCCESS} (0) if optimization completes successfully, otherwise returns \texttt{EXIT\_FAILURE}.
+\end{itemize}
+\end{itemize}
+\subsection{optimization\_multithread.hpp}
+This header file defines the optimization functions and structures used to optimize the parameters of a PID controller in a car simulation with multi-threaded processing.
+\lstinputlisting[language=C++]{./optimization_multithread.hpp}
+\subsubsection{Optimize Function}
+Optimizes the parameters of the PID controller based on the provided ranges and writes results to a CSV file.
+\begin{itemize}
+\item \textbf{Parameters:}
+\begin{itemize}
+\item \texttt{vector<ParameterRange> ranges}: A vector containing the ranges of parameters to optimize.
+\end{itemize}
+\item \textbf{Returns:}
+\begin{itemize}
+\item \texttt{int}: Returns \texttt{EXIT\_SUCCESS} (0) if optimization completes successfully, otherwise returns \texttt{EXIT\_FAILURE}.
+\end{itemize}
+\end{itemize}
+\subsection{main.cpp}
+The code file demonstrates the usage of the \texttt{optimization.hpp} (or \texttt{optimization\_multithread.hpp}) header file to perform parameter optimization for a PID controller. It defines a set of parameter ranges and calls the \texttt{optimize} function to evaluate different combinations of parameters.
+\subsubsection{Code}
+\lstinputlisting[language=C++]{./main.cpp}
+\subsubsection{Notes}
+Note that steps can't be zero or the program won't stop.
+\subsection{main.ino}
+This Arduino code is for controlling a differential-drive robot using two ultrasonic sensors to measure distance, a PID (Proportional-Integral-Derivative) controller for speed and direction adjustments, and an L293D motor driver to control the motors based on sensor inputs.
+\subsubsection{Code}
+\lstinputlisting[language=C++]{./main.ino}
+\subsubsection{Pin Definitions}
+\begin{itemize}
+\item \textbf{L293D motor control pins:}
+\begin{itemize}
+\item \texttt{L293D\_LEFT\_EN} and \texttt{L293D\_RIGHT\_EN}: Enable pins for the left and right motors.
+\item \texttt{L293D\_LEFT\_IN1}, \texttt{L293D\_LEFT\_IN2}, \texttt{L293D\_RIGHT\_IN1}, \texttt{L293D\_RIGHT\_IN2}: Input pins for controlling the direction of the motors.
+\end{itemize}
+\item \textbf{Ultrasonic sensor pins:}
+\begin{itemize}
+\item \texttt{TRIG\_LEFT} and \texttt{TRIG\_RIGHT}: Trigger pins for the left and right ultrasonic sensors.
+\item \texttt{ECHO\_LEFT} and \texttt{ECHO\_RIGHT}: Echo pins for the left and right ultrasonic sensors that return the duration of the reflected sound wave.
+\end{itemize}
+\end{itemize}
+\subsubsection{Constants}
+\begin{itemize}
+\item \textbf{HALF\_SOUND\_SPEED}: Constant used to convert the echo time into a distance. The value \texttt{0.1715} is derived from the speed of sound.
+\item \textbf{TARGET\_DISTANCE}: The target distance that the robot should maintain between the two sensors (in centimeters).
+\item \textbf{DISTANCE\_BETWEEN\_ULTRASONIC\_SENSORS}: The distance between the two ultrasonic sensors mounted on the robot, which is used to calculate angular adjustments.
+\end{itemize}
+\subsubsection{PID Tuning Parameters}
+\begin{itemize}
+\item \textbf{PID Controllers (\texttt{avgPID} and \texttt{angPID})}: Two PID controllers are used:
+\begin{itemize}
+\item \texttt{avgPID}: Controls the average speed to keep the robot at the target distance.
+\item \texttt{angPID}: Controls the angular speed to maintain proper alignment based on the sensor readings.
+\end{itemize}
+The values provided for the PID controllers (like 461.9, 517.9, etc.) are the tuning parameters for each PID term (P, I, D).
+\end{itemize}
+\subsubsection{Functions and Code Flow}
+\begin{itemize}
+\item \textbf{\texttt{leftIn()} and \texttt{rightIn()}}: These inline functions trigger the ultrasonic sensors by sending a pulse and measuring the time it takes for the sound to return. The return time is converted into a distance using the formula:
+\[
+\text{distance} = \frac{\text{time} \times \text{speed of sound}}{2}
+\]
+The resulting distance is then returned.
+\item \textbf{\texttt{setup()}}: This function runs once when the program starts. It initializes serial communication, sets pin modes for the motor control and ultrasonic sensors, and initializes the velocity variables (\texttt{avgV} and \texttt{angV}).
+\item \textbf{\texttt{loop()}}: This function runs repeatedly. It does the following:
+\begin{enumerate}
+\item Reads the distance from the left and right ultrasonic sensors using \texttt{leftIn()} and \texttt{rightIn()}.
+\item Calculates the average distance (\texttt{avg}) and the angular difference (\texttt{ang}) between the two sensors.
+\item Applies the PID controllers to adjust the average speed and angular speed to maintain the target distance.
+\item Sets the left and right velocities (\texttt{leftV} and \texttt{rightV}) based on the PID updates and applies any necessary adjustments to control the motors.
+\item Sends the control signals to the motors using \texttt{leftOut()} and \texttt{rightOut()}.
+\end{enumerate}
+\end{itemize}
+\subsubsection{Motor Control (\texttt{leftOut()} and \texttt{rightOut()})}
+\begin{itemize}
+\item \texttt{leftOut()} and \texttt{rightOut()}: These inline functions are responsible for sending control signals to the motor driver (L293D). The functions adjust the speed based on the calculated velocity and apply any speed multipliers to tune motor behavior. The \texttt{analogWrite()} function is used to set the motor speeds, where:
+\begin{itemize}
+\item Positive velocities drive the motors forward.
+\item Negative velocities drive the motors backward.
+\end{itemize}
+\end{itemize}
+\subsubsection{Debugging}
+If \texttt{DEBUG} is set to 1, additional information about the PID updates and motor velocities is printed to the serial monitor for troubleshooting and performance analysis.
+\subsection{all.ino}
+Combining \texttt{PID.hpp} and \texttt{main.ino} in one file.
+\subsubsection{Code}
+\lstinputlisting[language=C++]{all.ino}
+\subsection{Development History}
+The development of this PID (Proportional-Integral-Derivative) controller project is rooted in control theory, a field of engineering that focuses on the behavior of dynamic systems. What makes us take the initiative is the auto-following kart lesson in our living technology class. We aim to make an auto-following kart from scratch with Arduino and wooden boards and make it as quality as possible on a constrained budget.
+\subsubsection{Control Theory and PID Controllers}
+The development of this PID (Proportional-Integral-Derivative) controller project is rooted in control theory, a field of engineering that focuses on the behavior of dynamic systems. PID controllers are a cornerstone of modern control systems. They are designed to automatically adjust system outputs based on feedback to minimize error, allowing for precise control of dynamic systems. The PID controller operates based on three fundamental components:
+\begin{itemize}
+\item \textbf{Proportional Control (P)}: Responds proportionally to the current error value, providing immediate correction based on how far the system is from the desired state.
+\item \textbf{Integral Control (I)}: Addresses accumulated past errors, ensuring that the system reaches the desired state even if there are persistent biases.
+\item \textbf{Derivative Control (D)}: Predicts future errors based on the rate of change of the error, providing a damping effect to reduce overshoot and oscillation.
+\end{itemize}
+The tuning of these parameters is crucial for achieving optimal performance. The traditional Ziegler–Nichols tuning method has served as a foundational approach for many engineers, providing empirical guidelines for setting PID parameters based on system behavior.
+\subsubsection{Development Tools}
+Balancing heavy academic responsibilities, including preparation for the GSAT, I primarily developed the advanced PID controller, simulation framework, and Arduino implementation using Linux emulation environments on my Android phone. This allowed me to utilize commuting time efficiently and maximize productivity during otherwise idle periods.\\
+Leveraging my research on Android tools, such as \textbf{Android Non Root} (\href{https://github.com/Willie169/Android-Non-Root}{https://github.com/Willie169/Android-Non-Root}) and \textbf{Termux Sh} (\href{https://github.com/Willie169/termux-sh}{https://github.com/Willie169/termux-sh}), I set up isolated Linux virtual environments on Termux to streamline my development process. A Debian Bookworm ARM64 proot environment served as the primary development platform due to its optimal performance and lightweight setup, a Debian Bookworm AMD64 QEMU system emulation installed for testing in a more realistic, computer-like environment, and an Alpine 3.21 Virt AMD64 QEMU system emulation configured for running Docker containers cloned from GitHub and GitLab repositories.\\
+During development, I employed a suite of powerful and versatile tools. I primarily used \texttt{Vim} for editing to enhance coding speed and convenience, \texttt{G++} and \texttt{GCC} for compilation to run C and C++ programs, \texttt{GDB} for debugging to identify and resolve complex issues, and \texttt{git} for versioning to ensure my work remained organized, traceable, and collaborative-ready. These tools not only facilitated seamless development but also prepared me to adopt professional practices in future large-scale projects.
+\subsubsection{Initial Implementation}
+The journey began with a simple implementation of the traditional PID controller. The focus was on creating a basic class structure in C++ that encapsulated the PID logic, allowing for straightforward application in simulations.
+\begin{itemize}
+\item \textbf{Key Features}:
+\begin{itemize}
+\item Basic PID calculations.
+\item Initial support for both Arduino and non-Arduino environments through conditional compilation.
+\end{itemize}
+\end{itemize}
+\subsubsection{Enhancements and Adaptive Features}
+As the initial implementation was tested, several limitations became apparent, particularly regarding responsiveness and stability. This prompted the incorporation of advanced features such as:
+\begin{itemize}
+\item \textbf{Adaptive Gain Adjustment}: Inspired by the need for dynamic responsiveness, the proportional gain $K_p$ was made adaptable based on the error's rate of change. This enhancement allowed for better handling of transient behaviors in the system.
+\item \textbf{Adaptive Integral Term}: To mitigate integral windup, the integral gain $K_i$ was adjusted based on observed error amplitude. This feature improved system stability during sustained error conditions.
+\end{itemize}
+\subsubsection{Error History Management}
+To accurately compute the integral and derivative terms, a robust error history management system was implemented. This system utilized a linked list structure to store past error values and timestamps, enabling precise calculations for both the integral and derivative components. The integration of error history management was crucial for implementing more advanced tuning strategies, inspired by established control theory practices.
+\subsubsection{Additional Derivative Term}
+Recognizing the need for improved damping characteristics, an additional derivative term $K_{dd}$ was introduced. This term accounted for the acceleration of error changes, allowing the controller to anticipate and react to rapid fluctuations more effectively.
+\subsubsection{Testing and Simulation Framework}
+With the PID logic in place, attention turned to building a comprehensive simulation framework to test various PID configurations. The introduction of the \texttt{Car} class for simulating follower and leader vehicles added a practical context for evaluating PID performance in a dynamic environment.
+\begin{itemize}
+\item \textbf{PID Testing Function}: A dedicated function was developed to simulate the interaction between the leader and follower karts, providing insights into how different PID parameters affected system behavior.
+\end{itemize}
+\subsubsection{Optimization and Multi-threading}
+To facilitate further exploration of PID parameter tuning, optimization functions were integrated. Utilizing multi-threading allowed for the concurrent evaluation of multiple parameter combinations, greatly enhancing the testing efficiency. The optimization framework also included mechanisms for result logging and progress tracking, making it easier to analyze and visualize outcomes.
+\subsubsection{Arduino Auto-Following Kart}
+We use two ultrasonic sensors to measure the distance on both sides. The difference in distance helps adjust the robot's angular velocity, while the average of both distances adjusts its linear speed. The PID controllers fine-tune these adjustments to ensure the robot stays at the target distance, while adjusting its orientation to keep the two sensors aligned. The L293D motor driver uses these velocity values to control the left and right motors, adjusting the robot's movement accordingly.
+\subsection{Working Screenshots}
+\begin{center}\begin{figure}[H]\centering
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+\centering
+\includegraphics[width=\textwidth]{./working_screenshots/1.jpg}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+\centering
+\includegraphics[width=\textwidth]{./working_screenshots/2.jpg}
+\end{minipage}
+\hfill
+\end{figure}\FloatBarrier\end{center}
+\begin{center}\begin{figure}[H]\centering
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+\centering
+\includegraphics[width=\textwidth]{./working_screenshots/3.jpg}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+\centering
+\includegraphics[width=\textwidth]{./working_screenshots/4.jpg}
+\end{minipage}
+\hfill
+\end{figure}\FloatBarrier\end{center}
+\begin{center}\begin{figure}[H]\centering
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+\centering
+\includegraphics[width=\textwidth]{./working_screenshots/5.jpg}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+\centering
+\includegraphics[width=\textwidth]{./working_screenshots/6.jpg}
+\end{minipage}
+\hfill
+\end{figure}\FloatBarrier\end{center}
+
+\section{Report Writing}
+\subsection{My \LaTeX{} Learning Journey}
+My journey with \LaTeX{} began when I realized the limitations of traditional word processors for creating professional-looking documents, especially those involving mathematical equations and technical formatting. These features are critical for my studies and research in advanced mathematics and physics.\\\\
+With prior experience in programming languages such as HTML, C++, and JavaScript, I quickly grasped the basic syntax of \LaTeX. I created numerous \LaTeX{} documents on math and science, including my \textbf{tw-gifted-k12-notes} (\href{https://github.com/Willie169/tw-gifted-k12-notes}{https://github.com/Willie169/tw-gifted-k12-notes}) project and many entries in my Learning Portfolio.\\\\
+I expanded my knowledge of \LaTeX{} packages and commands by consulting resources such as \textbf{Overleaf} (\href{https://www.overleaf.com}{https://www.overleaf.com}), \textbf{TeX - LaTeX Stack Exchange} (\href{https://tex.stackexchange.com}{https://tex.stackexchange.com}), and package documentation from \textbf{CTAN - Comprehensive TEX Archive Network} (\href{https://ctan.org}{https://ctan.org}).\\\\
+As I became more proficient in \LaTeX, I ventured into designing templates specifically for \XeTeX, with a focus on enhancing usability for CJK users.
+\subsection{Template Design}
+When designing a template, I carefully select packages, fonts, and define custom commands to ensure compatibility with diverse document types. Below are the key aspects of my template:  
+\begin{itemize}  
+\item \textbf{Document Aesthetics:} Packages like \texttt{nowidow}, \texttt{titlesec}, and \texttt{titling} enable fine control over spacing, section styles, and title layouts.  
+\item \textbf{Mathematical and Scientific Typesetting:} For advanced notations and formulae, I utilize packages such as \texttt{amsmath}, \texttt{mathtools}, \texttt{nicematrix}, \texttt{physics}, and \texttt{mhchem}.  
+\item \textbf{Graphics and Tables:} The \texttt{graphicx}, \texttt{tikz}, \texttt{subcaption}, and \texttt{longtable} packages allow the creation of professional-quality tables and illustrations.  
+\item \textbf{Fonts and Localization:} I integrate multilingual support with \texttt{fontspec}, \texttt{xeCJK}, and \texttt{zhnumber}, using fonts like TeX Gyre, STIX 2 Math, and Noto CJK to seamlessly handle Chinese and other non-Latin characters.  \item \textbf{Customization:} Using \texttt{etoolbox}, \texttt{xparse}, and \texttt{tcolorbox}, I create reusable components and custom behaviors, such as styled boxes and command shortcuts.  
+\end{itemize}
+The culmination of my efforts is a template available on GitHub (\href{https://github.com/Willie169/LaTeX-ToolKit}{https://github.com/Willie169/LaTeX-ToolKit}), which I have also used for this report.  
+\subsection{\LaTeX{} Template Code}
+\lstinputlisting[language=TeX]{./LaTeX-ToolKit/template.tex}
+
+\end{document}
