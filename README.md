@@ -10,5 +10,5 @@ READMEs:
 - [`Arduino PID 自動跟隨車期末專題報告.pdf`](Arduino%20PID%20自動跟隨車期末專題報告.pdf): final project report PDF original image quality.
 - [`Arduino PID 自動跟隨車期末專題報告 30602 王品翔 30608 沈威宇 30627 廖宏璿.pdf`](Arduino%20PID%20自動跟隨車期末專題報告%2030602%20王品翔%2030608%20沈威宇%2030627%20廖宏璿.pdf): final project report PDF compressed to turn in.
 - [`沈威宇的高三上工程設計專題學習成果.tex`](沈威宇的高三上工程設計專題學習成果.tex): learning portfolio version of final project report LaTeX.
-- [`沈威宇的高三上工程設計專題學習成果.tex`](沈威宇的高三上工程設計專題學習成果.pdf): learning portfolio version of final project report PDF original image quality.
+- [`沈威宇的高三上工程設計專題學習成果.pdf`](沈威宇的高三上工程設計專題學習成果.pdf): learning portfolio version of final project report PDF original image quality.
 - [`沈威宇的高三上工程設計專題學習成果 Arduino PID 自動跟隨車.pdf`](沈威宇的高三上工程設計專題學習成果%20Arduino%20PID%20自動跟隨車.pdf): learning portfolio version of final project report PDF compressed to turn in.
